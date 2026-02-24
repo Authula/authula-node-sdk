@@ -1,0 +1,45 @@
+{
+  "name": "go-better-auth-node-sdk",
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/workspaces/go-better-auth-node-sdk",
+  "forwardPorts": [],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "workbench.iconTheme": "vscode-icons",
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "telemetry.telemetryLevel": "off",
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": "active"
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "vscode-icons-team.vscode-icons",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "aaron-bond.better-comments",
+        "codeandstuff.package-json-upgrade",
+        "andys8.jest-snippets",
+        "oderwat.indent-rainbow",
+        "evondev.indent-rainbow-palettes",
+        "IronGeek.vscode-env",
+        "yoavbls.pretty-ts-errors",
+        "github.vscode-github-actions",
+        "Gruntfuggly.todo-tree"
+      ]
+    }
+  }
+}
