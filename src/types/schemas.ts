@@ -6,6 +6,7 @@ export const userSchema = z.object({
   email: z.email(),
   emailVerified: z.boolean(),
   image: z.string().nullish(),
+  metadata: z.record(z.string(), z.unknown()).nullish(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 });
