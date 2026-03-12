@@ -148,13 +148,23 @@ export type GetUserStateResponse = {
   state: AdminUserState;
 };
 
-export type UpsertUserStateRequest = {
+export type CreateUserStateRequest = {
   banned: boolean;
   bannedUntil?: string;
   bannedReason?: string;
 };
 
-export type UpsertUserStateResponse = {
+export type UpdateUserStateRequest = {
+  banned: boolean;
+  bannedUntil?: string;
+  bannedReason?: string;
+};
+
+export type CreateUserStateResponse = {
+  userState: AdminUserState;
+};
+
+export type UpdateUserStateResponse = {
   userState: AdminUserState;
 };
 
@@ -185,7 +195,7 @@ export type GetSessionStateResponse = {
   state: AdminSessionState;
 };
 
-export type UpsertSessionStateRequest = {
+export type CreateSessionStateRequest = {
   revoke: boolean;
   revokedReason?: string;
   impersonatorUserId?: string;
@@ -193,7 +203,19 @@ export type UpsertSessionStateRequest = {
   impersonationExpiresAt?: string;
 };
 
-export type UpsertSessionStateResponse = {
+export type UpdateSessionStateRequest = {
+  revoke: boolean;
+  revokedReason?: string;
+  impersonatorUserId?: string;
+  impersonationReason?: string;
+  impersonationExpiresAt?: string;
+};
+
+export type CreateSessionStateResponse = {
+  state: AdminSessionState;
+};
+
+export type UpdateSessionStateResponse = {
   state: AdminSessionState;
 };
 

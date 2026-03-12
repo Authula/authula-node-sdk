@@ -25,10 +25,6 @@ import type {
   UnbanUserResponse,
   UpdateUserRequest,
   UpdateUserResponse,
-  UpsertSessionStateRequest,
-  UpsertSessionStateResponse,
-  UpsertUserStateRequest,
-  UpsertUserStateResponse,
   DeleteUserResponse,
   CreateAccountRequest,
   CreateAccountResponse,
@@ -37,6 +33,14 @@ import type {
   UpdateAccountRequest,
   UpdateAccountResponse,
   DeleteAccountResponse,
+  CreateUserStateRequest,
+  CreateUserStateResponse,
+  UpdateUserStateRequest,
+  UpdateUserStateResponse,
+  CreateSessionStateRequest,
+  CreateSessionStateResponse,
+  UpdateSessionStateRequest,
+  UpdateSessionStateResponse,
 } from "./types";
 
 export class AdminPlugin implements Plugin {
@@ -133,12 +137,21 @@ export class AdminPlugin implements Plugin {
           method: "GET",
         });
       },
-      upsertUserState: async (
+      createUserState: async (
         userId: string,
-        data: UpsertUserStateRequest,
-      ): Promise<UpsertUserStateResponse> => {
+        data: CreateUserStateRequest,
+      ): Promise<CreateUserStateResponse> => {
         return wrappedFetch(client, `/admin/users/${userId}/state`, {
           method: "POST",
+          body: data,
+        });
+      },
+      updateUserState: async (
+        userId: string,
+        data: UpdateUserStateRequest,
+      ): Promise<UpdateUserStateResponse> => {
+        return wrappedFetch(client, `/admin/users/${userId}/state`, {
+          method: "PATCH",
           body: data,
         });
       },
@@ -185,12 +198,21 @@ export class AdminPlugin implements Plugin {
           method: "GET",
         });
       },
-      upsertSessionState: async (
+      createSessionState: async (
         sessionId: string,
-        data: UpsertSessionStateRequest,
-      ): Promise<UpsertSessionStateResponse> => {
+        data: CreateSessionStateRequest,
+      ): Promise<CreateSessionStateResponse> => {
         return wrappedFetch(client, `/admin/sessions/${sessionId}/state`, {
           method: "POST",
+          body: data,
+        });
+      },
+      updateSessionState: async (
+        sessionId: string,
+        data: UpdateSessionStateRequest,
+      ): Promise<UpdateSessionStateResponse> => {
+        return wrappedFetch(client, `/admin/sessions/${sessionId}/state`, {
+          method: "PATCH",
           body: data,
         });
       },
