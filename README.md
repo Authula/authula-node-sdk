@@ -308,12 +308,12 @@ const goBetterAuthClient = createClient({
 
 ```typescript
 await goBetterAuthClient.admin.createUser({
-  email: "user@example.com",
   name: "John Doe",
+  email: "user@example.com",
   // other fields...
 });
 
-const users = await goBetterAuthClient.admin.getAllUsers("100");
+const users = await goBetterAuthClient.admin.getAllUsers(100);
 
 const user = await goBetterAuthClient.admin.getUserById("user-id");
 

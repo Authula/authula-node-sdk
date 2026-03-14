@@ -60,10 +60,10 @@ export class AdminPlugin implements Plugin {
           body: data,
         });
       },
-      getAllUsers: async (limit?: string): Promise<GetAllUsersResponse> => {
+      getAllUsers: async (limit?: number): Promise<GetAllUsersResponse> => {
         const urlSearchParams = new URLSearchParams();
         if (limit) {
-          urlSearchParams.append("limit", limit);
+          urlSearchParams.append("limit", limit.toString());
         }
         const params = urlSearchParams.toString()
           ? `?${urlSearchParams.toString()}`
