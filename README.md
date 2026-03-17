@@ -7,14 +7,14 @@ GoBetterAuth Node.js SDK
 </p>
 
 <p align="center">
-Official GoBetterAuth Node.js SDK. This SDK provides seamless integration with GoBetterAuth authentication server for both client-side and server-side applications and is framework agnostic (React, Vue.js and more).
+This SDK provides seamless integration with a GoBetterAuth server for both client-side and server-side applications and is framework agnostic.
 </p>
 
 ---
 
 ## Features
 
-- **Framework Agnostic**: Works with React, Vue.js, Angular, and more
+- **Framework Agnostic**: Works with Next.js/React, Vue.js and more
 - **Full TypeScript Support**: Complete TypeScript definitions with strict typing
 - **SSR Safe**: Supports proper cookie handling for SSR apps
 - **CSRF Protection**: Automatic CSRF token handling for mutating requests
@@ -121,6 +121,244 @@ if (emailPasswordPlugin) {
 
 ## Available Plugins
 
+### Access Control Plugin
+
+Provides role-based access control (RBAC) management for users, including roles, permissions, and their assignments.
+
+```typescript
+import { AccessControlPlugin } from "go-better-auth/plugins";
+
+const goBetterAuthClient = createClient({
+  url: "http://localhost:8080/auth",
+  plugins: [new AccessControlPlugin()],
+});
+```
+
+#### Role Management
+
+```typescript
+// Create a new role
+await goBetterAuthClient.accessControl.createRole({
+  name: "Admin",
+  description: "Administrator role",
+  isSystem: false,
+});
+
+// Get all roles
+const allRoles = await goBetterAuthClient.accessControl.getAllRoles();
+
+// Get a specific role
+const role = await goBetterAuthClient.accessControl.getRoleById("role-id");
+
+// Update a role
+await goBetterAuthClient.accessControl.updateRole("role-id", {
+  name: "Updated name",
+  description: "Updated description",
+});
+
+// Delete a role
+await goBetterAuthClient.accessControl.deleteRole("role-id");
+```
+
+#### Permission Management
+
+```typescript
+// Create a new permission
+await goBetterAuthClient.accessControl.createPermission({
+  key: "users.create",
+  description: "Create new users",
+  isSystem: false,
+});
+
+// Get all permissions
+const allPermissions = await goBetterAuthClient.accessControl.getAllPermissions();
+
+// Update a permission
+await goBetterAuthClient.accessControl.updatePermission("permission-id", {
+  description: "Updated permission description",
+});
+
+// Delete a permission
+await goBetterAuthClient.accessControl.deletePermission("permission-id");
+```
+
+#### Role-Permission Management
+
+```typescript
+// Add a permission to a role
+await goBetterAuthClient.accessControl.addRolePermission("role-id", {
+  permissionId: "permission-id",
+});
+
+// Get all permissions for a role
+const rolePermissions = await goBetterAuthClient.accessControl.getRolePermissions(
+  "role-id",
+);
+
+// Replace all permissions for a role
+await goBetterAuthClient.accessControl.replaceRolePermissions("role-id", {
+  permissionIds: ["permission-id-1", "permission-id-2", "permission-id-3"],
+});
+
+// Remove a permission from a role
+await goBetterAuthClient.accessControl.removeRolePermission(
+  "role-id",
+  "permission-id",
+);
+```
+
+#### User Role Management
+
+```typescript
+// Get all roles assigned to a user
+const userRoles = await goBetterAuthClient.accessControl.getUserRoles("user-id");
+
+// Assign a role to a user
+await goBetterAuthClient.accessControl.assignUserRole("user-id", {
+  roleId: "role-id",
+  expiresAt: new Date("2025-12-31"), // Optional: role expiration date
+});
+
+// Replace all roles for a user
+await goBetterAuthClient.accessControl.replaceUserRoles("user-id", {
+  roleIds: ["role-id-1", "role-id-2"],
+});
+
+// Remove a role from a user
+await goBetterAuthClient.accessControl.removeUserRole("user-id", "role-id");
+```
+
+#### User Permission Management
+
+```typescript
+// Get all effective permissions for a user (from all assigned roles)
+const userPermissions = await goBetterAuthClient.accessControl.getUserEffectivePermissions("user-id");
+```
+
+---
+
+### Admin Plugin
+
+Provides the ability to manage users, accounts, sessions, and impersonations.
+
+```typescript
+import { AdminPlugin } from "go-better-auth/plugins";
+
+const goBetterAuthClient = createClient({
+  url: "http://localhost:8080/auth",
+  plugins: [new AdminPlugin()],
+});
+```
+
+#### User Management
+
+```typescript
+await goBetterAuthClient.admin.createUser({
+  name: "John Doe",
+  email: "user@example.com",
+  // other fields...
+});
+
+// Get all users with pagination
+const users = await goBetterAuthClient.admin.getAllUsers(100);
+
+// Get a specific user by ID
+const user = await goBetterAuthClient.admin.getUserById("user-id");
+
+// Update user information
+await goBetterAuthClient.admin.updateUser("user-id", { name: "Jane" });
+
+// Delete a user
+await goBetterAuthClient.admin.deleteUser("user-id");
+```
+
+#### Account Management
+
+```typescript
+// Create a new account for a user
+await goBetterAuthClient.admin.createAccount("user-id", { /* account data */ });
+
+// Get all accounts for a user
+await goBetterAuthClient.admin.getUserAccounts("user-id");
+
+// Get a specific account by ID
+await goBetterAuthClient.admin.getAccountById("account-id");
+
+// Update account information
+await goBetterAuthClient.admin.updateAccount("account-id", { /* data */ });
+
+// Delete an account
+await goBetterAuthClient.admin.deleteAccount("account-id");
+```
+
+#### User State Management
+
+```typescript
+// Get user state
+await goBetterAuthClient.admin.getUserState("user-id");
+
+// Create or update user state
+await goBetterAuthClient.admin.createUserState("user-id", { /* state data */ });
+
+// Update user state
+await goBetterAuthClient.admin.updateUserState("user-id", { /* state data */ });
+
+// Delete user state
+await goBetterAuthClient.admin.deleteUserState("user-id");
+
+// Get all banned user states
+await goBetterAuthClient.admin.getBannedUserStates();
+
+// Ban a user
+await goBetterAuthClient.admin.banUser("user-id", { reason: "reason..." });
+
+// Unban a user
+await goBetterAuthClient.admin.unbanUser("user-id");
+
+// Get all active sessions for a user
+await goBetterAuthClient.admin.getUserAdminSessions("user-id");
+```
+
+#### Session State Management
+
+```typescript
+// Get session state
+await goBetterAuthClient.admin.getSessionState("session-id");
+
+// Create or update session state
+await goBetterAuthClient.admin.createSessionState("session-id", { /* data */ });
+
+// Update session state
+await goBetterAuthClient.admin.updateSessionState("session-id", { /* data */ });
+
+// Delete session state
+await goBetterAuthClient.admin.deleteSessionState("session-id");
+
+// Get all revoked session states
+await goBetterAuthClient.admin.getRevokedSessionStates();
+
+// Revoke a session
+await goBetterAuthClient.admin.revokeSession("session-id", { reason: "reason..." });
+```
+
+#### Impersonations
+
+```typescript
+// Get all active impersonations
+await goBetterAuthClient.admin.getAllImpersonations();
+
+// Get a specific impersonation by ID
+await goBetterAuthClient.admin.getImpersonationById("impersonation-id");
+
+// Start impersonating a user
+await goBetterAuthClient.admin.startImpersonation({ user_id: "user-id", /* data */ });
+
+// Stop impersonation
+await goBetterAuthClient.admin.stopImpersonation("impersonation-id");
+```
+
+---
+
 ### Email Password Plugin
 
 Handles traditional email/password authentication flows.
@@ -173,6 +411,8 @@ await goBetterAuthClient.emailPassword.requestEmailChange({
 });
 ```
 
+---
+
 ### OAuth2 Plugin
 
 Handles OAuth2 authentication with popular providers.
@@ -195,6 +435,8 @@ const response = await goBetterAuthClient.oauth2.signIn({
 window.location.href = response.auth_url;
 ```
 
+---
+
 ### CSRF Plugin
 
 Provides automatic CSRF protection for mutating requests.
@@ -216,6 +458,8 @@ const goBetterAuthClient = createClient({
 // CSRF tokens will be automatically added to mutating requests (POST, PUT, PATCH, DELETE)
 ```
 
+---
+
 ### JWT Plugin
 
 Handles JWT token operations including refresh.
@@ -236,6 +480,8 @@ const tokens = await goBetterAuthClient.jwt.refreshToken({
 // Get JWKS keys
 const jwksKeys = await goBetterAuthClient.jwt.getJWKSKeys();
 ```
+
+---
 
 ### Bearer Plugin
 
@@ -259,6 +505,8 @@ const goBetterAuthClient = createClient({
 // 2. Handle token refresh when receiving 401 responses
 // 3. Store tokens in localStorage (access_token and refresh_token)
 ```
+
+---
 
 ### Magic Link Plugin
 
@@ -290,100 +538,6 @@ await goBetterAuthClient.magicLink.exchange({
   token: "magic-link-token",
 });
 ```
-
-### Admin Plugin
-
-Provides the ability to manage users, accounts, sessions, and impersonations.
-
-```typescript
-import { AdminPlugin } from "go-better-auth/plugins";
-
-const goBetterAuthClient = createClient({
-  url: "http://localhost:8080/auth",
-  plugins: [new AdminPlugin()],
-});
-```
-
-#### User Management
-
-```typescript
-await goBetterAuthClient.admin.createUser({
-  name: "John Doe",
-  email: "user@example.com",
-  // other fields...
-});
-
-const users = await goBetterAuthClient.admin.getAllUsers(100);
-
-const user = await goBetterAuthClient.admin.getUserById("user-id");
-
-await goBetterAuthClient.admin.updateUser("user-id", { name: "Jane" });
-
-await goBetterAuthClient.admin.deleteUser("user-id");
-```
-
-#### Account Management
-
-```typescript
-await goBetterAuthClient.admin.createAccount("user-id", { /* account data */ });
-
-await goBetterAuthClient.admin.getUserAccounts("user-id");
-
-await goBetterAuthClient.admin.getAccountById("account-id");
-
-await goBetterAuthClient.admin.updateAccount("account-id", { /* data */ });
-
-await goBetterAuthClient.admin.deleteAccount("account-id");
-```
-
-#### User State Management
-
-```typescript
-await goBetterAuthClient.admin.getUserState("user-id");
-
-await goBetterAuthClient.admin.createUserState("user-id", { /* state data */ });
-
-await goBetterAuthClient.admin.updateUserState("user-id", { /* state data */ });
-
-await goBetterAuthClient.admin.deleteUserState("user-id");
-
-await goBetterAuthClient.admin.getBannedUserStates();
-
-await goBetterAuthClient.admin.banUser("user-id", { reason: "reason..." });
-
-await goBetterAuthClient.admin.unbanUser("user-id");
-
-await goBetterAuthClient.admin.getUserAdminSessions("user-id");
-```
-
-#### Session State Management
-
-```typescript
-await goBetterAuthClient.admin.getSessionState("session-id");
-
-await goBetterAuthClient.admin.createSessionState("session-id", { /* data */ });
-
-await goBetterAuthClient.admin.updateSessionState("session-id", { /* data */ });
-
-await goBetterAuthClient.admin.deleteSessionState("session-id");
-
-await goBetterAuthClient.admin.getRevokedSessionStates();
-
-await goBetterAuthClient.admin.revokeSession("session-id", { reason: "reason..." });
-```
-
-#### Impersonations
-
-```typescript
-await goBetterAuthClient.admin.getAllImpersonations();
-
-await goBetterAuthClient.admin.getImpersonationById("impersonation-id");
-
-await goBetterAuthClient.admin.startImpersonation({ user_id: "user-id", /* data */ });
-
-await goBetterAuthClient.admin.stopImpersonation("impersonation-id");
-```
-
 
 ## Advanced Configuration
 
