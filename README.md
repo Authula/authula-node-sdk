@@ -42,7 +42,8 @@ import { EmailPasswordPlugin } from "go-better-auth/plugins";
 
 // Create a client instance
 const goBetterAuthClient = createClient({
-  url: "http://localhost:8080", // Your GoBetterAuth server URL
+  // Your GoBetterAuth server URL
+  url: "http://localhost:8080/auth",
   plugins: [new EmailPasswordPlugin()],
 });
 
@@ -367,7 +368,7 @@ Handles traditional email/password authentication flows.
 import { EmailPasswordPlugin } from "go-better-auth/plugins";
 
 const goBetterAuthClient = createClient({
-  url: "http://localhost:8080",
+  url: "http://localhost:8080/auth",
   plugins: [new EmailPasswordPlugin()],
 });
 
