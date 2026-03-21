@@ -1,5 +1,5 @@
 /**
- * OAuth2 provider types supported by GoBetterAuth
+ * OAuth2 provider types supported by Authula
  */
 export type OAuth2ProviderType = "discord" | "github" | "google";
 

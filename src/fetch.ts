@@ -1,10 +1,10 @@
 import { toCamelCaseKeys, toSnakeCaseKeys } from "es-toolkit";
 
-import type { GoBetterAuthClient } from "./client";
+import type { AuthulaClient } from "./client";
 import type { CookieStore, FetchContext, FetchRequestOptions } from "./types";
 
 export async function wrappedFetch<T>(
-  client: GoBetterAuthClient,
+  client: AuthulaClient,
   endpoint: string,
   options: FetchRequestOptions = {},
 ): Promise<T> {

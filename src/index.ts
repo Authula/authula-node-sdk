@@ -1,11 +1,11 @@
 /**
- * Official GoBetterAuth Node.js SDK
+ * Official Authula Node.js SDK
  *
  * @packageDocumentation
  */
 
 export * from "./types";
 
-export { GoBetterAuthClient } from "./client";
+export { AuthulaClient } from "./client";
 
 export { createClient } from "./sdk";

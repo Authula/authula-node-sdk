@@ -1,5 +1,5 @@
 <p align="center">
-GoBetterAuth Node.js SDK
+Authula Node.js SDK
 </p>
 
 <p align="center">
@@ -7,7 +7,7 @@ GoBetterAuth Node.js SDK
 </p>
 
 <p align="center">
-This SDK provides seamless integration with a GoBetterAuth server for both client-side and server-side applications and is framework agnostic.
+This SDK provides seamless integration with a Authula server for both client-side and server-side applications and is framework agnostic.
 </p>
 
 ---
@@ -25,11 +25,11 @@ This SDK provides seamless integration with a GoBetterAuth server for both clien
 ## Installation
 
 ```bash
-npm install go-better-auth
+npm install authula
 # or
-yarn add go-better-auth
+yarn add authula
 # or
-pnpm add go-better-auth
+pnpm add authula
 ```
 
 ## Quick Start
@@ -37,12 +37,12 @@ pnpm add go-better-auth
 ### Basic Setup
 
 ```typescript
-import { createClient } from "go-better-auth";
-import { EmailPasswordPlugin } from "go-better-auth/plugins";
+import { createClient } from "authula";
+import { EmailPasswordPlugin } from "authula/plugins";
 
 // Create a client instance
-const goBetterAuthClient = createClient({
-  // Your GoBetterAuth server URL
+const authulaClient = createClient({
+  // Your Authula server URL
   url: "http://localhost:8080/auth",
   plugins: [new EmailPasswordPlugin()],
 });
@@ -57,10 +57,10 @@ For server-side rendering or applications that need to handle cookies properly:
 ```typescript
 import { cookies } from "next/headers";
 
-import { createClient } from "go-better-auth";
-import { EmailPasswordPlugin, CSRFPlugin } from "go-better-auth/plugins";
+import { createClient } from "authula";
+import { EmailPasswordPlugin, CSRFPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   cookies: cookies, // Provide cookie store for SSR
   plugins: [
@@ -82,7 +82,7 @@ The client provides built-in methods for essential authentication operations:
 Retrieve information about the currently authenticated user:
 
 ```typescript
-const { user, session } = await goBetterAuthClient.getMe();
+const { user, session } = await authulaClient.getMe();
 
 console.log(user.email);
 console.log(session.id);
@@ -94,15 +94,15 @@ Sign out the current user or all sessions:
 
 ```typescript
 // Sign out current session
-await goBetterAuthClient.signOut({});
+await authulaClient.signOut({});
 
 // Sign out all sessions
-await goBetterAuthClient.signOut({
+await authulaClient.signOut({
   signOutAll: true,
 });
 
 // Sign out a specific session
-await goBetterAuthClient.signOut({
+await authulaClient.signOut({
   sessionId: "session-id",
 });
 ```
@@ -112,7 +112,7 @@ await goBetterAuthClient.signOut({
 Access a plugin instance programmatically:
 
 ```typescript
-const emailPasswordPlugin = goBetterAuthClient.getPlugin("emailPassword");
+const emailPasswordPlugin = authulaClient.getPlugin("emailPassword");
 
 // Use the plugin
 if (emailPasswordPlugin) {
@@ -127,9 +127,9 @@ if (emailPasswordPlugin) {
 Provides role-based access control (RBAC) management for users, including roles, permissions, and their assignments.
 
 ```typescript
-import { AccessControlPlugin } from "go-better-auth/plugins";
+import { AccessControlPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new AccessControlPlugin()],
 });
@@ -139,70 +139,70 @@ const goBetterAuthClient = createClient({
 
 ```typescript
 // Create a new role
-await goBetterAuthClient.accessControl.createRole({
+await authulaClient.accessControl.createRole({
   name: "Admin",
   description: "Administrator role",
   isSystem: false,
 });
 
 // Get all roles
-const allRoles = await goBetterAuthClient.accessControl.getAllRoles();
+const allRoles = await authulaClient.accessControl.getAllRoles();
 
 // Get a specific role
-const role = await goBetterAuthClient.accessControl.getRoleById("role-id");
+const role = await authulaClient.accessControl.getRoleById("role-id");
 
 // Update a role
-await goBetterAuthClient.accessControl.updateRole("role-id", {
+await authulaClient.accessControl.updateRole("role-id", {
   name: "Updated name",
   description: "Updated description",
 });
 
 // Delete a role
-await goBetterAuthClient.accessControl.deleteRole("role-id");
+await authulaClient.accessControl.deleteRole("role-id");
 ```
 
 #### Permission Management
 
 ```typescript
 // Create a new permission
-await goBetterAuthClient.accessControl.createPermission({
+await authulaClient.accessControl.createPermission({
   key: "users.create",
   description: "Create new users",
   isSystem: false,
 });
 
 // Get all permissions
-const allPermissions = await goBetterAuthClient.accessControl.getAllPermissions();
+const allPermissions = await authulaClient.accessControl.getAllPermissions();
 
 // Update a permission
-await goBetterAuthClient.accessControl.updatePermission("permission-id", {
+await authulaClient.accessControl.updatePermission("permission-id", {
   description: "Updated permission description",
 });
 
 // Delete a permission
-await goBetterAuthClient.accessControl.deletePermission("permission-id");
+await authulaClient.accessControl.deletePermission("permission-id");
 ```
 
 #### Role-Permission Management
 
 ```typescript
 // Add a permission to a role
-await goBetterAuthClient.accessControl.addRolePermission("role-id", {
+await authulaClient.accessControl.addRolePermission("role-id", {
   permissionId: "permission-id",
 });
 
 // Get all permissions for a role
-const rolePermissions = await goBetterAuthClient.accessControl.getRolePermissions(
+const rolePermissions = await authulaClient.accessControl.getRolePermissions(
   "role-id",
 );
 
 // Replace all permissions for a role
-await goBetterAuthClient.accessControl.replaceRolePermissions("role-id", {
+await authulaClient.accessControl.replaceRolePermissions("role-id", {
   permissionIds: ["permission-id-1", "permission-id-2", "permission-id-3"],
 });
 
 // Remove a permission from a role
-await goBetterAuthClient.accessControl.removeRolePermission(
+await authulaClient.accessControl.removeRolePermission(
   "role-id",
   "permission-id",
 );
@@ -212,28 +212,28 @@ await goBetterAuthClient.accessControl.removeRolePermission(
 
 ```typescript
 // Get all roles assigned to a user
-const userRoles = await goBetterAuthClient.accessControl.getUserRoles("user-id");
+const userRoles = await authulaClient.accessControl.getUserRoles("user-id");
 
 // Assign a role to a user
-await goBetterAuthClient.accessControl.assignUserRole("user-id", {
+await authulaClient.accessControl.assignUserRole("user-id", {
   roleId: "role-id",
   expiresAt: new Date("2025-12-31"), // Optional: role expiration date
 });
 
 // Replace all roles for a user
-await goBetterAuthClient.accessControl.replaceUserRoles("user-id", {
+await authulaClient.accessControl.replaceUserRoles("user-id", {
   roleIds: ["role-id-1", "role-id-2"],
 });
 
 // Remove a role from a user
-await goBetterAuthClient.accessControl.removeUserRole("user-id", "role-id");
+await authulaClient.accessControl.removeUserRole("user-id", "role-id");
 ```
 
 #### User Permission Management
 
 ```typescript
 // Get all effective permissions for a user (from all assigned roles)
-const userPermissions = await goBetterAuthClient.accessControl.getUserEffectivePermissions("user-id");
+const userPermissions = await authulaClient.accessControl.getUserEffectivePermissions("user-id");
 ```
 
 ---
@@ -243,9 +243,9 @@ const userPermissions = await goBetterAuthClient.accessControl.getUserEffectiveP
 Provides the ability to manage users, accounts, sessions, and impersonations.
 
 ```typescript
-import { AdminPlugin } from "go-better-auth/plugins";
+import { AdminPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new AdminPlugin()],
 });
@@ -254,108 +254,108 @@ const goBetterAuthClient = createClient({
 #### User Management
 
 ```typescript
-await goBetterAuthClient.admin.createUser({
+await authulaClient.admin.createUser({
   name: "John Doe",
   email: "user@example.com",
   // other fields...
 });
 
 // Get all users with pagination
-const users = await goBetterAuthClient.admin.getAllUsers(100);
+const users = await authulaClient.admin.getAllUsers(100);
 
 // Get a specific user by ID
-const user = await goBetterAuthClient.admin.getUserById("user-id");
+const user = await authulaClient.admin.getUserById("user-id");
 
 // Update user information
-await goBetterAuthClient.admin.updateUser("user-id", { name: "Jane" });
+await authulaClient.admin.updateUser("user-id", { name: "Jane" });
 
 // Delete a user
-await goBetterAuthClient.admin.deleteUser("user-id");
+await authulaClient.admin.deleteUser("user-id");
 ```
 
 #### Account Management
 
 ```typescript
 // Create a new account for a user
-await goBetterAuthClient.admin.createAccount("user-id", { /* account data */ });
+await authulaClient.admin.createAccount("user-id", { /* account data */ });
 
 // Get all accounts for a user
-await goBetterAuthClient.admin.getUserAccounts("user-id");
+await authulaClient.admin.getUserAccounts("user-id");
 
 // Get a specific account by ID
-await goBetterAuthClient.admin.getAccountById("account-id");
+await authulaClient.admin.getAccountById("account-id");
 
 // Update account information
-await goBetterAuthClient.admin.updateAccount("account-id", { /* data */ });
+await authulaClient.admin.updateAccount("account-id", { /* data */ });
 
 // Delete an account
-await goBetterAuthClient.admin.deleteAccount("account-id");
+await authulaClient.admin.deleteAccount("account-id");
 ```
 
 #### User State Management
 
 ```typescript
 // Get user state
-await goBetterAuthClient.admin.getUserState("user-id");
+await authulaClient.admin.getUserState("user-id");
 
 // Create or update user state
-await goBetterAuthClient.admin.createUserState("user-id", { /* state data */ });
+await authulaClient.admin.createUserState("user-id", { /* state data */ });
 
 // Update user state
-await goBetterAuthClient.admin.updateUserState("user-id", { /* state data */ });
+await authulaClient.admin.updateUserState("user-id", { /* state data */ });
 
 // Delete user state
-await goBetterAuthClient.admin.deleteUserState("user-id");
+await authulaClient.admin.deleteUserState("user-id");
 
 // Get all banned user states
-await goBetterAuthClient.admin.getBannedUserStates();
+await authulaClient.admin.getBannedUserStates();
 
 // Ban a user
-await goBetterAuthClient.admin.banUser("user-id", { reason: "reason..." });
+await authulaClient.admin.banUser("user-id", { reason: "reason..." });
 
 // Unban a user
-await goBetterAuthClient.admin.unbanUser("user-id");
+await authulaClient.admin.unbanUser("user-id");
 
 // Get all active sessions for a user
-await goBetterAuthClient.admin.getUserAdminSessions("user-id");
+await authulaClient.admin.getUserAdminSessions("user-id");
 ```
 
 #### Session State Management
 
 ```typescript
 // Get session state
-await goBetterAuthClient.admin.getSessionState("session-id");
+await authulaClient.admin.getSessionState("session-id");
 
 // Create or update session state
-await goBetterAuthClient.admin.createSessionState("session-id", { /* data */ });
+await authulaClient.admin.createSessionState("session-id", { /* data */ });
 
 // Update session state
-await goBetterAuthClient.admin.updateSessionState("session-id", { /* data */ });
+await authulaClient.admin.updateSessionState("session-id", { /* data */ });
 
 // Delete session state
-await goBetterAuthClient.admin.deleteSessionState("session-id");
+await authulaClient.admin.deleteSessionState("session-id");
 
 // Get all revoked session states
-await goBetterAuthClient.admin.getRevokedSessionStates();
+await authulaClient.admin.getRevokedSessionStates();
 
 // Revoke a session
-await goBetterAuthClient.admin.revokeSession("session-id", { reason: "reason..." });
+await authulaClient.admin.revokeSession("session-id", { reason: "reason..." });
 ```
 
 #### Impersonations
 
 ```typescript
 // Get all active impersonations
-await goBetterAuthClient.admin.getAllImpersonations();
+await authulaClient.admin.getAllImpersonations();
 
 // Get a specific impersonation by ID
-await goBetterAuthClient.admin.getImpersonationById("impersonation-id");
+await authulaClient.admin.getImpersonationById("impersonation-id");
 
 // Start impersonating a user
-await goBetterAuthClient.admin.startImpersonation({ user_id: "user-id", /* data */ });
+await authulaClient.admin.startImpersonation({ user_id: "user-id", /* data */ });
 
 // Stop impersonation
-await goBetterAuthClient.admin.stopImpersonation("impersonation-id");
+await authulaClient.admin.stopImpersonation("impersonation-id");
 ```
 
 ---
@@ -365,15 +365,15 @@ await goBetterAuthClient.admin.stopImpersonation("impersonation-id");
 Handles traditional email/password authentication flows.
 
 ```typescript
-import { EmailPasswordPlugin } from "go-better-auth/plugins";
+import { EmailPasswordPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new EmailPasswordPlugin()],
 });
 
 // Sign up
-await goBetterAuthClient.emailPassword.signUp({
+await authulaClient.emailPassword.signUp({
   name: "John Doe",
   email: "john@example.com",
   password: "securePassword123",
@@ -381,32 +381,32 @@ await goBetterAuthClient.emailPassword.signUp({
 });
 
 // Sign in
-const response = await goBetterAuthClient.emailPassword.signIn({
+const response = await authulaClient.emailPassword.signIn({
   email: "john@example.com",
   password: "securePassword123",
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
 
 // Send email verification
-await goBetterAuthClient.emailPassword.sendEmailVerification({
+await authulaClient.emailPassword.sendEmailVerification({
   email: "john@example.com",
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
 
 // Request password reset
-await goBetterAuthClient.emailPassword.requestPasswordReset({
+await authulaClient.emailPassword.requestPasswordReset({
   email: "john@example.com",
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
 
 // Change password
-await goBetterAuthClient.emailPassword.changePassword({
+await authulaClient.emailPassword.changePassword({
   token: "reset-token",
   password: "newSecurePassword123",
 });
 
 // Request email change
-await goBetterAuthClient.emailPassword.requestEmailChange({
+await authulaClient.emailPassword.requestEmailChange({
   email: "john.doe@example.com",
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
@@ -419,15 +419,15 @@ await goBetterAuthClient.emailPassword.requestEmailChange({
 Handles OAuth2 authentication with popular providers.
 
 ```typescript
-import { OAuth2Plugin } from "go-better-auth/plugins";
+import { OAuth2Plugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new OAuth2Plugin()],
 });
 
 // Redirect user to OAuth2 provider
-const response = await goBetterAuthClient.oauth2.signIn({
+const response = await authulaClient.oauth2.signIn({
   provider: "google", // or "github", "discord"
   redirect_to: "http://localhost:3000/callback",
 });
@@ -443,9 +443,9 @@ window.location.href = response.auth_url;
 Provides automatic CSRF protection for mutating requests.
 
 ```typescript
-import { CSRFPlugin } from "go-better-auth/plugins";
+import { CSRFPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   cookies: ..., // Provide cookie store for SSR if needed, else omit for SPA/Mobile apps
   plugins: [
@@ -466,20 +466,20 @@ const goBetterAuthClient = createClient({
 Handles JWT token operations including refresh.
 
 ```typescript
-import { JWTPlugin } from "go-better-auth/plugins";
+import { JWTPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new JWTPlugin()],
 });
 
 // Refresh JWT tokens
-const tokens = await goBetterAuthClient.jwt.refreshToken({
+const tokens = await authulaClient.jwt.refreshToken({
   refresh_token: "your-refresh-token",
 });
 
 // Get JWKS keys
-const jwksKeys = await goBetterAuthClient.jwt.getJWKSKeys();
+const jwksKeys = await authulaClient.jwt.getJWKSKeys();
 ```
 
 ---
@@ -489,9 +489,9 @@ const jwksKeys = await goBetterAuthClient.jwt.getJWKSKeys();
 Provides automatic bearer token handling and refresh.
 
 ```typescript
-import { BearerPlugin, JWTPlugin } from "go-better-auth/plugins";
+import { BearerPlugin, JWTPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [
     new JWTPlugin(),
@@ -514,28 +514,28 @@ const goBetterAuthClient = createClient({
 Provides flows for passwordless authentication.
 
 ```typescript
-import { MagicLinkPlugin } from "go-better-auth/plugins";
+import { MagicLinkPlugin } from "authula/plugins";
 
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new MagicLinkPlugin()],
 });
 
 // Send magic link via email
-await goBetterAuthClient.magicLink.signIn({
+await authulaClient.magicLink.signIn({
   email: "john.doe@example.com",
   name: "John Doe", // Optional name
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
 
 // Verify magic link token
-await goBetterAuthClient.magicLink.verify({
+await authulaClient.magicLink.verify({
   token: "magic-link-token",
   callbackUrl: "http://localhost:3000/callback", // Optional callback URL
 });
 
 // Exchange token from verify endpoint for session
-await goBetterAuthClient.magicLink.exchange({
+await authulaClient.magicLink.exchange({
   token: "magic-link-token",
 });
 ```
@@ -547,7 +547,7 @@ await goBetterAuthClient.magicLink.exchange({
 Configure fetch behavior with timeout and other options:
 
 ```typescript
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   fetchOptions: {
     abortTimeout: 30, // Timeout in seconds
@@ -563,13 +563,13 @@ const goBetterAuthClient = createClient({
 Add custom before/after fetch hooks for advanced customization:
 
 ```typescript
-const goBetterAuthClient = createClient({
+const authulaClient = createClient({
   url: "http://localhost:8080/auth",
   plugins: [new EmailPasswordPlugin()],
 });
 
 // Register a before fetch hook
-goBetterAuthClient.registerBeforeFetch(async (ctx) => {
+authulaClient.registerBeforeFetch(async (ctx) => {
   console.log(`Making request to: ${ctx.url}`);
   // Modify context if needed
   ctx.init.headers = {
@@ -579,7 +579,7 @@ goBetterAuthClient.registerBeforeFetch(async (ctx) => {
 });
 
 // Register an after fetch hook
-goBetterAuthClient.registerAfterFetch(async (ctx, response) => {
+authulaClient.registerAfterFetch(async (ctx, response) => {
   console.log(`Received response: ${response.status}`);
   if (response.status >= 400) {
     // Handle error
@@ -593,7 +593,7 @@ goBetterAuthClient.registerAfterFetch(async (ctx, response) => {
 
 ```typescript
 {
-  // Base URL of your GoBetterAuth server
+  // Base URL of your Authula server
   url: string,
   // Optional fetch configuration
   fetchOptions?: {
@@ -611,7 +611,7 @@ All methods return promises that can be caught for error handling:
 
 ```typescript
 try {
-  const response = await goBetterAuthClient.emailPassword.signIn({
+  const response = await authulaClient.emailPassword.signIn({
     email: "user@example.com",
     password: "password",
   });

@@ -1,4 +1,4 @@
-import type { GoBetterAuthClient } from "@/client";
+import type { AuthulaClient } from "@/client";
 import { wrappedFetch } from "@/fetch";
 import type { Plugin } from "@/types";
 import type {
@@ -13,7 +13,7 @@ import type {
 export class EmailPasswordPlugin implements Plugin {
   public readonly id = "emailPassword";
 
-  public init(client: GoBetterAuthClient) {
+  public init(client: AuthulaClient) {
     return {
       signUp: async <T>(data: SignUpRequest): Promise<T> => {
         return wrappedFetch<T>(client, "/sign-up", {

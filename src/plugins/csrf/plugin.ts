@@ -2,14 +2,14 @@ import { parse } from "cookie";
 
 import type { FetchContext, Plugin } from "@/types";
 import type { CSRFPluginOptions } from "./types";
-import type { GoBetterAuthClient } from "@/client";
+import type { AuthulaClient } from "@/client";
 
 export class CSRFPlugin implements Plugin {
   public readonly id = "csrf";
 
   constructor(private readonly options: CSRFPluginOptions) {}
 
-  public init(client: GoBetterAuthClient) {
+  public init(client: AuthulaClient) {
     client.registerBeforeFetch(async (ctx: FetchContext) => {
       // Client-side
       if (typeof document !== "undefined") {

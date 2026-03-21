@@ -1,10 +1,10 @@
 {
-  "name": "go-better-auth-node-sdk",
+  "name": "authula-node-sdk",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
   },
-  "workspaceFolder": "/workspaces/go-better-auth-node-sdk",
+  "workspaceFolder": "/workspaces/authula-node-sdk",
   "forwardPorts": [],
   "customizations": {
     "vscode": {

@@ -3,8 +3,8 @@ import { toSnakeCaseKeys } from "es-toolkit";
 import { wrappedFetch } from "./fetch";
 import type {
   FetchContext,
-  GoBetterAuthClientConfig,
-  GoBetterAuthClientOptions,
+  AuthulaClientConfig,
+  AuthulaClientOptions,
   SignOutRequest,
   SignOutResponse,
   Plugin,
@@ -12,13 +12,13 @@ import type {
   AfterFetchHook,
 } from "./types";
 
-export class GoBetterAuthClient {
-  public readonly config: GoBetterAuthClientConfig;
+export class AuthulaClient {
+  public readonly config: AuthulaClientConfig;
   private readonly plugins: Array<Plugin>;
   private readonly beforeFetchHooks: BeforeFetchHook[] = [];
   private readonly afterFetchHooks: AfterFetchHook[] = [];
 
-  constructor(options: GoBetterAuthClientOptions) {
+  constructor(options: AuthulaClientOptions) {
     this.plugins = options.plugins;
 
     const { plugins, ...rest } = options;

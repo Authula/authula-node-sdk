@@ -8,9 +8,9 @@ export type FetchOptions = {
   abortTimeout?: number;
 };
 
-export type GoBetterAuthClientConfig = {
+export type AuthulaClientConfig = {
   /**
-   * The URL of your GoBetterAuth server
+   * The URL of your Authula server
    * @example 'http://localhost:8080/auth'
    */
   url: string;
@@ -18,7 +18,7 @@ export type GoBetterAuthClientConfig = {
   cookies?: CookieProvider;
 };
 
-export type GoBetterAuthClientOptions = GoBetterAuthClientConfig & {
+export type AuthulaClientOptions = AuthulaClientConfig & {
   /**
    * The list of plugins to use
    */

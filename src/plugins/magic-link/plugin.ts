@@ -1,4 +1,4 @@
-import type { GoBetterAuthClient } from "@/client";
+import type { AuthulaClient } from "@/client";
 import { wrappedFetch } from "@/fetch";
 import type { Plugin } from "@/types";
 import type {
@@ -14,7 +14,7 @@ export class MagicLinkPlugin implements Plugin {
 
   constructor() {}
 
-  public init(client: GoBetterAuthClient) {
+  public init(client: AuthulaClient) {
     return {
       signIn: async (
         data: MagicLinkSignInRequest,
