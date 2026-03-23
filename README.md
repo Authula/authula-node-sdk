@@ -544,6 +544,47 @@ await authulaClient.magicLink.exchange({
 });
 ```
 
+---
+
+### TOTP Plugin
+
+Provides time-based one-time password (TOTP) two-factor authentication flows.
+
+```typescript
+import { TOTPPlugin } from "authula/plugins";
+
+const authulaClient = createClient({
+  url: "http://localhost:8080/auth",
+  plugins: [new TOTPPlugin()],
+});
+
+// Enable TOTP for the current user
+await authulaClient.totp.enable();
+
+// Disable TOTP for the current user
+await authulaClient.totp.disable();
+
+// Get the TOTP URI for QR code generation
+await authulaClient.totp.getUri();
+
+// Verify a TOTP code
+await authulaClient.totp.verify({
+  code: "123456",
+  trustDevice: true,
+});
+
+// Verify a backup code
+await authulaClient.totp.verifyBackupCode({
+  code: "AbcXyz",
+  trustDevice: true,
+});
+
+// Generate fresh backup codes
+await authulaClient.totp.generateBackupCodes();
+```
+
+---
+
 ## Advanced Configuration
 
 ### Fetch Options
