@@ -20,12 +20,12 @@ import type {
   DeleteOrganizationTeamResponse,
   GetAllOrganizationsResponse,
   GetOrganizationByIdResponse,
-  GetOrganizationInvitationByIdResponse,
-  GetOrganizationInvitationsResponse,
-  GetOrganizationMemberByIdResponse,
+  GetOrganizationInvitationResponse,
+  GetAllOrganizationInvitationsResponse,
+  GetOrganizationMemberResponse,
   GetOrganizationMembersResponse,
-  GetOrganizationTeamMemberByIdResponse,
-  GetOrganizationTeamMembersResponse,
+  GetOrganizationTeamMemberResponse,
+  GetAllOrganizationTeamMembersResponse,
   GetOrganizationTeamsResponse,
   RejectOrganizationInvitationResponse,
   RevokeOrganizationInvitationResponse,
@@ -96,9 +96,9 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationInvitations: async (
+      getAllOrganizationInvitations: async (
         organizationId: string,
-      ): Promise<GetOrganizationInvitationsResponse> => {
+      ): Promise<GetAllOrganizationInvitationsResponse> => {
         return wrappedFetch(
           client,
           `/organizations/${organizationId}/invitations`,
@@ -107,10 +107,10 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationInvitationById: async (
+      getOrganizationInvitation: async (
         organizationId: string,
         invitationId: string,
-      ): Promise<GetOrganizationInvitationByIdResponse> => {
+      ): Promise<GetOrganizationInvitationResponse> => {
         return wrappedFetch(
           client,
           `/organizations/${organizationId}/invitations/${invitationId}`,
@@ -173,7 +173,7 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationMembers: async (
+      getAllOrganizationMembers: async (
         organizationId: string,
       ): Promise<GetOrganizationMembersResponse> => {
         return wrappedFetch(
@@ -184,10 +184,10 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationMemberById: async (
+      getOrganizationMember: async (
         organizationId: string,
         memberId: string,
-      ): Promise<GetOrganizationMemberByIdResponse> => {
+      ): Promise<GetOrganizationMemberResponse> => {
         return wrappedFetch(
           client,
           `/organizations/${organizationId}/members/${memberId}`,
@@ -234,7 +234,7 @@ export class OrganizationsPlugin implements Plugin {
           body: data,
         });
       },
-      getOrganizationTeams: async (
+      getAllOrganizationTeams: async (
         organizationId: string,
       ): Promise<GetOrganizationTeamsResponse> => {
         return wrappedFetch(client, `/organizations/${organizationId}/teams`, {
@@ -284,10 +284,10 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationTeamMembers: async (
+      getAllOrganizationTeamMembers: async (
         organizationId: string,
         teamId: string,
-      ): Promise<GetOrganizationTeamMembersResponse> => {
+      ): Promise<GetAllOrganizationTeamMembersResponse> => {
         return wrappedFetch(
           client,
           `/organizations/${organizationId}/teams/${teamId}/members`,
@@ -296,11 +296,11 @@ export class OrganizationsPlugin implements Plugin {
           },
         );
       },
-      getOrganizationTeamMemberById: async (
+      getOrganizationTeamMember: async (
         organizationId: string,
         teamId: string,
         memberId: string,
-      ): Promise<GetOrganizationTeamMemberByIdResponse> => {
+      ): Promise<GetOrganizationTeamMemberResponse> => {
         return wrappedFetch(
           client,
           `/organizations/${organizationId}/teams/${teamId}/members/${memberId}`,

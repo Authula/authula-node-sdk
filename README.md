@@ -272,6 +272,155 @@ const permissionCheck = await authulaClient.accessControl.checkUserPermissions(
 
 ---
 
+### Organizations Plugin
+
+Provides the ability to manage organizations, members, teams and invitations.
+
+```typescript
+import { OrganizationsPlugin } from "authula/plugins";
+
+const authulaClient = createClient({
+  url: "http://localhost:8080/auth",
+  plugins: [new OrganizationsPlugin()],
+});
+
+// Organizations
+
+await authulaClient.organizations.createOrganization({
+  name: "Acme Inc.",
+  slug: "acme-inc",
+  logo: "https://example.com/logo.svg",
+  metadata: { key: "value" },
+});
+
+await authulaClient.organizations.getAllOrganizations();
+
+await authulaClient.organizations.getOrganizationById("organization-id");
+
+await authulaClient.organizations.updateOrganization("organization-id", {
+  name: "Updated name",
+});
+
+await authulaClient.organizations.deleteOrganization("organization-id");
+
+// Invitations
+
+await authulaClient.organizations.createOrganizationInvitation(
+  "organization-id",
+  {
+    email: "user@example.com",
+    role: "member",
+    redirectUrl: "https://example.com/invite",
+  },
+);
+
+await authulaClient.organizations.getAllOrganizationInvitations(
+  "organization-id",
+);
+
+await authulaClient.organizations.getOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+await authulaClient.organizations.revokeOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+await authulaClient.organizations.acceptOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+  {
+    redirectUrl: "https://example.com/accepted",
+  },
+);
+
+await authulaClient.organizations.rejectOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+// Members
+
+await authulaClient.organizations.addOrganizationMember("organization-id", {
+  userId: "user-id",
+  role: "owner",
+});
+
+await authulaClient.organizations.getAllOrganizationMembers("organization-id");
+
+await authulaClient.organizations.getOrganizationMember(
+  "organization-id",
+  "member-id",
+);
+
+await authulaClient.organizations.updateOrganizationMember(
+  "organization-id",
+  "member-id",
+  {
+    role: "owner",
+  },
+);
+
+await authulaClient.organizations.deleteOrganizationMember(
+  "organization-id",
+  "member-id",
+);
+
+// Teams
+
+await authulaClient.organizations.createOrganizationTeam("organization-id", {
+  name: "Platform",
+  slug: "platform",
+  description: "Platform team",
+  metadata: { key: "value" },
+});
+
+await authulaClient.organizations.getAllOrganizationTeams("organization-id");
+
+await authulaClient.organizations.updateOrganizationTeam(
+  "organization-id",
+  "team-id",
+  {
+    name: "Platform",
+    slug: "platform",
+    description: "Updated team description",
+    metadata: { key: "value" },
+  },
+);
+await authulaClient.organizations.deleteOrganizationTeam(
+  "organization-id",
+  "team-id",
+);
+
+// Team Members
+
+await authulaClient.organizations.addOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  {
+    memberId: "member-id",
+  },
+);
+await authulaClient.organizations.getAllOrganizationTeamMembers(
+  "organization-id",
+  "team-id",
+);
+await authulaClient.organizations.getOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  "member-id",
+);
+await authulaClient.organizations.deleteOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  "member-id",
+);
+```
+
+---
+
 ### Admin Plugin
 
 Provides the ability to manage users, accounts, sessions, and impersonations.
@@ -402,143 +551,6 @@ await authulaClient.admin.startImpersonation({ user_id: "user-id" /* data */ });
 
 // Stop impersonation
 await authulaClient.admin.stopImpersonation("impersonation-id");
-```
-
----
-
-### Organizations Plugin
-
-Provides the ability to manage organizations, members, teams and invitations.
-
-```typescript
-import { OrganizationsPlugin } from "authula/plugins";
-
-const authulaClient = createClient({
-  url: "http://localhost:8080/auth",
-  plugins: [new OrganizationsPlugin()],
-});
-
-// Organizations
-
-await authulaClient.organizations.getAllOrganizations();
-await authulaClient.organizations.createOrganization({
-  name: "Acme Inc.",
-  slug: "acme-inc",
-  logo: "https://example.com/logo.svg",
-  metadata: { key: "value" },
-});
-
-await authulaClient.organizations.getOrganizationById("organization-id");
-await authulaClient.organizations.updateOrganization("organization-id", {
-  name: "Updated name",
-});
-await authulaClient.organizations.deleteOrganization("organization-id");
-
-// Organization members
-
-await authulaClient.organizations.getOrganizationMembers("organization-id");
-await authulaClient.organizations.getOrganizationMemberById(
-  "organization-id",
-  "member-id",
-);
-await authulaClient.organizations.updateOrganizationMember(
-  "organization-id",
-  "member-id",
-  {
-    role: "owner",
-  },
-);
-await authulaClient.organizations.removeOrganizationMember(
-  "organization-id",
-  "member-id",
-);
-
-// Invitations
-
-await authulaClient.organizations.createOrganizationInvitation(
-  "organization-id",
-  {
-    email: "user@example.com",
-    role: "member",
-    redirectUrl: "https://example.com/invite",
-  },
-);
-await authulaClient.organizations.getOrganizationInvitations("organization-id");
-await authulaClient.organizations.getOrganizationInvitationById(
-  "organization-id",
-  "invitation-id",
-);
-await authulaClient.organizations.revokeOrganizationInvitation(
-  "organization-id",
-  "invitation-id",
-);
-await authulaClient.organizations.acceptOrganizationInvitation(
-  "organization-id",
-  "invitation-id",
-  {
-    redirectUrl: "https://example.com/accepted",
-  },
-);
-await authulaClient.organizations.rejectOrganizationInvitation(
-  "organization-id",
-  "invitation-id",
-);
-
-// Members
-
-await authulaClient.organizations.addOrganizationMember("organization-id", {
-  userId: "user-id",
-  role: "owner",
-});
-
-// Teams
-
-await authulaClient.organizations.getOrganizationTeams("organization-id");
-await authulaClient.organizations.createOrganizationTeam("organization-id", {
-  name: "Platform",
-  slug: "platform",
-  description: "Platform team",
-  metadata: { key: "value" },
-});
-
-await authulaClient.organizations.updateOrganizationTeam(
-  "organization-id",
-  "team-id",
-  {
-    name: "Platform",
-    slug: "platform",
-    description: "Updated team description",
-    metadata: { key: "value" },
-  },
-);
-await authulaClient.organizations.deleteOrganizationTeam(
-  "organization-id",
-  "team-id",
-);
-
-// Team Members
-
-await authulaClient.organizations.addOrganizationTeamMember(
-  "organization-id",
-  "team-id",
-  {
-    memberId: "member-id",
-  },
-);
-await authulaClient.organizations.getOrganizationTeamMembers(
-  "organization-id",
-  "team-id",
-);
-await authulaClient.organizations.getOrganizationTeamMemberById(
-  "organization-id",
-  "team-id",
-  "member-id",
-);
-await authulaClient.organizations.removeOrganizationTeamMember(
-  "organization-id",
-  "team-id",
-  "member-id",
-);
 ```
 
 ---

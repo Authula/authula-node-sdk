@@ -90,7 +90,7 @@ export type AddOrganizationMemberResponse = OrganizationMember;
 
 export type GetOrganizationMembersResponse = Array<OrganizationMember>;
 
-export type GetOrganizationMemberByIdResponse = OrganizationMember;
+export type GetOrganizationMemberResponse = OrganizationMember;
 
 export type UpdateOrganizationMemberRequest = {
   role: string;
@@ -132,9 +132,10 @@ export type AddOrganizationTeamMemberRequest = {
 
 export type AddOrganizationTeamMemberResponse = OrganizationTeamMember;
 
-export type GetOrganizationTeamMembersResponse = Array<OrganizationTeamMember>;
+export type GetAllOrganizationTeamMembersResponse =
+  Array<OrganizationTeamMember>;
 
-export type GetOrganizationTeamMemberByIdResponse = OrganizationTeamMember;
+export type GetOrganizationTeamMemberResponse = OrganizationTeamMember;
 
 export type DeleteOrganizationTeamMemberResponse = {
   message: string;
@@ -148,9 +149,10 @@ export type CreateOrganizationInvitationRequest = {
 
 export type CreateOrganizationInvitationResponse = OrganizationInvitation;
 
-export type GetOrganizationInvitationsResponse = Array<OrganizationInvitation>;
+export type GetAllOrganizationInvitationsResponse =
+  Array<OrganizationInvitation>;
 
-export type GetOrganizationInvitationByIdResponse = OrganizationInvitation;
+export type GetOrganizationInvitationResponse = OrganizationInvitation;
 
 export type RevokeOrganizationInvitationResponse = OrganizationInvitation;
 
