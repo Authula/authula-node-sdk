@@ -1,4 +1,3 @@
-
 <p align="center">
 <img src="./project-logo.png" width="200" />
 </p>
@@ -6,7 +5,6 @@
 <p align="center">
 This Node.js SDK provides seamless integration with an Authula server for both client-side and server-side applications and is framework agnostic.
 </p>
-
 
 <div align="center">
   <a href="https://www.npmjs.com/package/authula" target="_parent">
@@ -165,7 +163,8 @@ const updatedRole = await authulaClient.accessControl.updateRole("role-id", {
 });
 
 // Delete a role
-const deleteRoleResult = await authulaClient.accessControl.deleteRole("role-id");
+const deleteRoleResult =
+  await authulaClient.accessControl.deleteRole("role-id");
 ```
 
 #### Permission Management
@@ -182,40 +181,49 @@ const createdPermission = await authulaClient.accessControl.createPermission({
 const allPermissions = await authulaClient.accessControl.getAllPermissions();
 
 // Get a specific permission
-const permission = await authulaClient.accessControl.getPermissionById("permission-id");
+const permission =
+  await authulaClient.accessControl.getPermissionById("permission-id");
 
 // Update a permission
-const updatedPermission = await authulaClient.accessControl.updatePermission("permission-id", {
-  description: "Updated permission description",
-});
+const updatedPermission = await authulaClient.accessControl.updatePermission(
+  "permission-id",
+  {
+    description: "Updated permission description",
+  },
+);
 
 // Delete a permission
-const deletePermissionResult = await authulaClient.accessControl.deletePermission("permission-id");
+const deletePermissionResult =
+  await authulaClient.accessControl.deletePermission("permission-id");
 ```
 
 #### Role-Permission Management
 
 ```typescript
 // Add a permission to a role
-const addPermissionResult = await authulaClient.accessControl.addRolePermission("role-id", {
-  permissionId: "permission-id",
-});
+const addPermissionResult = await authulaClient.accessControl.addRolePermission(
+  "role-id",
+  {
+    permissionId: "permission-id",
+  },
+);
 
 // Get all permissions for a role
-const rolePermissions = await authulaClient.accessControl.getRolePermissions(
-  "role-id",
-);
+const rolePermissions =
+  await authulaClient.accessControl.getRolePermissions("role-id");
 
 // Replace all permissions for a role
-const replaceRolePermissionsResult = await authulaClient.accessControl.replaceRolePermissions("role-id", {
-  permissionIds: ["permission-id-1", "permission-id-2", "permission-id-3"],
-});
+const replaceRolePermissionsResult =
+  await authulaClient.accessControl.replaceRolePermissions("role-id", {
+    permissionIds: ["permission-id-1", "permission-id-2", "permission-id-3"],
+  });
 
 // Remove a permission from a role
-const removeRolePermissionResult = await authulaClient.accessControl.removeRolePermission(
-  "role-id",
-  "permission-id",
-);
+const removeRolePermissionResult =
+  await authulaClient.accessControl.removeRolePermission(
+    "role-id",
+    "permission-id",
+  );
 ```
 
 #### User Role Management
@@ -225,30 +233,190 @@ const removeRolePermissionResult = await authulaClient.accessControl.removeRoleP
 const userRoles = await authulaClient.accessControl.getUserRoles("user-id");
 
 // Assign a role to a user
-const assignUserRoleResult = await authulaClient.accessControl.assignUserRole("user-id", {
-  roleId: "role-id",
-  expiresAt: new Date("2025-12-31"), // Optional: role expiration date
-});
+const assignUserRoleResult = await authulaClient.accessControl.assignUserRole(
+  "user-id",
+  {
+    roleId: "role-id",
+    expiresAt: new Date("2025-12-31"), // Optional: role expiration date
+  },
+);
 
 // Replace all roles for a user
-const replaceUserRolesResult = await authulaClient.accessControl.replaceUserRoles("user-id", {
-  roleIds: ["role-id-1", "role-id-2"],
-});
+const replaceUserRolesResult =
+  await authulaClient.accessControl.replaceUserRoles("user-id", {
+    roleIds: ["role-id-1", "role-id-2"],
+  });
 
 // Remove a role from a user
-const removeUserRoleResult = await authulaClient.accessControl.removeUserRole("user-id", "role-id");
+const removeUserRoleResult = await authulaClient.accessControl.removeUserRole(
+  "user-id",
+  "role-id",
+);
 ```
 
 #### User Permission Management
 
 ```typescript
 // Get all effective permissions for a user (from all assigned roles)
-const effectivePermissions = await authulaClient.accessControl.getUserPermissions("user-id");
+const effectivePermissions =
+  await authulaClient.accessControl.getUserPermissions("user-id");
 
 // Check whether the user has all requested permissions
-const permissionCheck = await authulaClient.accessControl.checkUserPermissions("user-id", {
-  permissionKeys: ["users.create", "users.update"],
+const permissionCheck = await authulaClient.accessControl.checkUserPermissions(
+  "user-id",
+  {
+    permissionKeys: ["users.create", "users.update"],
+  },
+);
+```
+
+---
+
+### Organizations Plugin
+
+Provides the ability to manage organizations, members, teams and invitations.
+
+```typescript
+import { OrganizationsPlugin } from "authula/plugins";
+
+const authulaClient = createClient({
+  url: "http://localhost:8080/auth",
+  plugins: [new OrganizationsPlugin()],
 });
+
+// Organizations
+
+await authulaClient.organizations.createOrganization({
+  name: "Acme Inc.",
+  slug: "acme-inc",
+  logo: "https://example.com/logo.svg",
+  metadata: { key: "value" },
+});
+
+await authulaClient.organizations.getAllOrganizations();
+
+await authulaClient.organizations.getOrganizationById("organization-id");
+
+await authulaClient.organizations.updateOrganization("organization-id", {
+  name: "Updated name",
+});
+
+await authulaClient.organizations.deleteOrganization("organization-id");
+
+// Invitations
+
+await authulaClient.organizations.createOrganizationInvitation(
+  "organization-id",
+  {
+    email: "user@example.com",
+    role: "member",
+    redirectUrl: "https://example.com/invite",
+  },
+);
+
+await authulaClient.organizations.getAllOrganizationInvitations(
+  "organization-id",
+);
+
+await authulaClient.organizations.getOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+await authulaClient.organizations.revokeOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+await authulaClient.organizations.acceptOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+  {
+    redirectUrl: "https://example.com/accepted",
+  },
+);
+
+await authulaClient.organizations.rejectOrganizationInvitation(
+  "organization-id",
+  "invitation-id",
+);
+
+// Members
+
+await authulaClient.organizations.addOrganizationMember("organization-id", {
+  userId: "user-id",
+  role: "owner",
+});
+
+await authulaClient.organizations.getAllOrganizationMembers("organization-id");
+
+await authulaClient.organizations.getOrganizationMember(
+  "organization-id",
+  "member-id",
+);
+
+await authulaClient.organizations.updateOrganizationMember(
+  "organization-id",
+  "member-id",
+  {
+    role: "owner",
+  },
+);
+
+await authulaClient.organizations.deleteOrganizationMember(
+  "organization-id",
+  "member-id",
+);
+
+// Teams
+
+await authulaClient.organizations.createOrganizationTeam("organization-id", {
+  name: "Platform",
+  slug: "platform",
+  description: "Platform team",
+  metadata: { key: "value" },
+});
+
+await authulaClient.organizations.getAllOrganizationTeams("organization-id");
+
+await authulaClient.organizations.updateOrganizationTeam(
+  "organization-id",
+  "team-id",
+  {
+    name: "Platform",
+    slug: "platform",
+    description: "Updated team description",
+    metadata: { key: "value" },
+  },
+);
+await authulaClient.organizations.deleteOrganizationTeam(
+  "organization-id",
+  "team-id",
+);
+
+// Team Members
+
+await authulaClient.organizations.addOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  {
+    memberId: "member-id",
+  },
+);
+await authulaClient.organizations.getAllOrganizationTeamMembers(
+  "organization-id",
+  "team-id",
+);
+await authulaClient.organizations.getOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  "member-id",
+);
+await authulaClient.organizations.deleteOrganizationTeamMember(
+  "organization-id",
+  "team-id",
+  "member-id",
+);
 ```
 
 ---
@@ -292,7 +460,9 @@ await authulaClient.admin.deleteUser("user-id");
 
 ```typescript
 // Create a new account for a user
-await authulaClient.admin.createAccount("user-id", { /* account data */ });
+await authulaClient.admin.createAccount("user-id", {
+  /* account data */
+});
 
 // Get all accounts for a user
 await authulaClient.admin.getUserAccounts("user-id");
@@ -301,7 +471,9 @@ await authulaClient.admin.getUserAccounts("user-id");
 await authulaClient.admin.getAccountById("account-id");
 
 // Update account information
-await authulaClient.admin.updateAccount("account-id", { /* data */ });
+await authulaClient.admin.updateAccount("account-id", {
+  /* data */
+});
 
 // Delete an account
 await authulaClient.admin.deleteAccount("account-id");
@@ -314,10 +486,14 @@ await authulaClient.admin.deleteAccount("account-id");
 await authulaClient.admin.getUserState("user-id");
 
 // Create or update user state
-await authulaClient.admin.createUserState("user-id", { /* state data */ });
+await authulaClient.admin.createUserState("user-id", {
+  /* state data */
+});
 
 // Update user state
-await authulaClient.admin.updateUserState("user-id", { /* state data */ });
+await authulaClient.admin.updateUserState("user-id", {
+  /* state data */
+});
 
 // Delete user state
 await authulaClient.admin.deleteUserState("user-id");
@@ -342,10 +518,14 @@ await authulaClient.admin.getUserAdminSessions("user-id");
 await authulaClient.admin.getSessionState("session-id");
 
 // Create or update session state
-await authulaClient.admin.createSessionState("session-id", { /* data */ });
+await authulaClient.admin.createSessionState("session-id", {
+  /* data */
+});
 
 // Update session state
-await authulaClient.admin.updateSessionState("session-id", { /* data */ });
+await authulaClient.admin.updateSessionState("session-id", {
+  /* data */
+});
 
 // Delete session state
 await authulaClient.admin.deleteSessionState("session-id");
@@ -367,7 +547,7 @@ await authulaClient.admin.getAllImpersonations();
 await authulaClient.admin.getImpersonationById("impersonation-id");
 
 // Start impersonating a user
-await authulaClient.admin.startImpersonation({ user_id: "user-id", /* data */ });
+await authulaClient.admin.startImpersonation({ user_id: "user-id" /* data */ });
 
 // Stop impersonation
 await authulaClient.admin.stopImpersonation("impersonation-id");

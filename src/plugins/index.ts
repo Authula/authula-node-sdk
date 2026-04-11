@@ -1,7 +1,7 @@
-export * from "./admin/plugin";
-export * from "./admin/types";
 export * from "./access-control/plugin";
 export * from "./access-control/types";
+export * from "./admin/plugin";
+export * from "./admin/types";
 export * from "./bearer/plugin";
 export * from "./bearer/types";
 export * from "./csrf/plugin";
@@ -14,5 +14,7 @@ export * from "./magic-link/plugin";
 export * from "./magic-link/types";
 export * from "./oauth2/plugin";
 export * from "./oauth2/types";
+export * from "./organizations/plugin";
+export * from "./organizations/types";
 export * from "./totp/plugin";
 export * from "./totp/types";

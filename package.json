@@ -1,7 +1,7 @@
 {
   "name": "authula",
   "type": "module",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Official SDK for Authula.",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Authula/authula-node-sdk#readme",
@@ -44,10 +44,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.5.2",
     "bumpp": "^11.0.1",
     "tsdown": "^0.21.7",
     "typescript": "^6.0.2",
-    "vitest": "^4.1.2"
+    "vitest": "^4.1.4"
   }
 }
