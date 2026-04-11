@@ -26,7 +26,7 @@ import type {
   GetOrganizationMembersResponse,
   GetOrganizationTeamMemberResponse,
   GetAllOrganizationTeamMembersResponse,
-  GetOrganizationTeamsResponse,
+  GetAllOrganizationTeamsResponse,
   RejectOrganizationInvitationResponse,
   RevokeOrganizationInvitationResponse,
   UpdateOrganizationMemberRequest,
@@ -35,6 +35,7 @@ import type {
   UpdateOrganizationResponse,
   UpdateOrganizationTeamRequest,
   UpdateOrganizationTeamResponse,
+  GetOrganizationTeamResponse,
 } from "./types";
 
 export class OrganizationsPlugin implements Plugin {
@@ -236,10 +237,22 @@ export class OrganizationsPlugin implements Plugin {
       },
       getAllOrganizationTeams: async (
         organizationId: string,
-      ): Promise<GetOrganizationTeamsResponse> => {
+      ): Promise<GetAllOrganizationTeamsResponse> => {
         return wrappedFetch(client, `/organizations/${organizationId}/teams`, {
           method: "GET",
         });
+      },
+      getOrganizationTeam: async (
+        organizationId: string,
+        teamId: string,
+      ): Promise<GetOrganizationTeamResponse> => {
+        return wrappedFetch(
+          client,
+          `/organizations/${organizationId}/teams/${teamId}`,
+          {
+            method: "GET",
+          },
+        );
       },
       updateOrganizationTeam: async (
         organizationId: string,

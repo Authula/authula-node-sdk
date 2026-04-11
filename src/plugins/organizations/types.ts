@@ -111,7 +111,9 @@ export type CreateOrganizationTeamRequest = {
 
 export type CreateOrganizationTeamResponse = OrganizationTeam;
 
-export type GetOrganizationTeamsResponse = Array<OrganizationTeam>;
+export type GetAllOrganizationTeamsResponse = Array<OrganizationTeam>;
+
+export type GetOrganizationTeamResponse = OrganizationTeam;
 
 export type UpdateOrganizationTeamRequest = {
   name: string;
