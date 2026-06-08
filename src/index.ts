@@ -8,4 +8,4 @@ export * from "./types";
 
 export { AuthulaClient } from "./client";
 
-export { createClient } from "./sdk";
+export { type ClientWithPlugins, createClient } from "./sdk";
