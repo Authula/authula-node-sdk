@@ -1,4 +1,4 @@
-import { parse } from "cookie";
+import { parseCookie } from "cookie";
 
 import type { FetchContext, Plugin } from "@/types";
 import type { CSRFPluginOptions } from "./types";
@@ -17,7 +17,7 @@ export class CSRFPlugin implements Plugin {
           return;
         }
 
-        const cookies = parse(document.cookie);
+        const cookies = parseCookie(document.cookie);
         const value = cookies[this.options.cookieName];
 
         if (!value) return;

@@ -2,3 +2,5 @@ packages:
   - "."
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - es-toolkit@1.49.0
