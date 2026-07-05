@@ -31,6 +31,6 @@ export type ChangePasswordRequest = {
 };
 
 export type RequestEmailChangeRequest = {
-  email: string;
+  newEmail: string;
   callbackUrl?: string;
 };
