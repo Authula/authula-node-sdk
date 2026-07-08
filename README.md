@@ -14,11 +14,34 @@ This Node.js SDK provides seamless integration with an Authula server for both c
 
 ---
 
+## 🚨 Breaking Changes (v0.6.0+)
+
+Starting with v0.6.0, the SDK transitions to an automated, schema-driven architecture powered by Orval. Code generation is now tied 1-to-1 with the Authula backend OpenAPI specification, ensuring absolute parity and enhanced reliability.
+
+This architectural shift introduces several breaking changes to the SDK footprint:
+
+1. Relocation of Core Methods
+
+   What changed: Core utility methods have been consolidated.
+
+   Impact: Any foundational system methods have moved directly into the Core Plugin namespace, as the underlying Authula engine now explicitly groups these operations under the core OpenAPI tag.
+
+2. Standardized Method Signatures via Orval
+
+   What changed: Every Authula plugin now exposes its feature set via auto-generated endpoints.
+
+   Impact: While plugins remain organized under their original top-level objects, individual method names, parameters, and payloads may have changed to match the strict schema specification.
+
+3. Unified Server & Client Support
+
+   The Benefit: Each plugin now natively exports decoupled, standalone methods optimized for server-side execution, alongside fully typed TanStack Query hooks dedicated to client-side web applications.
+
+   Why this matters: Moving forward, this SDK will perfectly mirror upstream backend updates with zero drift, drastically reducing runtime bugs and offering complete type safety across your entire stack.
+
 ## Features
 
 - **Framework Agnostic**: Works with Next.js/React, Vue.js and more
 - **Full TypeScript Support**: Complete TypeScript definitions with strict typing
-- **SSR Safe**: Supports proper cookie handling for SSR apps
 - **CSRF Protection**: Automatic CSRF token handling for mutating requests
 - **Multiple Auth Methods**: Email/password, OAuth2, JWT-based authentication
 - **Plugin Architecture**: Extensible plugin system for custom authentication flows
@@ -60,12 +83,12 @@ For server-side rendering or applications that need to handle cookies properly:
 import { cookies } from "next/headers";
 
 import { createClient } from "authula";
-import { EmailPasswordPlugin, CSRFPlugin } from "authula/plugins";
+import { CorePlugin, EmailPasswordPlugin, CSRFPlugin } from "authula/plugins";
 
 const authulaClient = createClient({
   url: "http://localhost:8080/auth",
-  cookies: cookies, // Provide cookie store for SSR
   plugins: [
+    new CorePlugin(),
     new EmailPasswordPlugin(),
     new CSRFPlugin({
       cookieName: "authula_csrf_token",
@@ -84,7 +107,7 @@ The client provides built-in methods for essential authentication operations:
 Retrieve information about the currently authenticated user:
 
 ```typescript
-const { user, session } = await authulaClient.getMe();
+const { user, session } = await authulaClient.core.getMe();
 
 console.log(user.email);
 console.log(session.id);
@@ -96,7 +119,7 @@ Sign out the current user or all sessions:
 
 ```typescript
 // Sign out current session
-await authulaClient.signOut({});
+await authulaClient.core.signOut({});
 
 // Sign out all sessions
 await authulaClient.signOut({

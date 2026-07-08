@@ -4,3 +4,14 @@ allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
   - es-toolkit@1.49.0
+  - "@biomejs/biome@2.5.3"
+  - "@biomejs/cli-darwin-arm64@2.5.3"
+  - "@biomejs/cli-darwin-x64@2.5.3"
+  - "@biomejs/cli-linux-arm64-musl@2.5.3"
+  - "@biomejs/cli-linux-arm64@2.5.3"
+  - "@biomejs/cli-linux-x64-musl@2.5.3"
+  - "@biomejs/cli-linux-x64@2.5.3"
+  - "@biomejs/cli-win32-arm64@2.5.3"
+  - "@biomejs/cli-win32-x64@2.5.3"
+  - "@types/node@26.1.1"
+  - tsdown@0.22.4

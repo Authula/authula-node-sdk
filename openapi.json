@@ -1,0 +1,5430 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Authula API",
+    "description": "Authula API - An open-source authentication solution that scales with you.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/.well-known/jwks.json": {
+      "get": {
+        "tags": ["JWT Plugin"],
+        "summary": "Get JWKS",
+        "description": "Returns the JSON Web Key Set (JWKS) containing the public keys used to verify JWT signatures.",
+        "operationId": "getJWKS",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WellKnownJWKSResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/permissions": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "List permissions",
+        "description": "Lists all permissions.",
+        "operationId": "listPermissions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Permission"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Access Control"],
+        "summary": "Create permission",
+        "description": "Creates a new permission.",
+        "operationId": "createPermission",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePermissionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/permissions/{permission_id}": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "Get permission by ID",
+        "description": "Retrieves a permission by its ID.",
+        "operationId": "getPermission",
+        "parameters": [
+          {
+            "name": "permission_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Permission"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Access Control"],
+        "summary": "Delete permission",
+        "description": "Deletes a permission.",
+        "operationId": "deletePermission",
+        "parameters": [
+          {
+            "name": "permission_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Access Control"],
+        "summary": "Update permission",
+        "description": "Updates a permission's description.",
+        "operationId": "updatePermission",
+        "parameters": [
+          {
+            "name": "permission_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePermissionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/roles": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "List roles",
+        "description": "Lists all roles.",
+        "operationId": "listRoles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Access Control"],
+        "summary": "Create role",
+        "description": "Creates a new role.",
+        "operationId": "createRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/roles/by-name/{role_name}": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "Get role by name",
+        "description": "Retrieves a role by its name.",
+        "operationId": "getRoleByName",
+        "parameters": [
+          {
+            "name": "role_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/roles/{role_id}": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "Get role by ID",
+        "description": "Retrieves a role by its ID, including its permissions.",
+        "operationId": "getRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Access Control"],
+        "summary": "Delete role",
+        "description": "Deletes a role.",
+        "operationId": "deleteRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Access Control"],
+        "summary": "Update role",
+        "description": "Updates a role's attributes.",
+        "operationId": "updateRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/roles/{role_id}/permissions": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "List role permissions",
+        "description": "Lists all permissions assigned to a role.",
+        "operationId": "listRolePermissions",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UserPermissionInfo"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Access Control"],
+        "summary": "Replace role permissions",
+        "description": "Replaces all permissions assigned to a role with a new set.",
+        "operationId": "replaceRolePermissions",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceRolePermissionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplaceRolePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Access Control"],
+        "summary": "Assign permission to role",
+        "description": "Assigns a permission to a role.",
+        "operationId": "addRolePermission",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRolePermissionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddRolePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/roles/{role_id}/permissions/{permission_id}": {
+      "delete": {
+        "tags": ["Access Control"],
+        "summary": "Remove role permission",
+        "description": "Removes a permission from a role.",
+        "operationId": "removeRolePermission",
+        "parameters": [
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "permission_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveRolePermissionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/users/{user_id}/permissions": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "Get user permissions",
+        "description": "Retrieves all permissions granted to a user through their roles.",
+        "operationId": "getUserPermissions",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserPermissionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/users/{user_id}/permissions/check": {
+      "post": {
+        "tags": ["Access Control"],
+        "summary": "Check user permissions",
+        "description": "Checks whether a user has all the specified permissions.",
+        "operationId": "checkUserPermissions",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckUserPermissionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckUserPermissionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/users/{user_id}/roles": {
+      "get": {
+        "tags": ["Access Control"],
+        "summary": "List user roles",
+        "description": "Lists all roles assigned to a user.",
+        "operationId": "listUserRoles",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UserRoleInfo"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Access Control"],
+        "summary": "Replace user roles",
+        "description": "Replaces all roles assigned to a user with a new set.",
+        "operationId": "replaceUserRoles",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceUserRolesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplaceUserRolesResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Access Control"],
+        "summary": "Assign role to user",
+        "description": "Assigns a role to a user.",
+        "operationId": "assignUserRole",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignUserRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignUserRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-control/users/{user_id}/roles/{role_id}": {
+      "delete": {
+        "tags": ["Access Control"],
+        "summary": "Remove user role",
+        "description": "Removes a role from a user.",
+        "operationId": "removeUserRole",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveUserRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/accounts/{id}": {
+      "get": {
+        "tags": ["Admin Accounts"],
+        "summary": "Get account by ID",
+        "description": "Retrieves an account by its ID.",
+        "operationId": "getAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountByIDResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin Accounts"],
+        "summary": "Delete account",
+        "description": "Deletes an account.",
+        "operationId": "deleteAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAccountResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin Accounts"],
+        "summary": "Update account",
+        "description": "Updates an account's attributes.",
+        "operationId": "updateAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAccountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/impersonations": {
+      "get": {
+        "tags": ["Admin Impersonation"],
+        "summary": "List impersonations",
+        "description": "Lists all impersonations.",
+        "operationId": "listImpersonations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Impersonation"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin Impersonation"],
+        "summary": "Start impersonation",
+        "description": "Starts an impersonation session as a target user.",
+        "operationId": "startImpersonation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartImpersonationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartImpersonationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/impersonations/{impersonation_id}": {
+      "get": {
+        "tags": ["Admin Impersonation"],
+        "summary": "Get impersonation by ID",
+        "description": "Retrieves an impersonation by its ID.",
+        "operationId": "getImpersonation",
+        "parameters": [
+          {
+            "name": "impersonation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetImpersonationByIDResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/impersonations/{impersonation_id}/stop": {
+      "post": {
+        "tags": ["Admin Impersonation"],
+        "summary": "Stop impersonation",
+        "description": "Stops an impersonation session and restores the original session.",
+        "operationId": "stopImpersonation",
+        "parameters": [
+          {
+            "name": "impersonation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopImpersonationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/sessions/states/revoked": {
+      "get": {
+        "tags": ["Admin Session State"],
+        "summary": "List revoked session states",
+        "description": "Lists all revoked session states.",
+        "operationId": "listRevokedSessionStates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AdminSessionState"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/sessions/{session_id}/revoke": {
+      "post": {
+        "tags": ["Admin Session State"],
+        "summary": "Revoke session",
+        "description": "Revokes a session.",
+        "operationId": "revokeSession",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeSessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokeSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/sessions/{session_id}/state": {
+      "get": {
+        "tags": ["Admin Session State"],
+        "summary": "Get session state",
+        "description": "Retrieves the state of a session.",
+        "operationId": "getSessionState",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSessionStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin Session State"],
+        "summary": "Create session state",
+        "description": "Creates the state for a session.",
+        "operationId": "createSessionState",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpsertSessionStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin Session State"],
+        "summary": "Delete session state",
+        "description": "Deletes the state of a session.",
+        "operationId": "deleteSessionState",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSessionStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin Session State"],
+        "summary": "Update session state",
+        "description": "Updates the state of a session.",
+        "operationId": "updateSessionState",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertSessionStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpsertSessionStateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": ["Admin Users"],
+        "summary": "List users",
+        "description": "Lists users with cursor-based pagination.",
+        "operationId": "listUsers",
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": ["null", "string"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": ["null", "integer"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersPage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin Users"],
+        "summary": "Create user",
+        "description": "Creates a new user with the specified attributes.",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/states/banned": {
+      "get": {
+        "tags": ["Admin User State"],
+        "summary": "List banned user states",
+        "description": "Lists all banned user states.",
+        "operationId": "listBannedUserStates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AdminUserState"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}": {
+      "get": {
+        "tags": ["Admin Users"],
+        "summary": "Get user by ID",
+        "description": "Retrieves a user by their ID.",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserByIDResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin Users"],
+        "summary": "Delete user",
+        "description": "Deletes a user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin Users"],
+        "summary": "Update user",
+        "description": "Updates a user's attributes.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}/accounts": {
+      "get": {
+        "tags": ["Admin Accounts"],
+        "summary": "List user accounts",
+        "description": "Lists all accounts for a user.",
+        "operationId": "listUserAccounts",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAccountsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin Accounts"],
+        "summary": "Create account",
+        "description": "Creates a new account for a user.",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAccountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}/ban": {
+      "post": {
+        "tags": ["Admin User State"],
+        "summary": "Ban user",
+        "description": "Bans a user.",
+        "operationId": "banUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BanUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BanUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}/sessions": {
+      "get": {
+        "tags": ["Admin User State"],
+        "summary": "List user sessions",
+        "description": "Lists all sessions for a user.",
+        "operationId": "listUserSessions",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AdminUserSession"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}/state": {
+      "get": {
+        "tags": ["Admin User State"],
+        "summary": "Get user state",
+        "description": "Retrieves the state of a user.",
+        "operationId": "getUserState",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin User State"],
+        "summary": "Create user state",
+        "description": "Creates the state for a user.",
+        "operationId": "createUserState",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpsertUserStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin User State"],
+        "summary": "Delete user state",
+        "description": "Deletes the state of a user.",
+        "operationId": "deleteUserState",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin User State"],
+        "summary": "Update user state",
+        "description": "Updates the state of a user.",
+        "operationId": "updateUserState",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertUserStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpsertUserStateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{user_id}/unban": {
+      "post": {
+        "tags": ["Admin User State"],
+        "summary": "Unban user",
+        "description": "Unbans a user.",
+        "operationId": "unbanUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnbanUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys": {
+      "get": {
+        "tags": ["API Keys"],
+        "summary": "List API keys",
+        "description": "Lists API keys with pagination, optionally filtered by owner.",
+        "operationId": "listApiKeys",
+        "parameters": [
+          {
+            "name": "owner_type",
+            "in": "query",
+            "schema": {
+              "type": ["null", "string"]
+            }
+          },
+          {
+            "name": "owner_id",
+            "in": "query",
+            "schema": {
+              "type": ["null", "string"]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": ["null", "integer"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": ["null", "integer"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllApiKeysResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Create API key",
+        "description": "Creates a new API key for the specified owner.",
+        "operationId": "createApiKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys/verify": {
+      "post": {
+        "tags": ["API Keys"],
+        "summary": "Verify API key",
+        "description": "Verifies an API key by its raw value and returns the associated key details.",
+        "operationId": "verifyApiKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyApiKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys/{id}": {
+      "get": {
+        "tags": ["API Keys"],
+        "summary": "Get API key by ID",
+        "description": "Retrieves an API key by its ID.",
+        "operationId": "getApiKey",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetApiKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["API Keys"],
+        "summary": "Delete API key",
+        "description": "Deletes an API key.",
+        "operationId": "deleteApiKey",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteApiKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["API Keys"],
+        "summary": "Update API key",
+        "description": "Updates an API key's attributes.",
+        "operationId": "updateApiKey",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateApiKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/change-password": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Change password",
+        "description": "Changes the user's password using a reset token",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/request-email-change": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Request email change",
+        "description": "Requests to change the authenticated user's email address",
+        "operationId": "requestEmailChange",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEmailChangeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeEmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/request-password-reset": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Request password reset",
+        "description": "Requests a password reset link to be sent to the user's email",
+        "operationId": "requestPasswordReset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/send-email-verification": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Send email verification",
+        "description": "Sends a verification email to the authenticated user",
+        "operationId": "sendEmailVerification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailVerificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/sign-in": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Sign in",
+        "description": "Authenticates a user with email and password",
+        "operationId": "signIn",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/sign-up": {
+      "post": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Register new user",
+        "description": "Registers a new user with email and password",
+        "operationId": "signUp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignUpResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-password/verify-email": {
+      "get": {
+        "tags": ["Email Password Plugin"],
+        "summary": "Verify email",
+        "description": "Verifies an email address or processes a password reset token using a verification token",
+        "operationId": "verifyEmail",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/magic-link/exchange": {
+      "post": {
+        "tags": ["Magic Link Plugin"],
+        "summary": "Exchange magic link token for session",
+        "description": "Exchanges a verified magic link token for an authenticated user session.",
+        "operationId": "exchangeMagicLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MagicLinkExchangeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MagicLinkExchangeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/magic-link/sign-in": {
+      "post": {
+        "tags": ["Magic Link Plugin"],
+        "summary": "Sign in with magic link",
+        "description": "Sends a magic link to the given email address if an account exists. Optionally creates a new account if sign-up is enabled.",
+        "operationId": "signInWithMagicLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MagicLinkSignInRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MagicLinkSignInResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/magic-link/verify": {
+      "get": {
+        "tags": ["Magic Link Plugin"],
+        "summary": "Verify magic link token",
+        "description": "Verifies a magic link token. If a callback_url is provided and trusted, redirects the user with an exchange token appended. Otherwise returns the exchange token in the JSON response.",
+        "operationId": "verifyMagicLink",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callback_url",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MagicLinkVerifyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": ["Core"],
+        "summary": "Get current user",
+        "description": "Retrieves the authenticated user's profile and current session.",
+        "operationId": "getMe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth2/authorize/{provider}": {
+      "get": {
+        "tags": ["OAuth2 Plugin"],
+        "summary": "Authorize with OAuth2 provider",
+        "description": "Initiates the OAuth2 authorization flow with the specified provider. Returns the provider's authorization URL to redirect the user to.",
+        "operationId": "oauthAuthorize",
+        "parameters": [
+          {
+            "name": "redirect_to",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth2/callback/{provider}": {
+      "get": {
+        "tags": ["OAuth2 Plugin"],
+        "summary": "OAuth2 callback",
+        "description": "Handles the OAuth2 callback from the provider. Exchanges the authorization code for tokens, creates or links a user account, and returns the authenticated user and session.",
+        "operationId": "oauthCallback",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallbackResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations": {
+      "get": {
+        "tags": ["Organizations"],
+        "summary": "List organizations",
+        "description": "Lists all organizations owned by the authenticated user.",
+        "operationId": "listOrganizations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Organization"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Organizations"],
+        "summary": "Create organization",
+        "description": "Creates a new organization with the authenticated user as the owner.",
+        "operationId": "createOrganization",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}": {
+      "get": {
+        "tags": ["Organizations"],
+        "summary": "Get organization",
+        "description": "Retrieves an organization by its ID.",
+        "operationId": "getOrganization",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Organizations"],
+        "summary": "Delete organization",
+        "description": "Deletes an organization.",
+        "operationId": "deleteOrganization",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteOrganizationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Organizations"],
+        "summary": "Update organization",
+        "description": "Updates an existing organization.",
+        "operationId": "updateOrganization",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invitations": {
+      "get": {
+        "tags": ["Invitations"],
+        "summary": "List invitations",
+        "description": "Lists all invitations for an organization.",
+        "operationId": "listOrganizationInvitations",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationInvitation"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Invitations"],
+        "summary": "Create invitation",
+        "description": "Creates an invitation for a user to join an organization.",
+        "operationId": "createOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationInvitationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invitations/{invitation_id}": {
+      "get": {
+        "tags": ["Invitations"],
+        "summary": "Get invitation",
+        "description": "Retrieves a single invitation by its ID.",
+        "operationId": "getOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationInvitation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Invitations"],
+        "summary": "Revoke invitation",
+        "description": "Revokes a pending invitation.",
+        "operationId": "revokeOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invitations/{invitation_id}/accept": {
+      "post": {
+        "tags": ["Invitations"],
+        "summary": "Accept invitation",
+        "description": "Accepts an invitation to join an organization. Optionally redirects if a redirect_url is provided.",
+        "operationId": "acceptOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "redirect_url",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptOrganizationInvitationQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invitations/{invitation_id}/reject": {
+      "post": {
+        "tags": ["Invitations"],
+        "summary": "Reject invitation",
+        "description": "Rejects an invitation to join an organization.",
+        "operationId": "rejectOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationInvitation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/members": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "List members",
+        "description": "Lists all members of an organization with pagination.",
+        "operationId": "listOrganizationMembers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationMember"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Members"],
+        "summary": "Add member",
+        "description": "Adds a user as a member of an organization with the specified role.",
+        "operationId": "addOrganizationMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOrganizationMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/members/{member_id}": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Get member",
+        "description": "Retrieves a single organization member by ID.",
+        "operationId": "getOrganizationMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMember"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Members"],
+        "summary": "Delete member",
+        "description": "Removes a member from an organization.",
+        "operationId": "deleteOrganizationMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteOrganizationMemberResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Members"],
+        "summary": "Update member",
+        "description": "Updates the role of an organization member.",
+        "operationId": "updateOrganizationMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/teams": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "List teams",
+        "description": "Lists all teams within an organization.",
+        "operationId": "listOrganizationTeams",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationTeam"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Create team",
+        "description": "Creates a new team within an organization.",
+        "operationId": "createOrganizationTeam",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationTeamRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationTeam"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/teams/{team_id}": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get team",
+        "description": "Retrieves a single team by its ID.",
+        "operationId": "getOrganizationTeam",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationTeam"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams"],
+        "summary": "Delete team",
+        "description": "Deletes a team.",
+        "operationId": "deleteOrganizationTeam",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteOrganizationTeamResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Teams"],
+        "summary": "Update team",
+        "description": "Updates an existing team.",
+        "operationId": "updateOrganizationTeam",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationTeamRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationTeam"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/teams/{team_id}/members": {
+      "get": {
+        "tags": ["Team Members"],
+        "summary": "List team members",
+        "description": "Lists all members of a team with pagination.",
+        "operationId": "listOrganizationTeamMembers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationTeamMember"
+                  },
+                  "type": ["null", "array"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Team Members"],
+        "summary": "Add team member",
+        "description": "Adds a member to a team.",
+        "operationId": "addOrganizationTeamMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOrganizationTeamMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationTeamMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/teams/{team_id}/members/{member_id}": {
+      "get": {
+        "tags": ["Team Members"],
+        "summary": "Get team member",
+        "description": "Retrieves a single team member by ID.",
+        "operationId": "getOrganizationTeamMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationTeamMember"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Team Members"],
+        "summary": "Delete team member",
+        "description": "Removes a member from a team.",
+        "operationId": "deleteOrganizationTeamMember",
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteOrganizationTeamMemberResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-out": {
+      "post": {
+        "tags": ["Core"],
+        "summary": "Sign out",
+        "description": "Signs out the authenticated user. Optionally sign out a specific session or all sessions.",
+        "operationId": "signOut",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignOutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignOutResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/refresh": {
+      "post": {
+        "tags": ["JWT Plugin"],
+        "summary": "Refresh JWT token",
+        "description": "Exchanges a valid refresh token for a new access token and refresh token pair.",
+        "operationId": "refreshToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/disable": {
+      "post": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Disable TOTP",
+        "description": "Disables TOTP two-factor authentication for the authenticated user.",
+        "operationId": "disableTotp",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisableResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/enable": {
+      "post": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Enable TOTP",
+        "description": "Enables TOTP two-factor authentication for the authenticated user. Returns the TOTP URI and backup codes.",
+        "operationId": "enableTotp",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnableResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/generate-backup-codes": {
+      "post": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Generate backup codes",
+        "description": "Generates a new set of backup codes for the authenticated user. Previous backup codes are invalidated.",
+        "operationId": "generateTotpBackupCodes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateBackupCodesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/get-uri": {
+      "get": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Get TOTP URI",
+        "description": "Returns the current TOTP URI for the authenticated user's authenticator app configuration.",
+        "operationId": "getTotpURI",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTOTPURIResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/verify": {
+      "post": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Verify TOTP code",
+        "description": "Verifies a TOTP code from the authenticator app and completes authentication. Requires a pending TOTP cookie set during sign-in.",
+        "operationId": "verifyTotp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyTOTPRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyTOTPResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/totp/verify-backup-code": {
+      "post": {
+        "tags": ["TOTP Plugin"],
+        "summary": "Verify backup code",
+        "description": "Verifies a backup code as an alternative to TOTP verification. Completes authentication if the code is valid.",
+        "operationId": "verifyTotpBackupCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyBackupCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyBackupCodeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcceptOrganizationInvitationQuery": {
+        "properties": {
+          "redirect_url": {
+            "type": ["string", "null"]
+          }
+        },
+        "type": "object"
+      },
+      "Account": {
+        "properties": {
+          "access_token": {
+            "type": ["null", "string"]
+          },
+          "access_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "account_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "id_token": {
+            "type": ["null", "string"]
+          },
+          "password": {
+            "type": ["null", "string"]
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": ["null", "string"]
+          },
+          "refresh_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "scope": {
+            "type": ["null", "string"]
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "user_id",
+          "account_id",
+          "provider_id",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "AddOrganizationMemberRequest": {
+        "properties": {
+          "role": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": ["user_id", "role"],
+        "type": "object"
+      },
+      "AddOrganizationTeamMemberRequest": {
+        "properties": {
+          "member_id": {
+            "type": "string"
+          }
+        },
+        "required": ["member_id"],
+        "type": "object"
+      },
+      "AddRolePermissionRequest": {
+        "properties": {
+          "permission_id": {
+            "type": "string"
+          }
+        },
+        "required": ["permission_id"],
+        "type": "object"
+      },
+      "AddRolePermissionResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "AdminSessionState": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "impersonation_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "impersonation_reason": {
+            "type": ["null", "string"]
+          },
+          "impersonator_session_id": {
+            "type": ["null", "string"]
+          },
+          "impersonator_user_id": {
+            "type": ["null", "string"]
+          },
+          "revoked_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "revoked_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "revoked_reason": {
+            "type": ["null", "string"]
+          },
+          "session_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": ["session_id", "created_at", "updated_at"],
+        "type": "object"
+      },
+      "AdminUserSession": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AdminSessionState"
+              }
+            ]
+          }
+        },
+        "required": ["session"],
+        "type": "object"
+      },
+      "AdminUserState": {
+        "properties": {
+          "banned": {
+            "type": "boolean"
+          },
+          "banned_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "banned_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "banned_reason": {
+            "type": ["null", "string"]
+          },
+          "banned_until": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": ["user_id", "banned", "created_at", "updated_at"],
+        "type": "object"
+      },
+      "ApiKey": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "id": {
+            "type": "string"
+          },
+          "key_hash": {
+            "type": "string"
+          },
+          "last": {
+            "type": "string"
+          },
+          "last_requested_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "owner_type": {
+            "type": "string"
+          },
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": ["array", "null"]
+          },
+          "prefix": {
+            "type": ["null", "string"]
+          },
+          "rate_limit_enabled": {
+            "type": "boolean"
+          },
+          "start": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "key_hash",
+          "name",
+          "owner_type",
+          "owner_id",
+          "start",
+          "last",
+          "enabled",
+          "rate_limit_enabled",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "AssignUserRoleRequest": {
+        "properties": {
+          "expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "role_id": {
+            "type": "string"
+          }
+        },
+        "required": ["role_id"],
+        "type": "object"
+      },
+      "AssignUserRoleResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "AuthorizeResponse": {
+        "properties": {
+          "auth_url": {
+            "type": "string"
+          }
+        },
+        "required": ["auth_url"],
+        "type": "object"
+      },
+      "BanUserRequest": {
+        "properties": {
+          "banned_until": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "reason": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "BanUserResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminUserState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "CallbackResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "ChangeEmailResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "ChangePasswordRequest": {
+        "properties": {
+          "password": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": ["token", "password"],
+        "type": "object"
+      },
+      "ChangePasswordResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "CheckUserPermissionsRequest": {
+        "properties": {
+          "permission_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["permission_keys"],
+        "type": "object"
+      },
+      "CheckUserPermissionsResponse": {
+        "properties": {
+          "has_permissions": {
+            "type": "boolean"
+          }
+        },
+        "required": ["has_permissions"],
+        "type": "object"
+      },
+      "CreateAccountRequest": {
+        "properties": {
+          "access_token": {
+            "type": ["null", "string"]
+          },
+          "access_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "account_id": {
+            "type": "string"
+          },
+          "id_token": {
+            "type": ["null", "string"]
+          },
+          "password": {
+            "type": ["null", "string"]
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": ["null", "string"]
+          },
+          "refresh_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "scope": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["provider_id", "account_id"],
+        "type": "object"
+      },
+      "CreateAccountResponse": {
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "required": ["account"],
+        "type": "object"
+      },
+      "CreateApiKeyRequest": {
+        "properties": {
+          "enabled": {
+            "type": ["null", "boolean"]
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "owner_type": {
+            "type": "string"
+          },
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": ["array", "null"]
+          },
+          "prefix": {
+            "type": ["null", "string"]
+          },
+          "rate_limit_enabled": {
+            "type": ["null", "boolean"]
+          },
+          "rate_limit_max_requests": {
+            "type": ["null", "integer"]
+          },
+          "rate_limit_time_window": {
+            "type": ["null", "integer"]
+          }
+        },
+        "required": ["name", "owner_type", "owner_id"],
+        "type": "object"
+      },
+      "CreateApiKeyResponse": {
+        "properties": {
+          "api_key": {
+            "$ref": "#/components/schemas/ApiKey"
+          },
+          "raw_api_key": {
+            "type": "string"
+          }
+        },
+        "required": ["raw_api_key", "api_key"],
+        "type": "object"
+      },
+      "CreateOrganizationInvitationRequest": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "redirect_url": {
+            "type": ["string", "null"]
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "role"],
+        "type": "object"
+      },
+      "CreateOrganizationRequest": {
+        "properties": {
+          "logo": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "slug": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["name", "role"],
+        "type": "object"
+      },
+      "CreateOrganizationTeamRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["name"],
+        "type": "object"
+      },
+      "CreatePermissionRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          },
+          "is_system": {
+            "type": "boolean"
+          },
+          "key": {
+            "type": "string"
+          }
+        },
+        "required": ["key"],
+        "type": "object"
+      },
+      "CreatePermissionResponse": {
+        "properties": {
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "required": ["permission"],
+        "type": "object"
+      },
+      "CreateRoleRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          },
+          "is_system": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "weight": {
+            "type": ["null", "integer"]
+          }
+        },
+        "required": ["name", "is_system"],
+        "type": "object"
+      },
+      "CreateRoleResponse": {
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          }
+        },
+        "required": ["role"],
+        "type": "object"
+      },
+      "CreateSessionStateRequest": {
+        "properties": {
+          "impersonation_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "impersonation_reason": {
+            "type": ["null", "string"]
+          },
+          "impersonator_user_id": {
+            "type": ["null", "string"]
+          },
+          "revoke": {
+            "type": "boolean"
+          },
+          "revoked_reason": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["revoke"],
+        "type": "object"
+      },
+      "CreateUserRequest": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "email_verified": {
+            "type": ["null", "boolean"]
+          },
+          "image": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email"],
+        "type": "object"
+      },
+      "CreateUserResponse": {
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user"],
+        "type": "object"
+      },
+      "CreateUserStateRequest": {
+        "properties": {
+          "banned": {
+            "type": "boolean"
+          },
+          "banned_reason": {
+            "type": ["null", "string"]
+          },
+          "banned_until": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["banned"],
+        "type": "object"
+      },
+      "DeleteAccountResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteApiKeyResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteOrganizationMemberResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteOrganizationResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteOrganizationTeamMemberResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteOrganizationTeamResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeletePermissionResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteRoleResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteSessionStateResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteUserResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DeleteUserStateResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "DisableResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "EnableResponse": {
+        "properties": {
+          "backup_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "totp_uri": {
+            "type": "string"
+          }
+        },
+        "required": ["totp_uri", "backup_codes"],
+        "type": "object"
+      },
+      "GenerateBackupCodesResponse": {
+        "properties": {
+          "backup_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["backup_codes"],
+        "type": "object"
+      },
+      "GetAccountByIDResponse": {
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "required": ["account"],
+        "type": "object"
+      },
+      "GetAllApiKeysResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApiKey"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "required": ["items", "total", "page", "limit"],
+        "type": "object"
+      },
+      "GetApiKeyResponse": {
+        "properties": {
+          "api_key": {
+            "$ref": "#/components/schemas/ApiKey"
+          }
+        },
+        "required": ["api_key"],
+        "type": "object"
+      },
+      "GetImpersonationByIDResponse": {
+        "properties": {
+          "impersonation": {
+            "$ref": "#/components/schemas/Impersonation"
+          }
+        },
+        "required": ["impersonation"],
+        "type": "object"
+      },
+      "GetMeResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "GetSessionStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminSessionState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "GetTOTPURIResponse": {
+        "properties": {
+          "totp_uri": {
+            "type": "string"
+          }
+        },
+        "required": ["totp_uri"],
+        "type": "object"
+      },
+      "GetUserByIDResponse": {
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user"],
+        "type": "object"
+      },
+      "GetUserPermissionsResponse": {
+        "properties": {
+          "permissions": {
+            "items": {
+              "$ref": "#/components/schemas/UserPermissionInfo"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["permissions"],
+        "type": "object"
+      },
+      "GetUserStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminUserState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "Impersonation": {
+        "properties": {
+          "actor_session_id": {
+            "type": ["null", "string"]
+          },
+          "actor_user_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ended_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "ended_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "impersonation_session_id": {
+            "type": ["null", "string"]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "started_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "target_user_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "actor_user_id",
+          "target_user_id",
+          "reason",
+          "started_at",
+          "expires_at",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "JWK": {
+        "properties": {
+          "alg": {
+            "type": "string"
+          },
+          "crv": {
+            "type": "string"
+          },
+          "e": {
+            "type": "string"
+          },
+          "kid": {
+            "type": "string"
+          },
+          "kty": {
+            "type": "string"
+          },
+          "n": {
+            "type": "string"
+          },
+          "use": {
+            "type": "string"
+          },
+          "x": {
+            "type": "string"
+          }
+        },
+        "required": ["kty"],
+        "type": "object"
+      },
+      "MagicLinkExchangeRequest": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": ["token"],
+        "type": "object"
+      },
+      "MagicLinkExchangeResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "MagicLinkSignInRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["email"],
+        "type": "object"
+      },
+      "MagicLinkSignInResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "MagicLinkVerifyResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "Organization": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "logo": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "owner_id",
+          "name",
+          "slug",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "OrganizationInvitation": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "inviter_id": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrganizationInvitationStatus"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "inviter_id",
+          "organization_id",
+          "role",
+          "status",
+          "expires_at",
+          "created_at"
+        ],
+        "type": "object"
+      },
+      "OrganizationInvitationStatus": {
+        "description": "The type of the invitation status",
+        "enum": ["pending", "accepted", "rejected", "revoked", "expired"],
+        "type": "string"
+      },
+      "OrganizationMember": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "user_id",
+          "role",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "OrganizationTeam": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": ["null", "string"]
+          },
+          "id": {
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "name",
+          "slug",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "OrganizationTeamMember": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "member_id": {
+            "type": "string"
+          },
+          "team_id": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "team_id", "member_id", "created_at"],
+        "type": "object"
+      },
+      "Permission": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": ["null", "string"]
+          },
+          "id": {
+            "type": "string"
+          },
+          "is_system": {
+            "type": "boolean"
+          },
+          "key": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": ["id", "key", "is_system", "created_at", "updated_at"],
+        "type": "object"
+      },
+      "PermissionGrantSource": {
+        "properties": {
+          "granted_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "granted_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "role_id": {
+            "type": "string"
+          },
+          "role_name": {
+            "type": "string"
+          }
+        },
+        "required": ["role_id", "role_name"],
+        "type": "object"
+      },
+      "RefreshTokenRequest": {
+        "properties": {
+          "refresh_token": {
+            "type": "string"
+          }
+        },
+        "required": ["refresh_token"],
+        "type": "object"
+      },
+      "RefreshTokenResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "refresh_token": {
+            "type": "string"
+          }
+        },
+        "required": ["access_token", "refresh_token"],
+        "type": "object"
+      },
+      "RemoveRolePermissionResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "RemoveUserRoleResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "ReplaceRolePermissionResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "ReplaceRolePermissionsRequest": {
+        "properties": {
+          "permission_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["permission_ids"],
+        "type": "object"
+      },
+      "ReplaceUserRolesRequest": {
+        "properties": {
+          "role_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["role_ids"],
+        "type": "object"
+      },
+      "ReplaceUserRolesResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "RequestEmailChangeRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          },
+          "new_email": {
+            "type": "string"
+          }
+        },
+        "required": ["new_email"],
+        "type": "object"
+      },
+      "RequestPasswordResetRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": ["email"],
+        "type": "object"
+      },
+      "RevokeSessionRequest": {
+        "properties": {
+          "reason": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "RevokeSessionResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminSessionState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "Role": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": ["null", "string"]
+          },
+          "id": {
+            "type": "string"
+          },
+          "is_system": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "weight": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "weight",
+          "is_system",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "RoleDetails": {
+        "properties": {
+          "permissions": {
+            "items": {
+              "$ref": "#/components/schemas/UserPermissionInfo"
+            },
+            "type": "array"
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          }
+        },
+        "required": ["role", "permissions"],
+        "type": "object"
+      },
+      "SendEmailVerificationRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "Session": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "ip_address": {
+            "type": ["null", "string"]
+          },
+          "token": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user_agent": {
+            "type": ["null", "string"]
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "user_id",
+          "token",
+          "expires_at",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "SignInRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["email", "password"],
+        "type": "object"
+      },
+      "SignInResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "SignOutRequest": {
+        "properties": {
+          "session_id": {
+            "type": ["null", "string"]
+          },
+          "sign_out_all": {
+            "type": ["null", "boolean"]
+          }
+        },
+        "type": "object"
+      },
+      "SignOutResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "SignUpRequest": {
+        "properties": {
+          "callback_url": {
+            "type": ["null", "string"]
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "password"],
+        "type": "object"
+      },
+      "SignUpResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "StartImpersonationRequest": {
+        "properties": {
+          "expires_in_seconds": {
+            "type": ["null", "integer"]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "target_user_id": {
+            "type": "string"
+          }
+        },
+        "required": ["target_user_id", "reason"],
+        "type": "object"
+      },
+      "StartImpersonationResponse": {
+        "properties": {
+          "impersonation": {
+            "$ref": "#/components/schemas/Impersonation"
+          }
+        },
+        "required": ["impersonation"],
+        "type": "object"
+      },
+      "StopImpersonationResponse": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"],
+        "type": "object"
+      },
+      "UnbanUserResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminUserState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "UpdateAccountRequest": {
+        "properties": {
+          "access_token": {
+            "type": ["null", "string"]
+          },
+          "access_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "account_id": {
+            "type": ["null", "string"]
+          },
+          "id_token": {
+            "type": ["null", "string"]
+          },
+          "password": {
+            "type": ["null", "string"]
+          },
+          "provider_id": {
+            "type": ["null", "string"]
+          },
+          "refresh_token": {
+            "type": ["null", "string"]
+          },
+          "refresh_token_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "scope": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdateAccountResponse": {
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "required": ["account"],
+        "type": "object"
+      },
+      "UpdateApiKeyRequest": {
+        "properties": {
+          "enabled": {
+            "type": ["null", "boolean"]
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": ["null", "string"]
+          },
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": ["array", "null"]
+          },
+          "rate_limit_enabled": {
+            "type": ["null", "boolean"]
+          },
+          "rate_limit_max_requests": {
+            "type": ["null", "integer"]
+          },
+          "rate_limit_time_window": {
+            "type": ["null", "integer"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdateApiKeyResponse": {
+        "properties": {
+          "api_key": {
+            "$ref": "#/components/schemas/ApiKey"
+          }
+        },
+        "required": ["api_key"],
+        "type": "object"
+      },
+      "UpdateOrganizationMemberRequest": {
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": ["role"],
+        "type": "object"
+      },
+      "UpdateOrganizationRequest": {
+        "properties": {
+          "logo": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": ["null", "string"]
+          },
+          "slug": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdateOrganizationTeamRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["name"],
+        "type": "object"
+      },
+      "UpdatePermissionRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdatePermissionResponse": {
+        "properties": {
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "required": ["permission"],
+        "type": "object"
+      },
+      "UpdateRoleRequest": {
+        "properties": {
+          "description": {
+            "type": ["null", "string"]
+          },
+          "name": {
+            "type": ["null", "string"]
+          },
+          "weight": {
+            "type": ["null", "integer"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdateRoleResponse": {
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          }
+        },
+        "required": ["role"],
+        "type": "object"
+      },
+      "UpdateUserRequest": {
+        "properties": {
+          "email": {
+            "type": ["null", "string"]
+          },
+          "email_verified": {
+            "type": ["null", "boolean"]
+          },
+          "image": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": ["null", "string"]
+          }
+        },
+        "type": "object"
+      },
+      "UpdateUserResponse": {
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user"],
+        "type": "object"
+      },
+      "UpsertSessionStateRequest": {
+        "properties": {
+          "impersonation_expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "impersonation_reason": {
+            "type": ["null", "string"]
+          },
+          "impersonator_user_id": {
+            "type": ["null", "string"]
+          },
+          "revoke": {
+            "type": "boolean"
+          },
+          "revoked_reason": {
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["revoke"],
+        "type": "object"
+      },
+      "UpsertSessionStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminSessionState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "UpsertUserStateRequest": {
+        "properties": {
+          "banned": {
+            "type": "boolean"
+          },
+          "banned_reason": {
+            "type": ["null", "string"]
+          },
+          "banned_until": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          }
+        },
+        "required": ["banned"],
+        "type": "object"
+      },
+      "UpsertUserStateResponse": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/AdminUserState"
+          }
+        },
+        "required": ["state"],
+        "type": "object"
+      },
+      "User": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "email_verified": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "image": {
+            "type": ["null", "string"]
+          },
+          "metadata": {
+            "additionalProperties": {},
+            "type": ["object", "null"]
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "email_verified",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object"
+      },
+      "UserAccountsResponse": {
+        "properties": {
+          "accounts": {
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["accounts"],
+        "type": "object"
+      },
+      "UserPermissionInfo": {
+        "properties": {
+          "granted_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "granted_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "permission_description": {
+            "type": ["null", "string"]
+          },
+          "permission_id": {
+            "type": "string"
+          },
+          "permission_key": {
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/PermissionGrantSource"
+            },
+            "type": ["array", "null"]
+          }
+        },
+        "required": ["permission_id", "permission_key"],
+        "type": "object"
+      },
+      "UserRoleInfo": {
+        "properties": {
+          "assigned_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "assigned_by_user_id": {
+            "type": ["null", "string"]
+          },
+          "expires_at": {
+            "format": "date-time",
+            "type": ["null", "string"]
+          },
+          "role_description": {
+            "type": ["null", "string"]
+          },
+          "role_id": {
+            "type": "string"
+          },
+          "role_name": {
+            "type": "string"
+          },
+          "role_weight": {
+            "type": "integer"
+          }
+        },
+        "required": ["role_id", "role_name", "role_weight"],
+        "type": "object"
+      },
+      "UsersPage": {
+        "properties": {
+          "next_cursor": {
+            "type": ["null", "string"]
+          },
+          "users": {
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["users"],
+        "type": "object"
+      },
+      "VerifyApiKeyRequest": {
+        "properties": {
+          "key": {
+            "type": "string"
+          }
+        },
+        "required": ["key"],
+        "type": "object"
+      },
+      "VerifyApiKeyResponse": {
+        "properties": {
+          "api_key": {
+            "$ref": "#/components/schemas/ApiKey"
+          }
+        },
+        "required": ["api_key"],
+        "type": "object"
+      },
+      "VerifyBackupCodeRequest": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "trust_device": {
+            "type": "boolean"
+          }
+        },
+        "required": ["code"],
+        "type": "object"
+      },
+      "VerifyBackupCodeResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "VerifyTOTPRequest": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "trust_device": {
+            "type": "boolean"
+          }
+        },
+        "required": ["code"],
+        "type": "object"
+      },
+      "VerifyTOTPResponse": {
+        "properties": {
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": ["user", "session"],
+        "type": "object"
+      },
+      "WellKnownJWKSResponse": {
+        "properties": {
+          "keys": {
+            "items": {
+              "$ref": "#/components/schemas/JWK"
+            },
+            "type": "array"
+          }
+        },
+        "required": ["keys"],
+        "type": "object"
+      }
+    }
+  }
+}
