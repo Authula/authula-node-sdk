@@ -11,44 +11,23 @@ export class CSRFPlugin implements Plugin {
 
   public init(client: AuthulaClient) {
     client.registerBeforeFetch(async (ctx: FetchContext) => {
-      // Client-side
-      if (typeof document !== "undefined") {
-        if (["OPTIONS", "HEAD", "GET"].includes(ctx.init.method || "GET")) {
-          return;
-        }
-
-        const cookies = parseCookie(document.cookie);
-        const value = cookies[this.options.cookieName];
-
-        if (!value) return;
-
-        ctx.init.headers = new Headers(ctx.init.headers);
-        ctx.init.headers.set(this.options.headerName, value);
+      if (["OPTIONS", "HEAD", "GET"].includes(ctx.init.method || "GET")) {
         return;
       }
 
-      // SSR
-      if (this.cookies) {
-        if (["OPTIONS", "HEAD", "GET"].includes(ctx.init.method || "GET")) {
-          return;
-        }
-
-        const store = await this.cookies();
-        const cookie = store.get(this.options.cookieName);
-
-        if (!cookie) return;
-
-        ctx.init.headers = new Headers(ctx.init.headers);
-        ctx.init.headers.set(this.options.headerName, cookie.value);
+      if (typeof document === "undefined") {
+        return;
       }
+
+      const cookies = parseCookie(document.cookie);
+      const value = cookies[this.options.cookieName];
+
+      if (!value) return;
+
+      ctx.init.headers = new Headers(ctx.init.headers);
+      ctx.init.headers.set(this.options.headerName, value);
     });
 
     return {};
-  }
-
-  // Injected by client
-  private cookies?: () => Promise<any>;
-  attachCookies(fn: () => Promise<any>) {
-    this.cookies = fn;
   }
 }

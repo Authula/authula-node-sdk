@@ -21,8 +21,8 @@ describe("Bearer Plugin", () => {
       registerAfterFetch: vi.fn((hook) => afterFetchHooks.push(hook)),
       jwt: {
         refreshToken: vi.fn(),
-        getJWKSKeys: vi.fn(),
-      },
+        getJWKS: vi.fn(),
+      } as unknown as any,
     };
 
     // Mock localStorage

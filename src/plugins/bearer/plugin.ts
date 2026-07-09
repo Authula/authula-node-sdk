@@ -1,7 +1,7 @@
 import type { FetchContext, Plugin } from "@/types";
-import type { BearerPluginOptions } from "./types";
-import type { JWTPlugin } from "../jwt/plugin";
 import type { ClientWithPlugins } from "@/sdk";
+import type { JWTPlugin } from "../jwt/plugin";
+import type { BearerPluginOptions } from "./types";
 
 export class BearerPlugin implements Plugin {
   public readonly id = "bearer";

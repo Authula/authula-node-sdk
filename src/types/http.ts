@@ -13,13 +13,3 @@ export type AfterFetchHook = (
   ctx: FetchContext,
   res: Response,
 ) => Promise<"retry" | void> | "retry" | void;
-
-/**
- * Fetch options for internal API calls
- */
-export type FetchRequestOptions = {
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  headers?: Record<string, string>;
-  body?: Record<string, unknown>;
-  callbackUrl?: string;
-};
