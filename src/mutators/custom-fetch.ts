@@ -1,5 +1,5 @@
 import { parseSetCookie } from "cookie";
-import { toSnakeCaseKeys } from "es-toolkit";
+import { toCamelCaseKeys, toSnakeCaseKeys } from "es-toolkit";
 
 import type { FetchContext, CookieStore } from "../types";
 
@@ -113,7 +113,10 @@ export async function customFetch<T>(
       cookieStore = await options.cookies();
       const all = cookieStore.getAll();
       if (all.length > 0 && !headers.has("cookie")) {
-        headers.set("cookie", all.map((c) => `${c.name}=${c.value}`).join("; "));
+        headers.set(
+          "cookie",
+          all.map((c) => `${c.name}=${c.value}`).join("; "),
+        );
       }
     } catch {
       cookieStore = null;
@@ -150,7 +153,7 @@ export async function customFetch<T>(
     const values: string[] =
       typeof res.headers.getSetCookie === "function"
         ? res.headers.getSetCookie()
-        : res.headers.get("set-cookie")?.split(", ") ?? [];
+        : (res.headers.get("set-cookie")?.split(", ") ?? []);
     for (const raw of values) {
       parseSetCookieToStore(raw, cookieStore);
     }
@@ -166,5 +169,5 @@ export async function customFetch<T>(
     throw new ApiError(message, res.status, data, res.headers);
   }
 
-  return data as T;
+  return toCamelCaseKeys(data) as T;
 }
