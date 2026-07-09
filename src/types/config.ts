@@ -29,7 +29,7 @@ export interface CookieStore {
 export type AuthulaClientConfig = {
   /**
    * The URL of your Authula server
-   * @example 'http://localhost:8080/auth'
+   * @example 'http://localhost:8080/api/auth'
    */
   url: string;
   fetchOptions?: FetchOptions;
