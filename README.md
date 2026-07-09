@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./project-logo.png" width="200" />
+  <img src="./project-logo.png" width="200" />
 </p>
 
 <p align="center">
@@ -62,23 +62,49 @@ pnpm add authula
 
 ### Basic Setup
 
+`Client instance`:
+
+Use with SPA (Vite etc.)
+
 ```typescript
 import { createClient } from "authula";
 import { CorePlugin, EmailPasswordPlugin } from "authula/plugins";
 
-// Create a client instance. This instantiation is specifically for client-side apps (Vite SPA etc).
 const authulaBrowserClient = createClient({
   // Your Authula server URL
   url: "http://localhost:8080/api/auth",
   plugins: [new CorePlugin(), new EmailPasswordPlugin()],
 });
 
-// Now you can use the client to perform authentication operations
 // Direct method call
-const response = await authulaClient.core.getMe();
+const response = await authulaBrowserClient.core.getMe();
 
 // Tanstack Query
-const { data, error, isLoading, isError } = await authulaClient.core.useGetMe();
+const { data, error, isLoading, isError } =
+  await authulaBrowserClient.core.useGetMe();
+```
+
+`Server instance`:
+
+Use with SSR frameworks e.g. Next.js/Tanstack Start etc.
+
+```typescript
+import { cookies } from "next/headers";
+
+import { createClient } from "authula";
+import { CorePlugin, EmailPasswordPlugin } from "authula/plugins";
+
+const authulaServerClient = createClient({
+  // Your Authula server URL
+  url: "http://localhost:8080/api/auth",
+  plugins: [new CorePlugin(), new EmailPasswordPlugin()],
+  // For frameworks other than Next.js, you may need to implement this cookies object manually by implementing the interface.
+  cookies: cookies,
+});
+
+// Now you can use the client...
+
+const response = await authulaServerClient.core.getMe();
 ```
 
 ### Using with Cookies (SSR Compatible)
