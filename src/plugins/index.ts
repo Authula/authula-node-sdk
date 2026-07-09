@@ -8,6 +8,7 @@ export * from "./csrf/plugin";
 export * from "./csrf/types";
 export * from "./email-password/plugin";
 export * from "./jwt/plugin";
+export * from "./jwt/types";
 export * from "./magic-link/plugin";
 export * from "./oauth2/plugin";
 export * from "./organizations/plugin";
