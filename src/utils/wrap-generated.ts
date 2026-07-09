@@ -31,9 +31,15 @@ export function wrapGenerated<T extends Record<string, any>>(
       wrapped[key] = (...args: any[]) => {
         const ctx = { baseUrl, cookies, onBeforeFetch, onAfterFetch };
         const optionsIdx = value.length - 1;
-        const beforeOptions = args.slice(0, Math.max(0, optionsIdx));
-        const userOptions = optionsIdx >= 0 && args.length > optionsIdx ? args[optionsIdx] : undefined;
-        return value(...beforeOptions, { ...userOptions, ...ctx });
+        while (args.length < optionsIdx) {
+          args.push(undefined);
+        }
+        if (optionsIdx >= 0 && args.length === optionsIdx) {
+          args.push(ctx);
+        } else if (optionsIdx >= 0) {
+          args[optionsIdx] = { ...args[optionsIdx], ...ctx };
+        }
+        return value(...args);
       };
     }
   }
