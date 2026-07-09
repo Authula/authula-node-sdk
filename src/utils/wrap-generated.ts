@@ -28,8 +28,13 @@ export function wrapGenerated<T extends Record<string, any>>(
           ...rest,
         );
     } else {
-      wrapped[key] = (options?: Record<string, any>, ...rest: any[]) =>
-        value({ baseUrl, cookies, onBeforeFetch, onAfterFetch, ...options }, ...rest);
+      wrapped[key] = (...args: any[]) => {
+        const ctx = { baseUrl, cookies, onBeforeFetch, onAfterFetch };
+        const optionsIdx = value.length - 1;
+        const beforeOptions = args.slice(0, Math.max(0, optionsIdx));
+        const userOptions = optionsIdx >= 0 && args.length > optionsIdx ? args[optionsIdx] : undefined;
+        return value(...beforeOptions, { ...userOptions, ...ctx });
+      };
     }
   }
   return wrapped as T;
