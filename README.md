@@ -14,9 +14,9 @@ This Node.js SDK provides seamless integration with an Authula server for both c
 
 ---
 
-## 🚨 Breaking Changes (v0.6.0+)
+## 🚨 Breaking Changes
 
-Starting with v0.6.0, the SDK transitions to an automated, schema-driven architecture powered by Orval. Code generation is now tied 1-to-1 with the Authula backend OpenAPI specification, ensuring absolute parity and enhanced reliability.
+Starting with v0.6.x, the SDK transitions to an automated, schema-driven architecture powered by Orval. Code generation is now tied 1-to-1 with the Authula backend OpenAPI specification, ensuring absolute parity and enhanced reliability.
 
 This architectural shift introduces several breaking changes to the SDK footprint:
 
