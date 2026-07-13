@@ -97,9 +97,8 @@ describe("Bearer Plugin", () => {
       };
 
       await beforeFetchHooks[0](ctx);
-      expect(ctx.init.headers).toEqual({
-        Authorization: "Bearer test-access-token",
-      });
+      const headers = ctx.init.headers as Headers;
+      expect(headers.get("Authorization")).toBe("Bearer test-access-token");
     });
 
     test("should use custom headerName from options", async () => {
@@ -118,9 +117,8 @@ describe("Bearer Plugin", () => {
       };
 
       await beforeFetchHooks[0](ctx);
-      expect(ctx.init.headers).toEqual({
-        "X-Custom-Auth": "Bearer test-access-token",
-      });
+      const headers = ctx.init.headers as Headers;
+      expect(headers.get("X-Custom-Auth")).toBe("Bearer test-access-token");
     });
 
     test("should preserve existing headers when adding Authorization", async () => {
@@ -138,10 +136,9 @@ describe("Bearer Plugin", () => {
       };
 
       await beforeFetchHooks[0](ctx);
-      expect(ctx.init.headers).toEqual({
-        "Content-Type": "application/json",
-        Authorization: "Bearer test-access-token",
-      });
+      const headers = ctx.init.headers as Headers;
+      expect(headers.get("Content-Type")).toBe("application/json");
+      expect(headers.get("Authorization")).toBe("Bearer test-access-token");
     });
 
     test("should not add header if no accessToken in localStorage", async () => {
@@ -287,9 +284,8 @@ describe("Bearer Plugin", () => {
         "refreshToken",
         newRefreshToken,
       );
-      expect(ctx.init.headers).toEqual({
-        Authorization: `Bearer ${newAccessToken}`,
-      });
+      const headers = ctx.init.headers as Headers;
+      expect(headers.get("Authorization")).toBe(`Bearer ${newAccessToken}`);
     });
 
     test("should use custom headerName in retry request", async () => {
@@ -313,9 +309,8 @@ describe("Bearer Plugin", () => {
       const mockResponse = new Response(null, { status: 401 });
 
       await afterFetchHooks[0](ctx, mockResponse);
-      expect(ctx.init.headers).toEqual({
-        "X-Custom-Auth": `Bearer ${newAccessToken}`,
-      });
+      const headers = ctx.init.headers as Headers;
+      expect(headers.get("X-Custom-Auth")).toBe(`Bearer ${newAccessToken}`);
     });
 
     test("should not retry if refresh fails", async () => {

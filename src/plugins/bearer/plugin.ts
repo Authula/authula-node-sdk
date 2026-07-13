@@ -18,10 +18,10 @@ export class BearerPlugin implements Plugin {
       const headerName = this.options?.headerName ?? "Authorization";
       const token = localStorage.getItem("accessToken");
       if (token) {
-        ctx.init.headers = {
-          ...ctx.init.headers,
-          [headerName]: `Bearer ${token}`,
-        };
+        if (!(ctx.init.headers instanceof Headers)) {
+          ctx.init.headers = new Headers(ctx.init.headers);
+        }
+        ctx.init.headers.set(headerName, `Bearer ${token}`);
       }
     });
 
@@ -73,10 +73,10 @@ export class BearerPlugin implements Plugin {
       }
 
       const headerName = this.options?.headerName ?? "Authorization";
-      ctx.init.headers = {
-        ...ctx.init.headers,
-        [headerName]: `Bearer ${refreshed.accessToken}`,
-      };
+      if (!(ctx.init.headers instanceof Headers)) {
+        ctx.init.headers = new Headers(ctx.init.headers);
+      }
+      ctx.init.headers.set(headerName, `Bearer ${refreshed.accessToken}`);
 
       return "retry";
     });
