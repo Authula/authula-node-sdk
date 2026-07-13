@@ -1,3 +1,5 @@
+import { parseCookie } from "cookie";
+
 import type {
   FetchContext,
   AuthulaClientConfig,
@@ -49,5 +51,34 @@ export class AuthulaClient {
 
   public getPlugin<T extends Plugin>(id: string): T | undefined {
     return this.plugins.find((plugin) => plugin.id === id) as T | undefined;
+  }
+
+  public async getCookie(name: string): Promise<string | undefined> {
+    const all = await this.getAllCookies();
+    return all ? all[name] : undefined;
+  }
+
+  public async getAllCookies(): Promise<
+    Record<string, string | undefined> | undefined
+  > {
+    if (this.config.cookies) {
+      try {
+        const store = await this.config.cookies();
+        const all = store.getAll();
+        const map: Record<string, string> = {};
+        for (const c of all) {
+          map[c.name] = c.value;
+        }
+        return map;
+      } catch {
+        return undefined;
+      }
+    }
+
+    if (typeof document !== "undefined") {
+      return parseCookie(document.cookie);
+    }
+
+    return undefined;
   }
 }

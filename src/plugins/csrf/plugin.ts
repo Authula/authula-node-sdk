@@ -1,5 +1,3 @@
-import { parseCookie } from "cookie";
-
 import type { FetchContext, Plugin } from "@/types";
 import type { CSRFPluginOptions } from "./types";
 import type { AuthulaClient } from "@/client";
@@ -15,14 +13,13 @@ export class CSRFPlugin implements Plugin {
         return;
       }
 
-      if (typeof document === "undefined") {
+      const value =
+        ctx.cookies?.[this.options.cookieName] ??
+        (await client.getCookie(this.options.cookieName));
+
+      if (!value) {
         return;
       }
-
-      const cookies = parseCookie(document.cookie);
-      const value = cookies[this.options.cookieName];
-
-      if (!value) return;
 
       ctx.init.headers = new Headers(ctx.init.headers);
       ctx.init.headers.set(this.options.headerName, value);
