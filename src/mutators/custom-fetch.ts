@@ -108,6 +108,7 @@ export async function customFetch<T>(
   const headers = new Headers(options?.headers || {});
 
   let cookieStore: CookieStore | null = null;
+  let resolvedCookies: Record<string, string> | undefined;
   if (options?.cookies) {
     try {
       cookieStore = await options.cookies();
@@ -117,6 +118,10 @@ export async function customFetch<T>(
           "cookie",
           all.map((c) => `${c.name}=${c.value}`).join("; "),
         );
+      }
+      resolvedCookies = {};
+      for (const c of all) {
+        resolvedCookies[c.name] = c.value;
       }
     } catch {
       cookieStore = null;
@@ -133,6 +138,7 @@ export async function customFetch<T>(
       signal: options?.signal ?? null,
     },
     meta: {},
+    cookies: resolvedCookies,
   };
 
   if (options?.onBeforeFetch) {
