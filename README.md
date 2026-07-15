@@ -107,30 +107,6 @@ const authulaServerClient = createClient({
 const response = await authulaServerClient.core.getMe();
 ```
 
-### Using with Cookies (SSR Compatible)
-
-For server-side rendering or applications that need to handle cookies properly:
-
-```typescript
-import { cookies } from "next/headers";
-
-import { createClient } from "authula";
-import { CorePlugin, EmailPasswordPlugin, CSRFPlugin } from "authula/plugins";
-
-const authulaClient = createClient({
-  url: "http://localhost:8080/api/auth",
-  plugins: [
-    new CorePlugin(),
-    new EmailPasswordPlugin(),
-    new CSRFPlugin({
-      cookieName: "authula_csrf_token",
-      headerName: "X-AUTHULA-CSRF-TOKEN",
-    }),
-  ],
-  cookies,
-});
-```
-
 ## Available Plugins
 
 The following plugins are available in this SDK:
