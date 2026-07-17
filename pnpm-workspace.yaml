@@ -2,3 +2,5 @@ packages:
   - "."
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - tsdown@0.22.9
