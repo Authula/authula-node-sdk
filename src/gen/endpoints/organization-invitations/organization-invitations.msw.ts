@@ -257,7 +257,7 @@ export const getRejectOrganizationInvitationMockHandler = (
 		options,
 	);
 };
-export const getInvitationsMock = () => [
+export const getOrganizationInvitationsMock = () => [
 	getListOrganizationInvitationsMockHandler(),
 	getCreateOrganizationInvitationMockHandler(),
 	getGetOrganizationInvitationMockHandler(),

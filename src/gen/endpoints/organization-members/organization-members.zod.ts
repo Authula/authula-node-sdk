@@ -45,6 +45,17 @@ export const AddOrganizationMemberBody = AddOrganizationMemberRequest;
 export const AddOrganizationMemberResponse = OrganizationMember;
 
 /**
+ * Retrieves an organization member by the user's ID.
+ * @summary Get member by user ID
+ */
+export const GetOrganizationMemberByUserIDParams = zod.object({
+	organization_id: zod.string(),
+	user_id: zod.string(),
+});
+
+export const GetOrganizationMemberByUserIDResponse = OrganizationMember;
+
+/**
  * Retrieves a single organization member by ID.
  * @summary Get member
  */

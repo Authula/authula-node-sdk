@@ -157,7 +157,7 @@ export const getDeleteOrganizationTeamMemberMockHandler = (
 		options,
 	);
 };
-export const getTeamMembersMock = () => [
+export const getOrganizationTeamMembersMock = () => [
 	getListOrganizationTeamMembersMockHandler(),
 	getAddOrganizationTeamMemberMockHandler(),
 	getGetOrganizationTeamMemberMockHandler(),

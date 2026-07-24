@@ -354,6 +354,206 @@ export const useAddOrganizationMember = <TError = unknown, TContext = unknown>(
 		queryClient,
 	);
 };
+export const getGetOrganizationMemberByUserIDUrl = (
+	organizationId: string,
+	userId: string,
+) => {
+	return `/organizations/${organizationId}/members/by-user/${userId}`;
+};
+
+/**
+ * Retrieves an organization member by the user's ID.
+ * @summary Get member by user ID
+ */
+export const getOrganizationMemberByUserID = async (
+	organizationId: string,
+	userId: string,
+	options?: RequestInit,
+): Promise<OrganizationMember> => {
+	return customFetch<OrganizationMember>(
+		getGetOrganizationMemberByUserIDUrl(organizationId, userId),
+		{
+			...options,
+			method: "GET",
+		},
+	);
+};
+
+export const getGetOrganizationMemberByUserIDQueryKey = (
+	organizationId: string,
+	userId: string,
+) => {
+	return [
+		`/organizations/${organizationId}/members/by-user/${userId}`,
+	] as const;
+};
+
+export const getGetOrganizationMemberByUserIDQueryOptions = <
+	TData = Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	userId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
+
+	const queryKey =
+		queryOptions?.queryKey ??
+		getGetOrganizationMemberByUserIDQueryKey(organizationId, userId);
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<typeof getOrganizationMemberByUserID>>
+	> = ({ signal }) =>
+		getOrganizationMemberByUserID(organizationId, userId, {
+			signal,
+			...requestOptions,
+		});
+
+	return {
+		queryKey,
+		queryFn,
+		enabled:
+			organizationId !== null &&
+			organizationId !== undefined &&
+			userId !== null &&
+			userId !== undefined,
+		...queryOptions,
+	} as UseQueryOptions<
+		Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetOrganizationMemberByUserIDQueryResult = NonNullable<
+	Awaited<ReturnType<typeof getOrganizationMemberByUserID>>
+>;
+export type GetOrganizationMemberByUserIDQueryError = unknown;
+
+export function useGetOrganizationMemberByUserID<
+	TData = Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	userId: string,
+	options: {
+		query: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				DefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+					TError,
+					Awaited<ReturnType<typeof getOrganizationMemberByUserID>>
+				>,
+				"initialData"
+			>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetOrganizationMemberByUserID<
+	TData = Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	userId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				UndefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+					TError,
+					Awaited<ReturnType<typeof getOrganizationMemberByUserID>>
+				>,
+				"initialData"
+			>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetOrganizationMemberByUserID<
+	TData = Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	userId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Get member by user ID
+ */
+
+export function useGetOrganizationMemberByUserID<
+	TData = Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	userId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getOrganizationMemberByUserID>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+} {
+	const queryOptions = getGetOrganizationMemberByUserIDQueryOptions(
+		organizationId,
+		userId,
+		options,
+	);
+
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+	return withQueryKey(query, queryOptions.queryKey);
+}
+
 export const getGetOrganizationMemberUrl = (
 	organizationId: string,
 	memberId: string,

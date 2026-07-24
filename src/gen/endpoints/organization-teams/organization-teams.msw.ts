@@ -260,7 +260,7 @@ export const getUpdateOrganizationTeamMockHandler = (
 		options,
 	);
 };
-export const getTeamsMock = () => [
+export const getOrganizationTeamsMock = () => [
 	getListOrganizationTeamsMockHandler(),
 	getCreateOrganizationTeamMockHandler(),
 	getGetOrganizationTeamMockHandler(),

@@ -39,6 +39,18 @@ export const getAddOrganizationMemberResponseMock = (
 	...overrideResponse,
 });
 
+export const getGetOrganizationMemberByUserIDResponseMock = (
+	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
+): OrganizationMember => ({
+	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	...overrideResponse,
+});
+
 export const getGetOrganizationMemberResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
 ): OrganizationMember => ({

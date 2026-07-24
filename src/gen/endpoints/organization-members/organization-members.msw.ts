@@ -41,6 +41,18 @@ export const getAddOrganizationMemberResponseMock = (
 	...overrideResponse,
 });
 
+export const getGetOrganizationMemberByUserIDResponseMock = (
+	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
+): OrganizationMember => ({
+	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	...overrideResponse,
+});
+
 export const getGetOrganizationMemberResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
 ): OrganizationMember => ({
@@ -123,6 +135,30 @@ export const getAddOrganizationMemberMockHandler = (
 	);
 };
 
+export const getGetOrganizationMemberByUserIDMockHandler = (
+	overrideResponse?:
+		| OrganizationMember
+		| ((
+				info: Parameters<Parameters<typeof http.get>[1]>[0],
+		  ) => Promise<OrganizationMember> | OrganizationMember),
+	options?: RequestHandlerOptions,
+) => {
+	return http.get(
+		"*/organizations/:organizationId/members/by-user/:userId",
+		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+			return HttpResponse.json(
+				overrideResponse !== undefined
+					? typeof overrideResponse === "function"
+						? await overrideResponse(info)
+						: overrideResponse
+					: getGetOrganizationMemberByUserIDResponseMock(),
+				{ status: 200 },
+			);
+		},
+		options,
+	);
+};
+
 export const getGetOrganizationMemberMockHandler = (
 	overrideResponse?:
 		| OrganizationMember
@@ -196,9 +232,10 @@ export const getUpdateOrganizationMemberMockHandler = (
 		options,
 	);
 };
-export const getMembersMock = () => [
+export const getOrganizationMembersMock = () => [
 	getListOrganizationMembersMockHandler(),
 	getAddOrganizationMemberMockHandler(),
+	getGetOrganizationMemberByUserIDMockHandler(),
 	getGetOrganizationMemberMockHandler(),
 	getDeleteOrganizationMemberMockHandler(),
 	getUpdateOrganizationMemberMockHandler(),

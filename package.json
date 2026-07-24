@@ -1,7 +1,7 @@
 {
   "name": "authula",
   "type": "module",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Official SDK for Authula.",
   "license": "Apache-2.0",
   "homepage": "https://github.com/Authula/authula-node-sdk#readme",
@@ -21,7 +21,7 @@
   "files": [
     "dist"
   ],
-  "packageManager": "pnpm@11.10.0",
+  "packageManager": "pnpm@11.17.0",
   "scripts": {
     "orval:build": "rm -rf ./src/gen && orval -c orval.config.ts",
     "tsdown:build": "rm -rf ./dist && tsdown",
@@ -45,9 +45,9 @@
     "@types/node": "^26.1.1",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
-    "bumpp": "^11.1.0",
+    "bumpp": "^12.0.0",
     "orval": "^8.22.0",
-    "tsdown": "^0.22.9",
+    "tsdown": "^0.22.14",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
   }
