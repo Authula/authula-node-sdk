@@ -11,6 +11,7 @@ import {
 	AddOrganizationMemberRequest,
 	DeleteOrganizationMemberResponse,
 	OrganizationMember,
+	OrganizationMemberResponse,
 	UpdateOrganizationMemberRequest,
 } from "../authula-api.schemas.zod";
 
@@ -27,7 +28,7 @@ export const ListOrganizationMembersQueryParams = zod.object({
 	limit: zod.number().optional(),
 });
 
-export const ListOrganizationMembersResponseItem = OrganizationMember;
+export const ListOrganizationMembersResponseItem = OrganizationMemberResponse;
 export const ListOrganizationMembersResponse = zod.array(
 	ListOrganizationMembersResponseItem,
 );
@@ -45,7 +46,7 @@ export const AddOrganizationMemberBody = AddOrganizationMemberRequest;
 export const AddOrganizationMemberResponse = OrganizationMember;
 
 /**
- * Retrieves an organization member by the user's ID.
+ * Retrieves an organization member by the user's ID with nested user data.
  * @summary Get member by user ID
  */
 export const GetOrganizationMemberByUserIDParams = zod.object({
@@ -53,10 +54,10 @@ export const GetOrganizationMemberByUserIDParams = zod.object({
 	user_id: zod.string(),
 });
 
-export const GetOrganizationMemberByUserIDResponse = OrganizationMember;
+export const GetOrganizationMemberByUserIDResponse = OrganizationMemberResponse;
 
 /**
- * Retrieves a single organization member by ID.
+ * Retrieves a single organization member by ID with nested user data.
  * @summary Get member
  */
 export const GetOrganizationMemberParams = zod.object({
@@ -64,7 +65,7 @@ export const GetOrganizationMemberParams = zod.object({
 	member_id: zod.string(),
 });
 
-export const GetOrganizationMemberResponse = OrganizationMember;
+export const GetOrganizationMemberResponse = OrganizationMemberResponse;
 
 /**
  * Removes a member from an organization.

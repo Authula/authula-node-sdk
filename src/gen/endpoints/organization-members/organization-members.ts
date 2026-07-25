@@ -27,6 +27,7 @@ import type {
 	DeleteOrganizationMemberResponse,
 	ListOrganizationMembersParams,
 	OrganizationMember,
+	OrganizationMemberResponse,
 	UpdateOrganizationMemberRequest,
 } from "../../models";
 
@@ -77,8 +78,8 @@ export const listOrganizationMembers = async (
 	organizationId: string,
 	params?: ListOrganizationMembersParams,
 	options?: RequestInit,
-): Promise<OrganizationMember[] | null> => {
-	return customFetch<OrganizationMember[] | null>(
+): Promise<OrganizationMemberResponse[] | null> => {
+	return customFetch<OrganizationMemberResponse[] | null>(
 		getListOrganizationMembersUrl(organizationId, params),
 		{
 			...options,
@@ -362,15 +363,15 @@ export const getGetOrganizationMemberByUserIDUrl = (
 };
 
 /**
- * Retrieves an organization member by the user's ID.
+ * Retrieves an organization member by the user's ID with nested user data.
  * @summary Get member by user ID
  */
 export const getOrganizationMemberByUserID = async (
 	organizationId: string,
 	userId: string,
 	options?: RequestInit,
-): Promise<OrganizationMember> => {
-	return customFetch<OrganizationMember>(
+): Promise<OrganizationMemberResponse> => {
+	return customFetch<OrganizationMemberResponse>(
 		getGetOrganizationMemberByUserIDUrl(organizationId, userId),
 		{
 			...options,
@@ -562,15 +563,15 @@ export const getGetOrganizationMemberUrl = (
 };
 
 /**
- * Retrieves a single organization member by ID.
+ * Retrieves a single organization member by ID with nested user data.
  * @summary Get member
  */
 export const getOrganizationMember = async (
 	organizationId: string,
 	memberId: string,
 	options?: RequestInit,
-): Promise<OrganizationMember> => {
-	return customFetch<OrganizationMember>(
+): Promise<OrganizationMemberResponse> => {
+	return customFetch<OrganizationMemberResponse>(
 		getGetOrganizationMemberUrl(organizationId, memberId),
 		{
 			...options,

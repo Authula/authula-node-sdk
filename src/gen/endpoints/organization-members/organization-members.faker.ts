@@ -10,10 +10,11 @@ import { faker } from "@faker-js/faker";
 import type {
 	DeleteOrganizationMemberResponse,
 	OrganizationMember,
+	OrganizationMemberResponse,
 } from "../../models";
 
 export const getListOrganizationMembersResponseMock = ():
-	| OrganizationMember[]
+	| OrganizationMemberResponse[]
 	| null =>
 	Array.from(
 		{ length: faker.number.int({ min: 1, max: 10 }) },
@@ -24,7 +25,30 @@ export const getListOrganizationMembersResponseMock = ():
 		organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
 		role: faker.string.alpha({ length: { min: 10, max: 20 } }),
 		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		user: {
+			createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+			email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			emailVerified: faker.datatype.boolean(),
+			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			image: faker.helpers.arrayElement([
+				faker.helpers.arrayElement([
+					faker.string.alpha({ length: { min: 10, max: 20 } }),
+					null,
+				]),
+				undefined,
+			]),
+			metadata: faker.helpers.arrayElement([
+				faker.helpers.arrayElement([
+					{
+						[faker.string.alphanumeric(5)]: {},
+					},
+					null,
+				]),
+				undefined,
+			]),
+			name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+		},
 	}));
 
 export const getAddOrganizationMemberResponseMock = (
@@ -40,26 +64,72 @@ export const getAddOrganizationMemberResponseMock = (
 });
 
 export const getGetOrganizationMemberByUserIDResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
-): OrganizationMember => ({
+	overrideResponse: Partial<Extract<OrganizationMemberResponse, object>> = {},
+): OrganizationMemberResponse => ({
 	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
 	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	user: {
+		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		emailVerified: faker.datatype.boolean(),
+		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		image: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				null,
+			]),
+			undefined,
+		]),
+		metadata: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				{
+					[faker.string.alphanumeric(5)]: {},
+				},
+				null,
+			]),
+			undefined,
+		]),
+		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	},
 	...overrideResponse,
 });
 
 export const getGetOrganizationMemberResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationMember, object>> = {},
-): OrganizationMember => ({
+	overrideResponse: Partial<Extract<OrganizationMemberResponse, object>> = {},
+): OrganizationMemberResponse => ({
 	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
 	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
 	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	user: {
+		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		emailVerified: faker.datatype.boolean(),
+		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		image: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				null,
+			]),
+			undefined,
+		]),
+		metadata: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				{
+					[faker.string.alphanumeric(5)]: {},
+				},
+				null,
+			]),
+			undefined,
+		]),
+		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	},
 	...overrideResponse,
 });
 

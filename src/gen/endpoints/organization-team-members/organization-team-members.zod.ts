@@ -11,6 +11,7 @@ import {
 	AddOrganizationTeamMemberRequest,
 	DeleteOrganizationTeamMemberResponse,
 	OrganizationTeamMember,
+	OrganizationTeamMemberResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -27,7 +28,8 @@ export const ListOrganizationTeamMembersQueryParams = zod.object({
 	limit: zod.number().optional(),
 });
 
-export const ListOrganizationTeamMembersResponseItem = OrganizationTeamMember;
+export const ListOrganizationTeamMembersResponseItem =
+	OrganizationTeamMemberResponse;
 export const ListOrganizationTeamMembersResponse = zod.array(
 	ListOrganizationTeamMembersResponseItem,
 );
@@ -46,7 +48,7 @@ export const AddOrganizationTeamMemberBody = AddOrganizationTeamMemberRequest;
 export const AddOrganizationTeamMemberResponse = OrganizationTeamMember;
 
 /**
- * Retrieves a single team member by ID.
+ * Retrieves a single team member by ID with nested member and user data.
  * @summary Get team member
  */
 export const GetOrganizationTeamMemberParams = zod.object({
@@ -55,7 +57,7 @@ export const GetOrganizationTeamMemberParams = zod.object({
 	member_id: zod.string(),
 });
 
-export const GetOrganizationTeamMemberResponse = OrganizationTeamMember;
+export const GetOrganizationTeamMemberResponse = OrganizationTeamMemberResponse;
 
 /**
  * Removes a member from a team.

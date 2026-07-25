@@ -853,6 +853,22 @@ export const OrganizationMember = zod.object({
 export type OrganizationMember = zod.input<typeof OrganizationMember>;
 export type OrganizationMemberOutput = zod.output<typeof OrganizationMember>;
 
+export const OrganizationMemberResponse = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	organizationId: zod.string(),
+	role: zod.string(),
+	updatedAt: zod.iso.datetime({ offset: true }),
+	user: User,
+});
+
+export type OrganizationMemberResponse = zod.input<
+	typeof OrganizationMemberResponse
+>;
+export type OrganizationMemberResponseOutput = zod.output<
+	typeof OrganizationMemberResponse
+>;
+
 export const OrganizationTeam = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
 	description: zod.string().nullish(),
@@ -877,6 +893,20 @@ export const OrganizationTeamMember = zod.object({
 export type OrganizationTeamMember = zod.input<typeof OrganizationTeamMember>;
 export type OrganizationTeamMemberOutput = zod.output<
 	typeof OrganizationTeamMember
+>;
+
+export const OrganizationTeamMemberResponse = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	member: OrganizationMemberResponse,
+	teamId: zod.string(),
+});
+
+export type OrganizationTeamMemberResponse = zod.input<
+	typeof OrganizationTeamMemberResponse
+>;
+export type OrganizationTeamMemberResponseOutput = zod.output<
+	typeof OrganizationTeamMemberResponse
 >;
 
 export const RefreshTokenRequest = zod.object({

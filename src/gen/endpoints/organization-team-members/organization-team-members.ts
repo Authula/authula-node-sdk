@@ -27,6 +27,7 @@ import type {
 	DeleteOrganizationTeamMemberResponse,
 	ListOrganizationTeamMembersParams,
 	OrganizationTeamMember,
+	OrganizationTeamMemberResponse,
 } from "../../models";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -78,8 +79,8 @@ export const listOrganizationTeamMembers = async (
 	teamId: string,
 	params?: ListOrganizationTeamMembersParams,
 	options?: RequestInit,
-): Promise<OrganizationTeamMember[] | null> => {
-	return customFetch<OrganizationTeamMember[] | null>(
+): Promise<OrganizationTeamMemberResponse[] | null> => {
+	return customFetch<OrganizationTeamMemberResponse[] | null>(
 		getListOrganizationTeamMembersUrl(organizationId, teamId, params),
 		{
 			...options,
@@ -407,7 +408,7 @@ export const getGetOrganizationTeamMemberUrl = (
 };
 
 /**
- * Retrieves a single team member by ID.
+ * Retrieves a single team member by ID with nested member and user data.
  * @summary Get team member
  */
 export const getOrganizationTeamMember = async (
@@ -415,8 +416,8 @@ export const getOrganizationTeamMember = async (
 	teamId: string,
 	memberId: string,
 	options?: RequestInit,
-): Promise<OrganizationTeamMember> => {
-	return customFetch<OrganizationTeamMember>(
+): Promise<OrganizationTeamMemberResponse> => {
+	return customFetch<OrganizationTeamMemberResponse>(
 		getGetOrganizationTeamMemberUrl(organizationId, teamId, memberId),
 		{
 			...options,
