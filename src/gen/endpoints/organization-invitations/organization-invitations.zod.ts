@@ -9,8 +9,9 @@ import * as zod from "zod";
 
 import {
 	AcceptOrganizationInvitationQuery,
-	CreateOrganizationInvitationRequest,
+	CreateOrganizationInvitationQuery,
 	OrganizationInvitation,
+	VerifyOrganizationInvitationResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -34,8 +35,12 @@ export const CreateOrganizationInvitationParams = zod.object({
 	organization_id: zod.string(),
 });
 
+export const CreateOrganizationInvitationQueryParams = zod.object({
+	redirectUrl: zod.string().optional(),
+});
+
 export const CreateOrganizationInvitationBody =
-	CreateOrganizationInvitationRequest;
+	CreateOrganizationInvitationQuery;
 
 export const CreateOrganizationInvitationResponse = OrganizationInvitation;
 
@@ -62,7 +67,7 @@ export const RevokeOrganizationInvitationParams = zod.object({
 export const RevokeOrganizationInvitationResponse = OrganizationInvitation;
 
 /**
- * Accepts an invitation to join an organization. Optionally redirects if a redirect_url is provided.
+ * Accepts an invitation to join an organization.
  * @summary Accept invitation
  */
 export const AcceptOrganizationInvitationParams = zod.object({
@@ -89,3 +94,20 @@ export const RejectOrganizationInvitationParams = zod.object({
 });
 
 export const RejectOrganizationInvitationResponse = OrganizationInvitation;
+
+/**
+ * Verifies an invitation token.
+ * @summary Verify invitation
+ */
+export const VerifyOrganizationInvitationParams = zod.object({
+	organization_id: zod.string(),
+	invitation_id: zod.string(),
+});
+
+export const VerifyOrganizationInvitationQueryParams = zod.object({
+	token: zod.string().optional(),
+	redirectUrl: zod.string().optional(),
+});
+
+export const VerifyOrganizationInvitationResponseSchema =
+	VerifyOrganizationInvitationResponse;

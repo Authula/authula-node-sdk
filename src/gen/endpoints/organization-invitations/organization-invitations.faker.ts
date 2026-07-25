@@ -6,7 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 import { faker } from "@faker-js/faker";
-import type { OrganizationInvitation } from "../../models";
+import type {
+	OrganizationInvitation,
+	VerifyOrganizationInvitationResponse,
+} from "../../models";
 import { OrganizationInvitationStatus } from "../../models";
 
 export const getListOrganizationInvitationsResponseMock = ():
@@ -105,5 +108,56 @@ export const getRejectOrganizationInvitationResponseMock = (
 	status: faker.helpers.arrayElement(
 		Object.values(OrganizationInvitationStatus),
 	),
+	...overrideResponse,
+});
+
+export const getVerifyOrganizationInvitationResponseMock = (
+	overrideResponse: Partial<
+		Extract<VerifyOrganizationInvitationResponse, object>
+	> = {},
+): VerifyOrganizationInvitationResponse => ({
+	invitation: faker.helpers.arrayElement([
+		{
+			createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+			email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			status: faker.helpers.arrayElement(
+				Object.values(OrganizationInvitationStatus),
+			),
+		},
+		undefined,
+	]),
+	organization: faker.helpers.arrayElement([
+		{
+			id: faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				undefined,
+			]),
+			logo: faker.helpers.arrayElement([
+				faker.helpers.arrayElement([
+					faker.string.alpha({ length: { min: 10, max: 20 } }),
+					null,
+				]),
+				undefined,
+			]),
+			name: faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				undefined,
+			]),
+			ownerId: faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				undefined,
+			]),
+			slug: faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				undefined,
+			]),
+		},
+		undefined,
+	]),
 	...overrideResponse,
 });

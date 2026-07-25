@@ -318,9 +318,19 @@ export type CreateApiKeyResponseOutput = zod.output<
 	typeof CreateApiKeyResponse
 >;
 
+export const CreateOrganizationInvitationQuery = zod.object({
+	redirectUrl: zod.string().nullish(),
+});
+
+export type CreateOrganizationInvitationQuery = zod.input<
+	typeof CreateOrganizationInvitationQuery
+>;
+export type CreateOrganizationInvitationQueryOutput = zod.output<
+	typeof CreateOrganizationInvitationQuery
+>;
+
 export const CreateOrganizationInvitationRequest = zod.object({
 	email: zod.string(),
-	redirectUrl: zod.string().nullish(),
 	role: zod.string(),
 });
 
@@ -869,6 +879,17 @@ export type OrganizationMemberResponseOutput = zod.output<
 	typeof OrganizationMemberResponse
 >;
 
+export const OrganizationSummary = zod.object({
+	id: zod.string().optional(),
+	logo: zod.string().nullish(),
+	name: zod.string().optional(),
+	ownerId: zod.string().optional(),
+	slug: zod.string().optional(),
+});
+
+export type OrganizationSummary = zod.input<typeof OrganizationSummary>;
+export type OrganizationSummaryOutput = zod.output<typeof OrganizationSummary>;
+
 export const OrganizationTeam = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
 	description: zod.string().nullish(),
@@ -1397,6 +1418,18 @@ export type VerifyBackupCodeResponse = zod.input<
 >;
 export type VerifyBackupCodeResponseOutput = zod.output<
 	typeof VerifyBackupCodeResponse
+>;
+
+export const VerifyOrganizationInvitationResponse = zod.object({
+	invitation: OrganizationInvitation.optional(),
+	organization: OrganizationSummary.optional(),
+});
+
+export type VerifyOrganizationInvitationResponse = zod.input<
+	typeof VerifyOrganizationInvitationResponse
+>;
+export type VerifyOrganizationInvitationResponseOutput = zod.output<
+	typeof VerifyOrganizationInvitationResponse
 >;
 
 export const VerifyTOTPRequest = zod.object({

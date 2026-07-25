@@ -6,7 +6,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateOrganizationInvitationRequest = {
-	email: string;
-	role: string;
+export type OrganizationSummary = {
+	id?: string;
+	/** @nullable */
+	logo?: string | null;
+	name?: string;
+	ownerId?: string;
+	slug?: string;
 };

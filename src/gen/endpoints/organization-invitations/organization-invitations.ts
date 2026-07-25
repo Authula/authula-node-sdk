@@ -25,8 +25,11 @@ import { customFetch } from "../../../mutators/custom-fetch";
 import type {
 	AcceptOrganizationInvitationParams,
 	AcceptOrganizationInvitationQuery,
-	CreateOrganizationInvitationRequest,
+	CreateOrganizationInvitationParams,
+	CreateOrganizationInvitationQuery,
 	OrganizationInvitation,
+	VerifyOrganizationInvitationParams,
+	VerifyOrganizationInvitationResponse,
 } from "../../models";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -229,8 +232,23 @@ export function useListOrganizationInvitations<
 	return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getCreateOrganizationInvitationUrl = (organizationId: string) => {
-	return `/organizations/${organizationId}/invitations`;
+export const getCreateOrganizationInvitationUrl = (
+	organizationId: string,
+	params?: CreateOrganizationInvitationParams,
+) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0
+		? `/organizations/${organizationId}/invitations?${stringifiedParams}`
+		: `/organizations/${organizationId}/invitations`;
 };
 
 /**
@@ -239,16 +257,17 @@ export const getCreateOrganizationInvitationUrl = (organizationId: string) => {
  */
 export const createOrganizationInvitation = async (
 	organizationId: string,
-	createOrganizationInvitationRequest?: CreateOrganizationInvitationRequest,
+	createOrganizationInvitationQuery?: CreateOrganizationInvitationQuery,
+	params?: CreateOrganizationInvitationParams,
 	options?: RequestInit,
 ): Promise<OrganizationInvitation> => {
 	return customFetch<OrganizationInvitation>(
-		getCreateOrganizationInvitationUrl(organizationId),
+		getCreateOrganizationInvitationUrl(organizationId, params),
 		{
 			...options,
 			method: "POST",
 			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(createOrganizationInvitationRequest),
+			body: JSON.stringify(createOrganizationInvitationQuery),
 		},
 	);
 };
@@ -260,14 +279,22 @@ export const getCreateOrganizationInvitationMutationOptions = <
 	mutation?: UseMutationOptions<
 		Awaited<ReturnType<typeof createOrganizationInvitation>>,
 		TError,
-		{ organizationId: string; data?: CreateOrganizationInvitationRequest },
+		{
+			organizationId: string;
+			data?: CreateOrganizationInvitationQuery;
+			params?: CreateOrganizationInvitationParams;
+		},
 		TContext
 	>;
 	request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
 	Awaited<ReturnType<typeof createOrganizationInvitation>>,
 	TError,
-	{ organizationId: string; data?: CreateOrganizationInvitationRequest },
+	{
+		organizationId: string;
+		data?: CreateOrganizationInvitationQuery;
+		params?: CreateOrganizationInvitationParams;
+	},
 	TContext
 > => {
 	const mutationKey = ["createOrganizationInvitation"];
@@ -281,11 +308,20 @@ export const getCreateOrganizationInvitationMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<typeof createOrganizationInvitation>>,
-		{ organizationId: string; data?: CreateOrganizationInvitationRequest }
+		{
+			organizationId: string;
+			data?: CreateOrganizationInvitationQuery;
+			params?: CreateOrganizationInvitationParams;
+		}
 	> = (props) => {
-		const { organizationId, data } = props ?? {};
+		const { organizationId, data, params } = props ?? {};
 
-		return createOrganizationInvitation(organizationId, data, requestOptions);
+		return createOrganizationInvitation(
+			organizationId,
+			data,
+			params,
+			requestOptions,
+		);
 	};
 
 	return { mutationFn, ...mutationOptions };
@@ -295,7 +331,7 @@ export type CreateOrganizationInvitationMutationResult = NonNullable<
 	Awaited<ReturnType<typeof createOrganizationInvitation>>
 >;
 export type CreateOrganizationInvitationMutationBody =
-	| CreateOrganizationInvitationRequest
+	| CreateOrganizationInvitationQuery
 	| undefined;
 export type CreateOrganizationInvitationMutationError = unknown;
 
@@ -310,7 +346,11 @@ export const useCreateOrganizationInvitation = <
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof createOrganizationInvitation>>,
 			TError,
-			{ organizationId: string; data?: CreateOrganizationInvitationRequest },
+			{
+				organizationId: string;
+				data?: CreateOrganizationInvitationQuery;
+				params?: CreateOrganizationInvitationParams;
+			},
 			TContext
 		>;
 		request?: SecondParameter<typeof customFetch>;
@@ -319,7 +359,11 @@ export const useCreateOrganizationInvitation = <
 ): UseMutationResult<
 	Awaited<ReturnType<typeof createOrganizationInvitation>>,
 	TError,
-	{ organizationId: string; data?: CreateOrganizationInvitationRequest },
+	{
+		organizationId: string;
+		data?: CreateOrganizationInvitationQuery;
+		params?: CreateOrganizationInvitationParams;
+	},
 	TContext
 > => {
 	return useMutation(
@@ -649,7 +693,7 @@ export const getAcceptOrganizationInvitationUrl = (
 };
 
 /**
- * Accepts an invitation to join an organization. Optionally redirects if a redirect_url is provided.
+ * Accepts an invitation to join an organization.
  * @summary Accept invitation
  */
 export const acceptOrganizationInvitation = async (
@@ -876,3 +920,228 @@ export const useRejectOrganizationInvitation = <
 		queryClient,
 	);
 };
+export const getVerifyOrganizationInvitationUrl = (
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0
+		? `/organizations/${organizationId}/invitations/${invitationId}/verify?${stringifiedParams}`
+		: `/organizations/${organizationId}/invitations/${invitationId}/verify`;
+};
+
+/**
+ * Verifies an invitation token.
+ * @summary Verify invitation
+ */
+export const verifyOrganizationInvitation = async (
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+	options?: RequestInit,
+): Promise<VerifyOrganizationInvitationResponse> => {
+	return customFetch<VerifyOrganizationInvitationResponse>(
+		getVerifyOrganizationInvitationUrl(organizationId, invitationId, params),
+		{
+			...options,
+			method: "GET",
+		},
+	);
+};
+
+export const getVerifyOrganizationInvitationQueryKey = (
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+) => {
+	return [
+		`/organizations/${organizationId}/invitations/${invitationId}/verify`,
+		...(params ? [params] : []),
+	] as const;
+};
+
+export const getVerifyOrganizationInvitationQueryOptions = <
+	TData = Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
+
+	const queryKey =
+		queryOptions?.queryKey ??
+		getVerifyOrganizationInvitationQueryKey(
+			organizationId,
+			invitationId,
+			params,
+		);
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<typeof verifyOrganizationInvitation>>
+	> = ({ signal }) =>
+		verifyOrganizationInvitation(organizationId, invitationId, params, {
+			signal,
+			...requestOptions,
+		});
+
+	return {
+		queryKey,
+		queryFn,
+		enabled:
+			organizationId !== null &&
+			organizationId !== undefined &&
+			invitationId !== null &&
+			invitationId !== undefined,
+		...queryOptions,
+	} as UseQueryOptions<
+		Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type VerifyOrganizationInvitationQueryResult = NonNullable<
+	Awaited<ReturnType<typeof verifyOrganizationInvitation>>
+>;
+export type VerifyOrganizationInvitationQueryError = unknown;
+
+export function useVerifyOrganizationInvitation<
+	TData = Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	invitationId: string,
+	params: undefined | VerifyOrganizationInvitationParams,
+	options: {
+		query: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				DefinedInitialDataOptions<
+					Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+					TError,
+					Awaited<ReturnType<typeof verifyOrganizationInvitation>>
+				>,
+				"initialData"
+			>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVerifyOrganizationInvitation<
+	TData = Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				UndefinedInitialDataOptions<
+					Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+					TError,
+					Awaited<ReturnType<typeof verifyOrganizationInvitation>>
+				>,
+				"initialData"
+			>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVerifyOrganizationInvitation<
+	TData = Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+/**
+ * @summary Verify invitation
+ */
+
+export function useVerifyOrganizationInvitation<
+	TData = Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+	TError = unknown,
+>(
+	organizationId: string,
+	invitationId: string,
+	params?: VerifyOrganizationInvitationParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof verifyOrganizationInvitation>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+} {
+	const queryOptions = getVerifyOrganizationInvitationQueryOptions(
+		organizationId,
+		invitationId,
+		params,
+		options,
+	);
+
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+	return withQueryKey(query, queryOptions.queryKey);
+}

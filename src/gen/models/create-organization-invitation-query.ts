@@ -6,7 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type CreateOrganizationInvitationRequest = {
-	email: string;
-	role: string;
+export type CreateOrganizationInvitationQuery = {
+	/** @nullable */
+	redirectUrl?: string | null;
 };
