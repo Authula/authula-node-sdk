@@ -65,22 +65,6 @@ export const getGetOrganizationInvitationResponseMock = (
 	...overrideResponse,
 });
 
-export const getRevokeOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
-): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
-});
-
 export const getAcceptOrganizationInvitationResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
@@ -98,6 +82,22 @@ export const getAcceptOrganizationInvitationResponseMock = (
 });
 
 export const getRejectOrganizationInvitationResponseMock = (
+	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+): OrganizationInvitation => ({
+	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	status: faker.helpers.arrayElement(
+		Object.values(OrganizationInvitationStatus),
+	),
+	...overrideResponse,
+});
+
+export const getRevokeOrganizationInvitationResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
 	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -240,7 +240,7 @@ export const getGetOrganizationInvitationMockHandler = (
 	);
 };
 
-export const getRevokeOrganizationInvitationMockHandler = (
+export const getAcceptOrganizationInvitationMockHandler = (
 	overrideResponse?:
 		| OrganizationInvitation
 		| ((
@@ -249,32 +249,8 @@ export const getRevokeOrganizationInvitationMockHandler = (
 	options?: RequestHandlerOptions,
 ) => {
 	return http.patch(
-		"*/organizations/:organizationId/invitations/:invitationId",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRevokeOrganizationInvitationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
-};
-
-export const getAcceptOrganizationInvitationMockHandler = (
-	overrideResponse?:
-		| OrganizationInvitation
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<OrganizationInvitation> | OrganizationInvitation),
-	options?: RequestHandlerOptions,
-) => {
-	return http.post(
 		"*/organizations/:organizationId/invitations/:invitationId/accept",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
 			return HttpResponse.json(
 				overrideResponse !== undefined
 					? typeof overrideResponse === "function"
@@ -292,19 +268,43 @@ export const getRejectOrganizationInvitationMockHandler = (
 	overrideResponse?:
 		| OrganizationInvitation
 		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
+				info: Parameters<Parameters<typeof http.patch>[1]>[0],
 		  ) => Promise<OrganizationInvitation> | OrganizationInvitation),
 	options?: RequestHandlerOptions,
 ) => {
-	return http.post(
+	return http.patch(
 		"*/organizations/:organizationId/invitations/:invitationId/reject",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
 			return HttpResponse.json(
 				overrideResponse !== undefined
 					? typeof overrideResponse === "function"
 						? await overrideResponse(info)
 						: overrideResponse
 					: getRejectOrganizationInvitationResponseMock(),
+				{ status: 200 },
+			);
+		},
+		options,
+	);
+};
+
+export const getRevokeOrganizationInvitationMockHandler = (
+	overrideResponse?:
+		| OrganizationInvitation
+		| ((
+				info: Parameters<Parameters<typeof http.patch>[1]>[0],
+		  ) => Promise<OrganizationInvitation> | OrganizationInvitation),
+	options?: RequestHandlerOptions,
+) => {
+	return http.patch(
+		"*/organizations/:organizationId/invitations/:invitationId/revoke",
+		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+			return HttpResponse.json(
+				overrideResponse !== undefined
+					? typeof overrideResponse === "function"
+						? await overrideResponse(info)
+						: overrideResponse
+					: getRevokeOrganizationInvitationResponseMock(),
 				{ status: 200 },
 			);
 		},
@@ -341,8 +341,8 @@ export const getOrganizationInvitationsMock = () => [
 	getListOrganizationInvitationsMockHandler(),
 	getCreateOrganizationInvitationMockHandler(),
 	getGetOrganizationInvitationMockHandler(),
-	getRevokeOrganizationInvitationMockHandler(),
 	getAcceptOrganizationInvitationMockHandler(),
 	getRejectOrganizationInvitationMockHandler(),
+	getRevokeOrganizationInvitationMockHandler(),
 	getVerifyOrganizationInvitationMockHandler(),
 ];

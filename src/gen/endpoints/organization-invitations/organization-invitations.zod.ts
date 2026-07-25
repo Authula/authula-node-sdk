@@ -56,17 +56,6 @@ export const GetOrganizationInvitationParams = zod.object({
 export const GetOrganizationInvitationResponse = OrganizationInvitation;
 
 /**
- * Revokes a pending invitation.
- * @summary Revoke invitation
- */
-export const RevokeOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
-	invitation_id: zod.string(),
-});
-
-export const RevokeOrganizationInvitationResponse = OrganizationInvitation;
-
-/**
  * Accepts an invitation to join an organization.
  * @summary Accept invitation
  */
@@ -94,6 +83,17 @@ export const RejectOrganizationInvitationParams = zod.object({
 });
 
 export const RejectOrganizationInvitationResponse = OrganizationInvitation;
+
+/**
+ * Revokes a pending invitation.
+ * @summary Revoke invitation
+ */
+export const RevokeOrganizationInvitationParams = zod.object({
+	organization_id: zod.string(),
+	invitation_id: zod.string(),
+});
+
+export const RevokeOrganizationInvitationResponse = OrganizationInvitation;
 
 /**
  * Verifies an invitation token.

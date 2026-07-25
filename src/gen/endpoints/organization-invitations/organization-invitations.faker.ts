@@ -63,22 +63,6 @@ export const getGetOrganizationInvitationResponseMock = (
 	...overrideResponse,
 });
 
-export const getRevokeOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
-): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
-});
-
 export const getAcceptOrganizationInvitationResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
@@ -96,6 +80,22 @@ export const getAcceptOrganizationInvitationResponseMock = (
 });
 
 export const getRejectOrganizationInvitationResponseMock = (
+	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+): OrganizationInvitation => ({
+	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	status: faker.helpers.arrayElement(
+		Object.values(OrganizationInvitationStatus),
+	),
+	...overrideResponse,
+});
+
+export const getRevokeOrganizationInvitationResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
 	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",

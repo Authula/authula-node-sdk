@@ -571,107 +571,6 @@ export function useGetOrganizationInvitation<
 	return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getRevokeOrganizationInvitationUrl = (
-	organizationId: string,
-	invitationId: string,
-) => {
-	return `/organizations/${organizationId}/invitations/${invitationId}`;
-};
-
-/**
- * Revokes a pending invitation.
- * @summary Revoke invitation
- */
-export const revokeOrganizationInvitation = async (
-	organizationId: string,
-	invitationId: string,
-	options?: RequestInit,
-): Promise<OrganizationInvitation> => {
-	return customFetch<OrganizationInvitation>(
-		getRevokeOrganizationInvitationUrl(organizationId, invitationId),
-		{
-			...options,
-			method: "PATCH",
-		},
-	);
-};
-
-export const getRevokeOrganizationInvitationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-		TError,
-		{ organizationId: string; invitationId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
-> => {
-	const mutationKey = ["revokeOrganizationInvitation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-		{ organizationId: string; invitationId: string }
-	> = (props) => {
-		const { organizationId, invitationId } = props ?? {};
-
-		return revokeOrganizationInvitation(
-			organizationId,
-			invitationId,
-			requestOptions,
-		);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type RevokeOrganizationInvitationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>
->;
-
-export type RevokeOrganizationInvitationMutationError = unknown;
-
-/**
- * @summary Revoke invitation
- */
-export const useRevokeOrganizationInvitation = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-			TError,
-			{ organizationId: string; invitationId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseMutationResult<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
-> => {
-	return useMutation(
-		getRevokeOrganizationInvitationMutationOptions(options),
-		queryClient,
-	);
-};
 export const getAcceptOrganizationInvitationUrl = (
 	organizationId: string,
 	invitationId: string,
@@ -707,7 +606,7 @@ export const acceptOrganizationInvitation = async (
 		getAcceptOrganizationInvitationUrl(organizationId, invitationId, params),
 		{
 			...options,
-			method: "POST",
+			method: "PATCH",
 			headers: { "Content-Type": "application/json", ...options?.headers },
 			body: JSON.stringify(acceptOrganizationInvitationQuery),
 		},
@@ -839,7 +738,7 @@ export const rejectOrganizationInvitation = async (
 		getRejectOrganizationInvitationUrl(organizationId, invitationId),
 		{
 			...options,
-			method: "POST",
+			method: "PATCH",
 		},
 	);
 };
@@ -917,6 +816,107 @@ export const useRejectOrganizationInvitation = <
 > => {
 	return useMutation(
 		getRejectOrganizationInvitationMutationOptions(options),
+		queryClient,
+	);
+};
+export const getRevokeOrganizationInvitationUrl = (
+	organizationId: string,
+	invitationId: string,
+) => {
+	return `/organizations/${organizationId}/invitations/${invitationId}/revoke`;
+};
+
+/**
+ * Revokes a pending invitation.
+ * @summary Revoke invitation
+ */
+export const revokeOrganizationInvitation = async (
+	organizationId: string,
+	invitationId: string,
+	options?: RequestInit,
+): Promise<OrganizationInvitation> => {
+	return customFetch<OrganizationInvitation>(
+		getRevokeOrganizationInvitationUrl(organizationId, invitationId),
+		{
+			...options,
+			method: "PATCH",
+		},
+	);
+};
+
+export const getRevokeOrganizationInvitationMutationOptions = <
+	TError = unknown,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+		TError,
+		{ organizationId: string; invitationId: string },
+		TContext
+	>;
+	request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+	TError,
+	{ organizationId: string; invitationId: string },
+	TContext
+> => {
+	const mutationKey = ["revokeOrganizationInvitation"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+		{ organizationId: string; invitationId: string }
+	> = (props) => {
+		const { organizationId, invitationId } = props ?? {};
+
+		return revokeOrganizationInvitation(
+			organizationId,
+			invitationId,
+			requestOptions,
+		);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type RevokeOrganizationInvitationMutationResult = NonNullable<
+	Awaited<ReturnType<typeof revokeOrganizationInvitation>>
+>;
+
+export type RevokeOrganizationInvitationMutationError = unknown;
+
+/**
+ * @summary Revoke invitation
+ */
+export const useRevokeOrganizationInvitation = <
+	TError = unknown,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+			TError,
+			{ organizationId: string; invitationId: string },
+			TContext
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+	TError,
+	{ organizationId: string; invitationId: string },
+	TContext
+> => {
+	return useMutation(
+		getRevokeOrganizationInvitationMutationOptions(options),
 		queryClient,
 	);
 };
