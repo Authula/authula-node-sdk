@@ -26,7 +26,7 @@ import type {
 	AcceptOrganizationInvitationParams,
 	AcceptOrganizationInvitationQuery,
 	CreateOrganizationInvitationParams,
-	CreateOrganizationInvitationQuery,
+	CreateOrganizationInvitationRequest,
 	OrganizationInvitation,
 	VerifyOrganizationInvitationParams,
 	VerifyOrganizationInvitationResponse,
@@ -257,7 +257,7 @@ export const getCreateOrganizationInvitationUrl = (
  */
 export const createOrganizationInvitation = async (
 	organizationId: string,
-	createOrganizationInvitationQuery?: CreateOrganizationInvitationQuery,
+	createOrganizationInvitationRequest?: CreateOrganizationInvitationRequest,
 	params?: CreateOrganizationInvitationParams,
 	options?: RequestInit,
 ): Promise<OrganizationInvitation> => {
@@ -267,7 +267,7 @@ export const createOrganizationInvitation = async (
 			...options,
 			method: "POST",
 			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(createOrganizationInvitationQuery),
+			body: JSON.stringify(createOrganizationInvitationRequest),
 		},
 	);
 };
@@ -281,7 +281,7 @@ export const getCreateOrganizationInvitationMutationOptions = <
 		TError,
 		{
 			organizationId: string;
-			data?: CreateOrganizationInvitationQuery;
+			data?: CreateOrganizationInvitationRequest;
 			params?: CreateOrganizationInvitationParams;
 		},
 		TContext
@@ -292,7 +292,7 @@ export const getCreateOrganizationInvitationMutationOptions = <
 	TError,
 	{
 		organizationId: string;
-		data?: CreateOrganizationInvitationQuery;
+		data?: CreateOrganizationInvitationRequest;
 		params?: CreateOrganizationInvitationParams;
 	},
 	TContext
@@ -310,7 +310,7 @@ export const getCreateOrganizationInvitationMutationOptions = <
 		Awaited<ReturnType<typeof createOrganizationInvitation>>,
 		{
 			organizationId: string;
-			data?: CreateOrganizationInvitationQuery;
+			data?: CreateOrganizationInvitationRequest;
 			params?: CreateOrganizationInvitationParams;
 		}
 	> = (props) => {
@@ -331,7 +331,7 @@ export type CreateOrganizationInvitationMutationResult = NonNullable<
 	Awaited<ReturnType<typeof createOrganizationInvitation>>
 >;
 export type CreateOrganizationInvitationMutationBody =
-	| CreateOrganizationInvitationQuery
+	| CreateOrganizationInvitationRequest
 	| undefined;
 export type CreateOrganizationInvitationMutationError = unknown;
 
@@ -348,7 +348,7 @@ export const useCreateOrganizationInvitation = <
 			TError,
 			{
 				organizationId: string;
-				data?: CreateOrganizationInvitationQuery;
+				data?: CreateOrganizationInvitationRequest;
 				params?: CreateOrganizationInvitationParams;
 			},
 			TContext
@@ -361,7 +361,7 @@ export const useCreateOrganizationInvitation = <
 	TError,
 	{
 		organizationId: string;
-		data?: CreateOrganizationInvitationQuery;
+		data?: CreateOrganizationInvitationRequest;
 		params?: CreateOrganizationInvitationParams;
 	},
 	TContext

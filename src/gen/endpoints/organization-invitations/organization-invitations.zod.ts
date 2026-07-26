@@ -9,7 +9,7 @@ import * as zod from "zod";
 
 import {
 	AcceptOrganizationInvitationQuery,
-	CreateOrganizationInvitationQuery,
+	CreateOrganizationInvitationRequest,
 	OrganizationInvitation,
 	VerifyOrganizationInvitationResponse,
 } from "../authula-api.schemas.zod";
@@ -40,7 +40,7 @@ export const CreateOrganizationInvitationQueryParams = zod.object({
 });
 
 export const CreateOrganizationInvitationBody =
-	CreateOrganizationInvitationQuery;
+	CreateOrganizationInvitationRequest;
 
 export const CreateOrganizationInvitationResponse = OrganizationInvitation;
 
