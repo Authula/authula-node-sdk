@@ -90,6 +90,24 @@ function parseSetCookieToStore(raw: string, store: CookieStore): void {
   }
 }
 
+export function convertQueryKeysToSnakeCase(url: string): string {
+  const qIndex = url.indexOf("?");
+  if (qIndex === -1) {
+    return url;
+  }
+
+  const base = url.slice(0, qIndex);
+  const searchParams = new URLSearchParams(url.slice(qIndex + 1));
+  const snakeParams = new URLSearchParams();
+
+  for (const [key, value] of searchParams.entries()) {
+    const snakeKey = key.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`);
+    snakeParams.append(snakeKey, value);
+  }
+
+  return `${base}?${snakeParams.toString()}`;
+}
+
 export async function customFetch<T>(
   url: string,
   options?: RequestInit & {
@@ -103,7 +121,9 @@ export async function customFetch<T>(
     ) => Promise<"retry" | void>;
   },
 ): Promise<T> {
-  const resolvedUrl = prependBase(url, options?.baseUrl ?? "");
+  const resolvedUrl = convertQueryKeysToSnakeCase(
+    prependBase(url, options?.baseUrl ?? ""),
+  );
 
   const headers = new Headers(options?.headers || {});
 

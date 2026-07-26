@@ -30,7 +30,8 @@ export const walkAndTransformSpec = (obj: any): any => {
           : reqKey,
       );
     } else if (obj.in && obj.in !== "path" && key === "name" && typeof value === "string") {
-      // Handle URL query parameter naming (path params must match the URL template)
+      // Convert non-path parameter names to camelCase for TS client usage
+      // (customFetch will convert query keys back to snake_case at request time)
       newObj[key] = value.includes("_") ? toCamelCase(value) : value;
     } else {
       newObj[key] = walkAndTransformSpec(value);
