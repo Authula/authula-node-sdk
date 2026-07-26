@@ -8,7 +8,7 @@
 import type { OrganizationInvitation } from "./organization-invitation";
 import type { OrganizationSummary } from "./organization-summary";
 
-export type VerifyOrganizationInvitationResponse = {
-	invitation?: OrganizationInvitation;
-	organization?: OrganizationSummary;
+export type GetOrganizationInvitationResponse = {
+	invitation: OrganizationInvitation;
+	organization: OrganizationSummary;
 };

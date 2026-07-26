@@ -5,12 +5,15 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import type { OrganizationSummaryMetadata } from "./organization-summary-metadata";
 
 export type OrganizationSummary = {
-	id?: string;
+	id: string;
 	/** @nullable */
 	logo?: string | null;
-	name?: string;
-	ownerId?: string;
-	slug?: string;
+	/** @nullable */
+	metadata?: OrganizationSummaryMetadata;
+	name: string;
+	ownerId: string;
+	slug: string;
 };

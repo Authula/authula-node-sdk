@@ -6,7 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type VerifyOrganizationInvitationParams = {
-	token?: string;
-	redirectUrl?: string;
-};
+/**
+ * @nullable
+ */
+export type OrganizationSummaryMetadata = { [key: string]: unknown } | null;

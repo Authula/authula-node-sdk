@@ -9,28 +9,52 @@ import { faker } from "@faker-js/faker";
 import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
 import type {
+	GetOrganizationInvitationResponse,
 	OrganizationInvitation,
-	VerifyOrganizationInvitationResponse,
 } from "../../models";
 import { OrganizationInvitationStatus } from "../../models";
 
 export const getListOrganizationInvitationsResponseMock = ():
-	| OrganizationInvitation[]
+	| GetOrganizationInvitationResponse[]
 	| null =>
 	Array.from(
 		{ length: faker.number.int({ min: 1, max: 10 }) },
 		(_, i) => i + 1,
 	).map(() => ({
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		status: faker.helpers.arrayElement(
-			Object.values(OrganizationInvitationStatus),
-		),
+		invitation: {
+			createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+			email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			status: faker.helpers.arrayElement(
+				Object.values(OrganizationInvitationStatus),
+			),
+		},
+		organization: {
+			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			logo: faker.helpers.arrayElement([
+				faker.helpers.arrayElement([
+					faker.string.alpha({ length: { min: 10, max: 20 } }),
+					null,
+				]),
+				undefined,
+			]),
+			metadata: faker.helpers.arrayElement([
+				faker.helpers.arrayElement([
+					{
+						[faker.string.alphanumeric(5)]: {},
+					},
+					null,
+				]),
+				undefined,
+			]),
+			name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+			slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		},
 	}));
 
 export const getCreateOrganizationInvitationResponseMock = (
@@ -50,18 +74,44 @@ export const getCreateOrganizationInvitationResponseMock = (
 });
 
 export const getGetOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
-): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
+	overrideResponse: Partial<
+		Extract<GetOrganizationInvitationResponse, object>
+	> = {},
+): GetOrganizationInvitationResponse => ({
+	invitation: {
+		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		status: faker.helpers.arrayElement(
+			Object.values(OrganizationInvitationStatus),
+		),
+	},
+	organization: {
+		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		logo: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				faker.string.alpha({ length: { min: 10, max: 20 } }),
+				null,
+			]),
+			undefined,
+		]),
+		metadata: faker.helpers.arrayElement([
+			faker.helpers.arrayElement([
+				{
+					[faker.string.alphanumeric(5)]: {},
+				},
+				null,
+			]),
+			undefined,
+		]),
+		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+		slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+	},
 	...overrideResponse,
 });
 
@@ -113,66 +163,15 @@ export const getRevokeOrganizationInvitationResponseMock = (
 	...overrideResponse,
 });
 
-export const getVerifyOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<
-		Extract<VerifyOrganizationInvitationResponse, object>
-	> = {},
-): VerifyOrganizationInvitationResponse => ({
-	invitation: faker.helpers.arrayElement([
-		{
-			createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-			email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			status: faker.helpers.arrayElement(
-				Object.values(OrganizationInvitationStatus),
-			),
-		},
-		undefined,
-	]),
-	organization: faker.helpers.arrayElement([
-		{
-			id: faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				undefined,
-			]),
-			logo: faker.helpers.arrayElement([
-				faker.helpers.arrayElement([
-					faker.string.alpha({ length: { min: 10, max: 20 } }),
-					null,
-				]),
-				undefined,
-			]),
-			name: faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				undefined,
-			]),
-			ownerId: faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				undefined,
-			]),
-			slug: faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				undefined,
-			]),
-		},
-		undefined,
-	]),
-	...overrideResponse,
-});
-
 export const getListOrganizationInvitationsMockHandler = (
 	overrideResponse?:
-		| OrganizationInvitation[]
+		| GetOrganizationInvitationResponse[]
 		| null
 		| ((
 				info: Parameters<Parameters<typeof http.get>[1]>[0],
 		  ) =>
-				| Promise<OrganizationInvitation[] | null>
-				| OrganizationInvitation[]
+				| Promise<GetOrganizationInvitationResponse[] | null>
+				| GetOrganizationInvitationResponse[]
 				| null),
 	options?: RequestHandlerOptions,
 ) => {
@@ -218,10 +217,12 @@ export const getCreateOrganizationInvitationMockHandler = (
 
 export const getGetOrganizationInvitationMockHandler = (
 	overrideResponse?:
-		| OrganizationInvitation
+		| GetOrganizationInvitationResponse
 		| ((
 				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<OrganizationInvitation> | OrganizationInvitation),
+		  ) =>
+				| Promise<GetOrganizationInvitationResponse>
+				| GetOrganizationInvitationResponse),
 	options?: RequestHandlerOptions,
 ) => {
 	return http.get(
@@ -311,32 +312,6 @@ export const getRevokeOrganizationInvitationMockHandler = (
 		options,
 	);
 };
-
-export const getVerifyOrganizationInvitationMockHandler = (
-	overrideResponse?:
-		| VerifyOrganizationInvitationResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) =>
-				| Promise<VerifyOrganizationInvitationResponse>
-				| VerifyOrganizationInvitationResponse),
-	options?: RequestHandlerOptions,
-) => {
-	return http.get(
-		"*/organizations/:organizationId/invitations/:invitationId/verify",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyOrganizationInvitationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
-};
 export const getOrganizationInvitationsMock = () => [
 	getListOrganizationInvitationsMockHandler(),
 	getCreateOrganizationInvitationMockHandler(),
@@ -344,5 +319,4 @@ export const getOrganizationInvitationsMock = () => [
 	getAcceptOrganizationInvitationMockHandler(),
 	getRejectOrganizationInvitationMockHandler(),
 	getRevokeOrganizationInvitationMockHandler(),
-	getVerifyOrganizationInvitationMockHandler(),
 ];

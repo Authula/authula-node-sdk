@@ -676,6 +676,57 @@ export const GetMeResponse = zod.object({
 export type GetMeResponse = zod.input<typeof GetMeResponse>;
 export type GetMeResponseOutput = zod.output<typeof GetMeResponse>;
 
+export const OrganizationInvitationStatus = zod
+	.enum(["pending", "accepted", "rejected", "revoked", "expired"])
+	.describe("The type of the invitation status");
+
+export type OrganizationInvitationStatus = zod.input<
+	typeof OrganizationInvitationStatus
+>;
+export type OrganizationInvitationStatusOutput = zod.output<
+	typeof OrganizationInvitationStatus
+>;
+
+export const OrganizationInvitation = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	email: zod.string(),
+	expiresAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	inviterId: zod.string(),
+	organizationId: zod.string(),
+	role: zod.string(),
+	status: OrganizationInvitationStatus,
+});
+
+export type OrganizationInvitation = zod.input<typeof OrganizationInvitation>;
+export type OrganizationInvitationOutput = zod.output<
+	typeof OrganizationInvitation
+>;
+
+export const OrganizationSummary = zod.object({
+	id: zod.string(),
+	logo: zod.string().nullish(),
+	metadata: zod.record(zod.string(), zod.unknown()).nullish(),
+	name: zod.string(),
+	ownerId: zod.string(),
+	slug: zod.string(),
+});
+
+export type OrganizationSummary = zod.input<typeof OrganizationSummary>;
+export type OrganizationSummaryOutput = zod.output<typeof OrganizationSummary>;
+
+export const GetOrganizationInvitationResponse = zod.object({
+	invitation: OrganizationInvitation,
+	organization: OrganizationSummary,
+});
+
+export type GetOrganizationInvitationResponse = zod.input<
+	typeof GetOrganizationInvitationResponse
+>;
+export type GetOrganizationInvitationResponseOutput = zod.output<
+	typeof GetOrganizationInvitationResponse
+>;
+
 export const GetSessionStateResponse = zod.object({
 	state: AdminSessionState,
 });
@@ -824,33 +875,6 @@ export const Organization = zod.object({
 export type Organization = zod.input<typeof Organization>;
 export type OrganizationOutput = zod.output<typeof Organization>;
 
-export const OrganizationInvitationStatus = zod
-	.enum(["pending", "accepted", "rejected", "revoked", "expired"])
-	.describe("The type of the invitation status");
-
-export type OrganizationInvitationStatus = zod.input<
-	typeof OrganizationInvitationStatus
->;
-export type OrganizationInvitationStatusOutput = zod.output<
-	typeof OrganizationInvitationStatus
->;
-
-export const OrganizationInvitation = zod.object({
-	createdAt: zod.iso.datetime({ offset: true }),
-	email: zod.string(),
-	expiresAt: zod.iso.datetime({ offset: true }),
-	id: zod.string(),
-	inviterId: zod.string(),
-	organizationId: zod.string(),
-	role: zod.string(),
-	status: OrganizationInvitationStatus,
-});
-
-export type OrganizationInvitation = zod.input<typeof OrganizationInvitation>;
-export type OrganizationInvitationOutput = zod.output<
-	typeof OrganizationInvitation
->;
-
 export const OrganizationMember = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
 	id: zod.string(),
@@ -878,17 +902,6 @@ export type OrganizationMemberResponse = zod.input<
 export type OrganizationMemberResponseOutput = zod.output<
 	typeof OrganizationMemberResponse
 >;
-
-export const OrganizationSummary = zod.object({
-	id: zod.string().optional(),
-	logo: zod.string().nullish(),
-	name: zod.string().optional(),
-	ownerId: zod.string().optional(),
-	slug: zod.string().optional(),
-});
-
-export type OrganizationSummary = zod.input<typeof OrganizationSummary>;
-export type OrganizationSummaryOutput = zod.output<typeof OrganizationSummary>;
 
 export const OrganizationTeam = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
@@ -1418,18 +1431,6 @@ export type VerifyBackupCodeResponse = zod.input<
 >;
 export type VerifyBackupCodeResponseOutput = zod.output<
 	typeof VerifyBackupCodeResponse
->;
-
-export const VerifyOrganizationInvitationResponse = zod.object({
-	invitation: OrganizationInvitation.optional(),
-	organization: OrganizationSummary.optional(),
-});
-
-export type VerifyOrganizationInvitationResponse = zod.input<
-	typeof VerifyOrganizationInvitationResponse
->;
-export type VerifyOrganizationInvitationResponseOutput = zod.output<
-	typeof VerifyOrganizationInvitationResponse
 >;
 
 export const VerifyTOTPRequest = zod.object({
