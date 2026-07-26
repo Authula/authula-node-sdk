@@ -22,11 +22,22 @@ export function wrapGenerated<T extends Record<string, any>>(
     }
 
     if (isHookKey(key)) {
-      wrapped[key] = (options?: Record<string, any>, ...rest: any[]) =>
-        value(
-          { ...options, request: { ...options?.request, baseUrl, cookies, onBeforeFetch, onAfterFetch } },
-          ...rest,
-        );
+      wrapped[key] = (...args: any[]) => {
+        const ctx = { baseUrl, cookies, onBeforeFetch, onAfterFetch };
+        let optionsIdx = Math.max(0, value.length - 2);
+        if (args[optionsIdx] != null && typeof args[optionsIdx] !== "object") {
+          optionsIdx = Math.max(0, value.length - 1);
+        }
+        while (args.length <= optionsIdx) {
+          args.push(undefined);
+        }
+        const existing = args[optionsIdx] ?? {};
+        args[optionsIdx] = {
+          ...(typeof existing === "object" && existing !== null ? existing : {}),
+          request: { ...(existing?.request ?? {}), ...ctx },
+        };
+        return value(...args);
+      };
     } else {
       wrapped[key] = (...args: any[]) => {
         const ctx = { baseUrl, cookies, onBeforeFetch, onAfterFetch };
