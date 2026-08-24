@@ -10,18 +10,21 @@ import * as zod from "zod";
 import {
 	CreateOrganizationRequest,
 	DeleteOrganizationResponse,
+	ListOrganizationsResponse,
 	Organization,
 	UpdateOrganizationRequest,
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists all organizations owned by the authenticated user.
+ * Lists every organization the authenticated user can access, both the ones they own and the ones they are a member of, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List organizations
  */
-export const ListOrganizationsResponseItem = Organization;
-export const ListOrganizationsResponse = zod.array(
-	ListOrganizationsResponseItem,
-);
+export const ListOrganizationsQueryParams = zod.object({
+	page: zod.int().optional(),
+	limit: zod.int().optional(),
+});
+
+export const ListOrganizationsResponseSchema = ListOrganizationsResponse;
 
 /**
  * Creates a new organization with the authenticated user as the owner.

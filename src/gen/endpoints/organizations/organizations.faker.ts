@@ -7,10 +7,16 @@
  */
 import { faker } from "@faker-js/faker";
 
-import type { DeleteOrganizationResponse, Organization } from "../../models";
+import type {
+	DeleteOrganizationResponse,
+	ListOrganizationsResponse,
+	Organization,
+} from "../../models";
 
-export const getListOrganizationsResponseMock = (): Organization[] | null =>
-	Array.from(
+export const getListOrganizationsResponseMock = (
+	overrideResponse: Partial<Extract<ListOrganizationsResponse, object>> = {},
+): ListOrganizationsResponse => ({
+	data: Array.from(
 		{ length: faker.number.int({ min: 1, max: 10 }) },
 		(_, i) => i + 1,
 	).map(() => ({
@@ -36,7 +42,16 @@ export const getListOrganizationsResponseMock = (): Organization[] | null =>
 		ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
 		slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
 		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	}));
+	})),
+	pagination: {
+		hasMore: faker.datatype.boolean(),
+		limit: faker.number.int(),
+		page: faker.number.int(),
+		total: faker.number.int(),
+		totalPages: faker.number.int(),
+	},
+	...overrideResponse,
+});
 
 export const getCreateOrganizationResponseMock = (
 	overrideResponse: Partial<Extract<Organization, object>> = {},

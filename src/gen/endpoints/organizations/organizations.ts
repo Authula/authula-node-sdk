@@ -25,6 +25,8 @@ import { customFetch } from "../../../mutators/custom-fetch";
 import type {
 	CreateOrganizationRequest,
 	DeleteOrganizationResponse,
+	ListOrganizationsParams,
+	ListOrganizationsResponse,
 	Organization,
 	UpdateOrganizationRequest,
 } from "../../models";
@@ -49,47 +51,69 @@ const withQueryKey = <T extends object, K>(
 	return result;
 };
 
-export const getListOrganizationsUrl = () => {
-	return `/organizations`;
+export const getListOrganizationsUrl = (params?: ListOrganizationsParams) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0
+		? `/organizations?${stringifiedParams}`
+		: `/organizations`;
 };
 
 /**
- * Lists all organizations owned by the authenticated user.
+ * Lists every organization the authenticated user can access, both the ones they own and the ones they are a member of, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List organizations
  */
 export const listOrganizations = async (
+	params?: ListOrganizationsParams,
 	options?: Parameters<typeof customFetch>[1],
-): Promise<Organization[] | null> => {
-	return customFetch<Organization[] | null>(getListOrganizationsUrl(), {
-		...options,
-		method: "GET",
-	});
+): Promise<ListOrganizationsResponse> => {
+	return customFetch<ListOrganizationsResponse>(
+		getListOrganizationsUrl(params),
+		{
+			...options,
+			method: "GET",
+		},
+	);
 };
 
-export const getListOrganizationsQueryKey = () => {
-	return [`/organizations`] as const;
+export const getListOrganizationsQueryKey = (
+	params?: ListOrganizationsParams,
+) => {
+	return [`/organizations`, ...(params ? [params] : [])] as const;
 };
 
 export const getListOrganizationsQueryOptions = <
 	TData = Awaited<ReturnType<typeof listOrganizations>>,
 	TError = unknown,
->(options?: {
-	query?: Partial<
-		UseQueryOptions<
-			Awaited<ReturnType<typeof listOrganizations>>,
-			TError,
-			TData
-		>
-	>;
-	request?: SecondParameter<typeof customFetch>;
-}) => {
+>(
+	params?: ListOrganizationsParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof listOrganizations>>,
+				TError,
+				TData
+			>
+		>;
+		request?: SecondParameter<typeof customFetch>;
+	},
+) => {
 	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getListOrganizationsQueryKey();
+	const queryKey =
+		queryOptions?.queryKey ?? getListOrganizationsQueryKey(params);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof listOrganizations>>
-	> = ({ signal }) => listOrganizations({ signal, ...requestOptions });
+	> = ({ signal }) => listOrganizations(params, { signal, ...requestOptions });
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof listOrganizations>>,
@@ -107,6 +131,7 @@ export function useListOrganizations<
 	TData = Awaited<ReturnType<typeof listOrganizations>>,
 	TError = unknown,
 >(
+	params: undefined | ListOrganizationsParams,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -133,6 +158,7 @@ export function useListOrganizations<
 	TData = Awaited<ReturnType<typeof listOrganizations>>,
 	TError = unknown,
 >(
+	params?: ListOrganizationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -159,6 +185,7 @@ export function useListOrganizations<
 	TData = Awaited<ReturnType<typeof listOrganizations>>,
 	TError = unknown,
 >(
+	params?: ListOrganizationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -181,6 +208,7 @@ export function useListOrganizations<
 	TData = Awaited<ReturnType<typeof listOrganizations>>,
 	TError = unknown,
 >(
+	params?: ListOrganizationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -195,7 +223,7 @@ export function useListOrganizations<
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions = getListOrganizationsQueryOptions(options);
+	const queryOptions = getListOrganizationsQueryOptions(params, options);
 
 	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
 		TData,

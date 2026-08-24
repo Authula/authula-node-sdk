@@ -28,6 +28,8 @@ import type {
 	CreateOrganizationInvitationParams,
 	CreateOrganizationInvitationRequest,
 	GetOrganizationInvitationResponse,
+	ListOrganizationInvitationsParams,
+	ListOrganizationInvitationsResponse,
 	OrganizationInvitation,
 } from "../../models";
 
@@ -51,20 +53,36 @@ const withQueryKey = <T extends object, K>(
 	return result;
 };
 
-export const getListOrganizationInvitationsUrl = (organizationId: string) => {
-	return `/organizations/${organizationId}/invitations`;
+export const getListOrganizationInvitationsUrl = (
+	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
+) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0
+		? `/organizations/${organizationId}/invitations?${stringifiedParams}`
+		: `/organizations/${organizationId}/invitations`;
 };
 
 /**
- * Lists all invitations for an organization.
+ * Lists the invitations for an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List invitations
  */
 export const listOrganizationInvitations = async (
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 	options?: Parameters<typeof customFetch>[1],
-): Promise<GetOrganizationInvitationResponse[] | null> => {
-	return customFetch<GetOrganizationInvitationResponse[] | null>(
-		getListOrganizationInvitationsUrl(organizationId),
+): Promise<ListOrganizationInvitationsResponse> => {
+	return customFetch<ListOrganizationInvitationsResponse>(
+		getListOrganizationInvitationsUrl(organizationId, params),
 		{
 			...options,
 			method: "GET",
@@ -74,8 +92,12 @@ export const listOrganizationInvitations = async (
 
 export const getListOrganizationInvitationsQueryKey = (
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 ) => {
-	return [`/organizations/${organizationId}/invitations`] as const;
+	return [
+		`/organizations/${organizationId}/invitations`,
+		...(params ? [params] : []),
+	] as const;
 };
 
 export const getListOrganizationInvitationsQueryOptions = <
@@ -83,6 +105,7 @@ export const getListOrganizationInvitationsQueryOptions = <
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -98,12 +121,15 @@ export const getListOrganizationInvitationsQueryOptions = <
 
 	const queryKey =
 		queryOptions?.queryKey ??
-		getListOrganizationInvitationsQueryKey(organizationId);
+		getListOrganizationInvitationsQueryKey(organizationId, params);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof listOrganizationInvitations>>
 	> = ({ signal }) =>
-		listOrganizationInvitations(organizationId, { signal, ...requestOptions });
+		listOrganizationInvitations(organizationId, params, {
+			signal,
+			...requestOptions,
+		});
 
 	return {
 		queryKey,
@@ -127,6 +153,7 @@ export function useListOrganizationInvitations<
 	TError = unknown,
 >(
 	organizationId: string,
+	params: undefined | ListOrganizationInvitationsParams,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -154,6 +181,7 @@ export function useListOrganizationInvitations<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -181,6 +209,7 @@ export function useListOrganizationInvitations<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -204,6 +233,7 @@ export function useListOrganizationInvitations<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationInvitationsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -220,6 +250,7 @@ export function useListOrganizationInvitations<
 } {
 	const queryOptions = getListOrganizationInvitationsQueryOptions(
 		organizationId,
+		params,
 		options,
 	);
 

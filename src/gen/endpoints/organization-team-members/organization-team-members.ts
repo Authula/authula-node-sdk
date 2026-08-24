@@ -26,6 +26,7 @@ import type {
 	AddOrganizationTeamMemberRequest,
 	DeleteOrganizationTeamMemberResponse,
 	ListOrganizationTeamMembersParams,
+	ListOrganizationTeamMembersResponse,
 	OrganizationTeamMember,
 	OrganizationTeamMemberResponse,
 } from "../../models";
@@ -71,7 +72,7 @@ export const getListOrganizationTeamMembersUrl = (
 };
 
 /**
- * Lists all members of a team with pagination.
+ * Lists the members of a team, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List team members
  */
 export const listOrganizationTeamMembers = async (
@@ -79,8 +80,8 @@ export const listOrganizationTeamMembers = async (
 	teamId: string,
 	params?: ListOrganizationTeamMembersParams,
 	options?: Parameters<typeof customFetch>[1],
-): Promise<OrganizationTeamMemberResponse[] | null> => {
-	return customFetch<OrganizationTeamMemberResponse[] | null>(
+): Promise<ListOrganizationTeamMembersResponse> => {
+	return customFetch<ListOrganizationTeamMembersResponse>(
 		getListOrganizationTeamMembersUrl(organizationId, teamId, params),
 		{
 			...options,

@@ -808,6 +808,135 @@ export const Jwk = zod.object({
 export type Jwk = zod.input<typeof Jwk>;
 export type JwkOutput = zod.output<typeof Jwk>;
 
+export const Pagination = zod.object({
+	hasMore: zod.boolean(),
+	limit: zod.int(),
+	page: zod.int(),
+	total: zod.int(),
+	totalPages: zod.int(),
+});
+
+export type Pagination = zod.input<typeof Pagination>;
+export type PaginationOutput = zod.output<typeof Pagination>;
+
+export const ListOrganizationInvitationsResponse = zod.object({
+	data: zod.array(GetOrganizationInvitationResponse),
+	pagination: Pagination,
+});
+
+export type ListOrganizationInvitationsResponse = zod.input<
+	typeof ListOrganizationInvitationsResponse
+>;
+export type ListOrganizationInvitationsResponseOutput = zod.output<
+	typeof ListOrganizationInvitationsResponse
+>;
+
+export const OrganizationMemberResponse = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	organizationId: zod.string(),
+	role: zod.string(),
+	updatedAt: zod.iso.datetime({ offset: true }),
+	user: User,
+});
+
+export type OrganizationMemberResponse = zod.input<
+	typeof OrganizationMemberResponse
+>;
+export type OrganizationMemberResponseOutput = zod.output<
+	typeof OrganizationMemberResponse
+>;
+
+export const ListOrganizationMembersResponse = zod.object({
+	data: zod.array(OrganizationMemberResponse),
+	pagination: Pagination,
+});
+
+export type ListOrganizationMembersResponse = zod.input<
+	typeof ListOrganizationMembersResponse
+>;
+export type ListOrganizationMembersResponseOutput = zod.output<
+	typeof ListOrganizationMembersResponse
+>;
+
+export const OrganizationTeamMemberResponse = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	member: OrganizationMemberResponse,
+	teamId: zod.string(),
+});
+
+export type OrganizationTeamMemberResponse = zod.input<
+	typeof OrganizationTeamMemberResponse
+>;
+export type OrganizationTeamMemberResponseOutput = zod.output<
+	typeof OrganizationTeamMemberResponse
+>;
+
+export const ListOrganizationTeamMembersResponse = zod.object({
+	data: zod.array(OrganizationTeamMemberResponse),
+	pagination: Pagination,
+});
+
+export type ListOrganizationTeamMembersResponse = zod.input<
+	typeof ListOrganizationTeamMembersResponse
+>;
+export type ListOrganizationTeamMembersResponseOutput = zod.output<
+	typeof ListOrganizationTeamMembersResponse
+>;
+
+export const OrganizationTeam = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	description: zod.string().nullish(),
+	id: zod.string(),
+	metadata: zod.record(zod.string(), zod.unknown()).nullish(),
+	name: zod.string(),
+	organizationId: zod.string(),
+	slug: zod.string(),
+	updatedAt: zod.iso.datetime({ offset: true }),
+});
+
+export type OrganizationTeam = zod.input<typeof OrganizationTeam>;
+export type OrganizationTeamOutput = zod.output<typeof OrganizationTeam>;
+
+export const ListOrganizationTeamsResponse = zod.object({
+	data: zod.array(OrganizationTeam),
+	pagination: Pagination,
+});
+
+export type ListOrganizationTeamsResponse = zod.input<
+	typeof ListOrganizationTeamsResponse
+>;
+export type ListOrganizationTeamsResponseOutput = zod.output<
+	typeof ListOrganizationTeamsResponse
+>;
+
+export const Organization = zod.object({
+	createdAt: zod.iso.datetime({ offset: true }),
+	id: zod.string(),
+	logo: zod.string().nullish(),
+	metadata: zod.record(zod.string(), zod.unknown()).nullish(),
+	name: zod.string(),
+	ownerId: zod.string(),
+	slug: zod.string(),
+	updatedAt: zod.iso.datetime({ offset: true }),
+});
+
+export type Organization = zod.input<typeof Organization>;
+export type OrganizationOutput = zod.output<typeof Organization>;
+
+export const ListOrganizationsResponse = zod.object({
+	data: zod.array(Organization),
+	pagination: Pagination,
+});
+
+export type ListOrganizationsResponse = zod.input<
+	typeof ListOrganizationsResponse
+>;
+export type ListOrganizationsResponseOutput = zod.output<
+	typeof ListOrganizationsResponse
+>;
+
 export const MagicLinkExchangeRequest = zod.object({
 	token: zod.string(),
 });
@@ -861,20 +990,6 @@ export type MagicLinkVerifyResponseOutput = zod.output<
 	typeof MagicLinkVerifyResponse
 >;
 
-export const Organization = zod.object({
-	createdAt: zod.iso.datetime({ offset: true }),
-	id: zod.string(),
-	logo: zod.string().nullish(),
-	metadata: zod.record(zod.string(), zod.unknown()).nullish(),
-	name: zod.string(),
-	ownerId: zod.string(),
-	slug: zod.string(),
-	updatedAt: zod.iso.datetime({ offset: true }),
-});
-
-export type Organization = zod.input<typeof Organization>;
-export type OrganizationOutput = zod.output<typeof Organization>;
-
 export const OrganizationMember = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
 	id: zod.string(),
@@ -887,36 +1002,6 @@ export const OrganizationMember = zod.object({
 export type OrganizationMember = zod.input<typeof OrganizationMember>;
 export type OrganizationMemberOutput = zod.output<typeof OrganizationMember>;
 
-export const OrganizationMemberResponse = zod.object({
-	createdAt: zod.iso.datetime({ offset: true }),
-	id: zod.string(),
-	organizationId: zod.string(),
-	role: zod.string(),
-	updatedAt: zod.iso.datetime({ offset: true }),
-	user: User,
-});
-
-export type OrganizationMemberResponse = zod.input<
-	typeof OrganizationMemberResponse
->;
-export type OrganizationMemberResponseOutput = zod.output<
-	typeof OrganizationMemberResponse
->;
-
-export const OrganizationTeam = zod.object({
-	createdAt: zod.iso.datetime({ offset: true }),
-	description: zod.string().nullish(),
-	id: zod.string(),
-	metadata: zod.record(zod.string(), zod.unknown()).nullish(),
-	name: zod.string(),
-	organizationId: zod.string(),
-	slug: zod.string(),
-	updatedAt: zod.iso.datetime({ offset: true }),
-});
-
-export type OrganizationTeam = zod.input<typeof OrganizationTeam>;
-export type OrganizationTeamOutput = zod.output<typeof OrganizationTeam>;
-
 export const OrganizationTeamMember = zod.object({
 	createdAt: zod.iso.datetime({ offset: true }),
 	id: zod.string(),
@@ -927,20 +1012,6 @@ export const OrganizationTeamMember = zod.object({
 export type OrganizationTeamMember = zod.input<typeof OrganizationTeamMember>;
 export type OrganizationTeamMemberOutput = zod.output<
 	typeof OrganizationTeamMember
->;
-
-export const OrganizationTeamMemberResponse = zod.object({
-	createdAt: zod.iso.datetime({ offset: true }),
-	id: zod.string(),
-	member: OrganizationMemberResponse,
-	teamId: zod.string(),
-});
-
-export type OrganizationTeamMemberResponse = zod.input<
-	typeof OrganizationTeamMemberResponse
->;
-export type OrganizationTeamMemberResponseOutput = zod.output<
-	typeof OrganizationTeamMemberResponse
 >;
 
 export const RefreshTokenRequest = zod.object({

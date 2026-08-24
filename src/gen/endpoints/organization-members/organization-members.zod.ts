@@ -10,13 +10,14 @@ import * as zod from "zod";
 import {
 	AddOrganizationMemberRequest,
 	DeleteOrganizationMemberResponse,
+	ListOrganizationMembersResponse,
 	OrganizationMember,
 	OrganizationMemberResponse,
 	UpdateOrganizationMemberRequest,
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists all members of an organization with pagination.
+ * Lists the members of an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List members
  */
 export const ListOrganizationMembersParams = zod.object({
@@ -28,10 +29,8 @@ export const ListOrganizationMembersQueryParams = zod.object({
 	limit: zod.int().optional(),
 });
 
-export const ListOrganizationMembersResponseItem = OrganizationMemberResponse;
-export const ListOrganizationMembersResponse = zod.array(
-	ListOrganizationMembersResponseItem,
-);
+export const ListOrganizationMembersResponseSchema =
+	ListOrganizationMembersResponse;
 
 /**
  * Adds a user as a member of an organization with the specified role.

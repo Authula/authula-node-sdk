@@ -11,6 +11,7 @@ import { HttpResponse, http } from "msw";
 
 import type {
 	DeleteOrganizationTeamMemberResponse,
+	ListOrganizationTeamMembersResponse,
 	OrganizationTeamMember,
 	OrganizationTeamMemberResponse,
 } from "../../models";
@@ -31,14 +32,12 @@ export {
 
 export const getListOrganizationTeamMembersMockHandler = (
 	overrideResponse?:
-		| OrganizationTeamMemberResponse[]
-		| null
+		| ListOrganizationTeamMembersResponse
 		| ((
 				info: Parameters<Parameters<typeof http.get>[1]>[0],
 		  ) =>
-				| Promise<OrganizationTeamMemberResponse[] | null>
-				| OrganizationTeamMemberResponse[]
-				| null),
+				| Promise<ListOrganizationTeamMembersResponse>
+				| ListOrganizationTeamMembersResponse),
 	options?: RequestHandlerOptions,
 ) => {
 	return http.get(

@@ -9,7 +9,11 @@
 import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
 
-import type { DeleteOrganizationResponse, Organization } from "../../models";
+import type {
+	DeleteOrganizationResponse,
+	ListOrganizationsResponse,
+	Organization,
+} from "../../models";
 
 import {
 	getCreateOrganizationResponseMock,
@@ -29,11 +33,10 @@ export {
 
 export const getListOrganizationsMockHandler = (
 	overrideResponse?:
-		| Organization[]
-		| null
+		| ListOrganizationsResponse
 		| ((
 				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Organization[] | null> | Organization[] | null),
+		  ) => Promise<ListOrganizationsResponse> | ListOrganizationsResponse),
 	options?: RequestHandlerOptions,
 ) => {
 	return http.get(

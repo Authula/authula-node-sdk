@@ -11,6 +11,7 @@ import { HttpResponse, http } from "msw";
 
 import type {
 	GetOrganizationInvitationResponse,
+	ListOrganizationInvitationsResponse,
 	OrganizationInvitation,
 } from "../../models";
 
@@ -34,14 +35,12 @@ export {
 
 export const getListOrganizationInvitationsMockHandler = (
 	overrideResponse?:
-		| GetOrganizationInvitationResponse[]
-		| null
+		| ListOrganizationInvitationsResponse
 		| ((
 				info: Parameters<Parameters<typeof http.get>[1]>[0],
 		  ) =>
-				| Promise<GetOrganizationInvitationResponse[] | null>
-				| GetOrganizationInvitationResponse[]
-				| null),
+				| Promise<ListOrganizationInvitationsResponse>
+				| ListOrganizationInvitationsResponse),
 	options?: RequestHandlerOptions,
 ) => {
 	return http.get(

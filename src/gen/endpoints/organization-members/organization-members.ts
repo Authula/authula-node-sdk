@@ -26,6 +26,7 @@ import type {
 	AddOrganizationMemberRequest,
 	DeleteOrganizationMemberResponse,
 	ListOrganizationMembersParams,
+	ListOrganizationMembersResponse,
 	OrganizationMember,
 	OrganizationMemberResponse,
 	UpdateOrganizationMemberRequest,
@@ -71,15 +72,15 @@ export const getListOrganizationMembersUrl = (
 };
 
 /**
- * Lists all members of an organization with pagination.
+ * Lists the members of an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List members
  */
 export const listOrganizationMembers = async (
 	organizationId: string,
 	params?: ListOrganizationMembersParams,
 	options?: Parameters<typeof customFetch>[1],
-): Promise<OrganizationMemberResponse[] | null> => {
-	return customFetch<OrganizationMemberResponse[] | null>(
+): Promise<ListOrganizationMembersResponse> => {
+	return customFetch<ListOrganizationMembersResponse>(
 		getListOrganizationMembersUrl(organizationId, params),
 		{
 			...options,

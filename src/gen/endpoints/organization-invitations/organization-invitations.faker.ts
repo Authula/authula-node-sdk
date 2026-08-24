@@ -8,14 +8,17 @@
 import { faker } from "@faker-js/faker";
 import type {
 	GetOrganizationInvitationResponse,
+	ListOrganizationInvitationsResponse,
 	OrganizationInvitation,
 } from "../../models";
 import { OrganizationInvitationStatus } from "../../models";
 
-export const getListOrganizationInvitationsResponseMock = ():
-	| GetOrganizationInvitationResponse[]
-	| null =>
-	Array.from(
+export const getListOrganizationInvitationsResponseMock = (
+	overrideResponse: Partial<
+		Extract<ListOrganizationInvitationsResponse, object>
+	> = {},
+): ListOrganizationInvitationsResponse => ({
+	data: Array.from(
 		{ length: faker.number.int({ min: 1, max: 10 }) },
 		(_, i) => i + 1,
 	).map(() => ({
@@ -53,7 +56,16 @@ export const getListOrganizationInvitationsResponseMock = ():
 			ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
 			slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
 		},
-	}));
+	})),
+	pagination: {
+		hasMore: faker.datatype.boolean(),
+		limit: faker.number.int(),
+		page: faker.number.int(),
+		total: faker.number.int(),
+		totalPages: faker.number.int(),
+	},
+	...overrideResponse,
+});
 
 export const getCreateOrganizationInvitationResponseMock = (
 	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},

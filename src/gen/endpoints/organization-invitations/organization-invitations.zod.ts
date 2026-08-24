@@ -11,22 +11,25 @@ import {
 	AcceptOrganizationInvitationQuery,
 	CreateOrganizationInvitationRequest,
 	GetOrganizationInvitationResponse,
+	ListOrganizationInvitationsResponse,
 	OrganizationInvitation,
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists all invitations for an organization.
+ * Lists the invitations for an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List invitations
  */
 export const ListOrganizationInvitationsParams = zod.object({
 	organization_id: zod.string(),
 });
 
-export const ListOrganizationInvitationsResponseItem =
-	GetOrganizationInvitationResponse;
-export const ListOrganizationInvitationsResponse = zod.array(
-	ListOrganizationInvitationsResponseItem,
-);
+export const ListOrganizationInvitationsQueryParams = zod.object({
+	page: zod.int().optional(),
+	limit: zod.int().optional(),
+});
+
+export const ListOrganizationInvitationsResponseSchema =
+	ListOrganizationInvitationsResponse;
 
 /**
  * Creates an invitation for a user to join an organization.

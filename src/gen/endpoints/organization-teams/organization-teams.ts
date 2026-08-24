@@ -25,6 +25,8 @@ import { customFetch } from "../../../mutators/custom-fetch";
 import type {
 	CreateOrganizationTeamRequest,
 	DeleteOrganizationTeamResponse,
+	ListOrganizationTeamsParams,
+	ListOrganizationTeamsResponse,
 	OrganizationTeam,
 	UpdateOrganizationTeamRequest,
 } from "../../models";
@@ -49,20 +51,36 @@ const withQueryKey = <T extends object, K>(
 	return result;
 };
 
-export const getListOrganizationTeamsUrl = (organizationId: string) => {
-	return `/organizations/${organizationId}/teams`;
+export const getListOrganizationTeamsUrl = (
+	organizationId: string,
+	params?: ListOrganizationTeamsParams,
+) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0
+		? `/organizations/${organizationId}/teams?${stringifiedParams}`
+		: `/organizations/${organizationId}/teams`;
 };
 
 /**
- * Lists all teams within an organization.
+ * Lists the teams within an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List teams
  */
 export const listOrganizationTeams = async (
 	organizationId: string,
+	params?: ListOrganizationTeamsParams,
 	options?: Parameters<typeof customFetch>[1],
-): Promise<OrganizationTeam[] | null> => {
-	return customFetch<OrganizationTeam[] | null>(
-		getListOrganizationTeamsUrl(organizationId),
+): Promise<ListOrganizationTeamsResponse> => {
+	return customFetch<ListOrganizationTeamsResponse>(
+		getListOrganizationTeamsUrl(organizationId, params),
 		{
 			...options,
 			method: "GET",
@@ -70,8 +88,14 @@ export const listOrganizationTeams = async (
 	);
 };
 
-export const getListOrganizationTeamsQueryKey = (organizationId: string) => {
-	return [`/organizations/${organizationId}/teams`] as const;
+export const getListOrganizationTeamsQueryKey = (
+	organizationId: string,
+	params?: ListOrganizationTeamsParams,
+) => {
+	return [
+		`/organizations/${organizationId}/teams`,
+		...(params ? [params] : []),
+	] as const;
 };
 
 export const getListOrganizationTeamsQueryOptions = <
@@ -79,6 +103,7 @@ export const getListOrganizationTeamsQueryOptions = <
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationTeamsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -93,12 +118,16 @@ export const getListOrganizationTeamsQueryOptions = <
 	const { query: queryOptions, request: requestOptions } = options ?? {};
 
 	const queryKey =
-		queryOptions?.queryKey ?? getListOrganizationTeamsQueryKey(organizationId);
+		queryOptions?.queryKey ??
+		getListOrganizationTeamsQueryKey(organizationId, params);
 
 	const queryFn: QueryFunction<
 		Awaited<ReturnType<typeof listOrganizationTeams>>
 	> = ({ signal }) =>
-		listOrganizationTeams(organizationId, { signal, ...requestOptions });
+		listOrganizationTeams(organizationId, params, {
+			signal,
+			...requestOptions,
+		});
 
 	return {
 		queryKey,
@@ -122,6 +151,7 @@ export function useListOrganizationTeams<
 	TError = unknown,
 >(
 	organizationId: string,
+	params: undefined | ListOrganizationTeamsParams,
 	options: {
 		query: Partial<
 			UseQueryOptions<
@@ -149,6 +179,7 @@ export function useListOrganizationTeams<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationTeamsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -176,6 +207,7 @@ export function useListOrganizationTeams<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationTeamsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -199,6 +231,7 @@ export function useListOrganizationTeams<
 	TError = unknown,
 >(
 	organizationId: string,
+	params?: ListOrganizationTeamsParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
@@ -215,6 +248,7 @@ export function useListOrganizationTeams<
 } {
 	const queryOptions = getListOrganizationTeamsQueryOptions(
 		organizationId,
+		params,
 		options,
 	);
 

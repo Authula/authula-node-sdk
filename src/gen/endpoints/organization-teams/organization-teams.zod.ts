@@ -10,22 +10,26 @@ import * as zod from "zod";
 import {
 	CreateOrganizationTeamRequest,
 	DeleteOrganizationTeamResponse,
+	ListOrganizationTeamsResponse,
 	OrganizationTeam,
 	UpdateOrganizationTeamRequest,
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists all teams within an organization.
+ * Lists the teams within an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List teams
  */
 export const ListOrganizationTeamsParams = zod.object({
 	organization_id: zod.string(),
 });
 
-export const ListOrganizationTeamsResponseItem = OrganizationTeam;
-export const ListOrganizationTeamsResponse = zod.array(
-	ListOrganizationTeamsResponseItem,
-);
+export const ListOrganizationTeamsQueryParams = zod.object({
+	page: zod.int().optional(),
+	limit: zod.int().optional(),
+});
+
+export const ListOrganizationTeamsResponseSchema =
+	ListOrganizationTeamsResponse;
 
 /**
  * Creates a new team within an organization.

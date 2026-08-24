@@ -10,12 +10,13 @@ import * as zod from "zod";
 import {
 	AddOrganizationTeamMemberRequest,
 	DeleteOrganizationTeamMemberResponse,
+	ListOrganizationTeamMembersResponse,
 	OrganizationTeamMember,
 	OrganizationTeamMemberResponse,
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists all members of a team with pagination.
+ * Lists the members of a team, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
  * @summary List team members
  */
 export const ListOrganizationTeamMembersParams = zod.object({
@@ -28,11 +29,8 @@ export const ListOrganizationTeamMembersQueryParams = zod.object({
 	limit: zod.int().optional(),
 });
 
-export const ListOrganizationTeamMembersResponseItem =
-	OrganizationTeamMemberResponse;
-export const ListOrganizationTeamMembersResponse = zod.array(
-	ListOrganizationTeamMembersResponseItem,
-);
+export const ListOrganizationTeamMembersResponseSchema =
+	ListOrganizationTeamMembersResponse;
 
 /**
  * Adds a member to a team.
