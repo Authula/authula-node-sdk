@@ -14,30 +14,6 @@ This Node.js SDK provides seamless integration with an Authula server for both c
 
 ---
 
-## 🚨 Breaking Changes
-
-Starting with v0.6.x, the SDK transitions to an automated, schema-driven architecture powered by Orval. Code generation is now tied 1-to-1 with the Authula backend OpenAPI specification, ensuring absolute parity and enhanced reliability.
-
-This architectural shift introduces several breaking changes to the SDK footprint:
-
-1. Relocation of Core Methods
-
-   What changed: Core utility methods have been consolidated.
-
-   Impact: Any foundational system methods have moved directly into the Core Plugin namespace, as the underlying Authula engine now explicitly groups these operations under the core OpenAPI tag.
-
-2. Standardized Method Signatures via Orval
-
-   What changed: Every Authula plugin now exposes its feature set via auto-generated endpoints.
-
-   Impact: While plugins remain organized under their original top-level objects, individual method names, parameters, and payloads may have changed to match the strict schema specification.
-
-3. Unified Server & Client Support
-
-   The Benefit: Each plugin now natively exports decoupled, standalone methods optimized for server-side execution, alongside fully typed TanStack Query hooks dedicated to client-side web applications.
-
-   Why this matters: Moving forward, this SDK will perfectly mirror upstream backend updates with zero drift, drastically reducing runtime bugs and offering complete type safety across your entire stack.
-
 ## Features
 
 - **Framework Agnostic**: Works with Next.js/React, Vue.js and more
