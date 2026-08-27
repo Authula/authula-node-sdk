@@ -71,7 +71,7 @@ export const getListOrganizationTeamsUrl = (
 };
 
 /**
- * Lists the teams within an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
+ * Lists the teams within an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.
  * @summary List teams
  */
 export const listOrganizationTeams = async (

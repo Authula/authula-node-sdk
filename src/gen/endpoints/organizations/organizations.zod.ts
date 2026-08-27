@@ -16,12 +16,15 @@ import {
 } from "../authula-api.schemas.zod";
 
 /**
- * Lists every organization the authenticated user can access, both the ones they own and the ones they are a member of, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10, with a hard maximum of 100. Out-of-range values are clamped silently rather than rejected.
+ * Lists every organization the authenticated user can access, both the ones they own and the ones they are a member of, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.
  * @summary List organizations
  */
+export const listOrganizationsQueryPageDefault = 1;
+export const listOrganizationsQueryLimitDefault = 10;
+
 export const ListOrganizationsQueryParams = zod.object({
-	page: zod.int().optional(),
-	limit: zod.int().optional(),
+	page: zod.int().default(listOrganizationsQueryPageDefault),
+	limit: zod.int().default(listOrganizationsQueryLimitDefault),
 });
 
 export const ListOrganizationsResponseSchema = ListOrganizationsResponse;
