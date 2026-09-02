@@ -21,7 +21,7 @@
   "files": [
     "dist"
   ],
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "build": "pnpm run orval:build && pnpm run tsdown:build",
     "orval:build": "rm -rf ./src/gen && orval -c orval.config.ts",
