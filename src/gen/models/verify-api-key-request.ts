@@ -7,5 +7,5 @@
  */
 
 export type VerifyApiKeyRequest = {
-	key: string;
+  key: string;
 };

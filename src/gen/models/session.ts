@@ -7,14 +7,14 @@
  */
 
 export type Session = {
-	createdAt: string;
-	expiresAt: string;
-	id: string;
-	/** @nullable */
-	ipAddress?: string | null;
-	token: string;
-	updatedAt: string;
-	/** @nullable */
-	userAgent?: string | null;
-	userId: string;
+  createdAt: string;
+  expiresAt: string;
+  id: string;
+  /** @nullable */
+  ipAddress?: string | null;
+  token: string;
+  updatedAt: string;
+  /** @nullable */
+  userAgent?: string | null;
+  userId: string;
 };

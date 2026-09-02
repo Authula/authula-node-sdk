@@ -8,12 +8,12 @@
 import type { OrganizationSummaryMetadata } from "./organization-summary-metadata";
 
 export type OrganizationSummary = {
-	id: string;
-	/** @nullable */
-	logo?: string | null;
-	/** @nullable */
-	metadata?: OrganizationSummaryMetadata;
-	name: string;
-	ownerId: string;
-	slug: string;
+  id: string;
+  /** @nullable */
+  logo?: string | null;
+  /** @nullable */
+  metadata?: OrganizationSummaryMetadata;
+  name: string;
+  ownerId: string;
+  slug: string;
 };

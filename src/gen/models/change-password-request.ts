@@ -7,6 +7,6 @@
  */
 
 export type ChangePasswordRequest = {
-	password: string;
-	token: string;
+  password: string;
+  token: string;
 };

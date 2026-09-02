@@ -7,22 +7,22 @@
  */
 
 export type UpdateAccountRequest = {
-	/** @nullable */
-	accessToken?: string | null;
-	/** @nullable */
-	accessTokenExpiresAt?: string | null;
-	/** @nullable */
-	accountId?: string | null;
-	/** @nullable */
-	idToken?: string | null;
-	/** @nullable */
-	password?: string | null;
-	/** @nullable */
-	providerId?: string | null;
-	/** @nullable */
-	refreshToken?: string | null;
-	/** @nullable */
-	refreshTokenExpiresAt?: string | null;
-	/** @nullable */
-	scope?: string | null;
+  /** @nullable */
+  accessToken?: string | null;
+  /** @nullable */
+  accessTokenExpiresAt?: string | null;
+  /** @nullable */
+  accountId?: string | null;
+  /** @nullable */
+  idToken?: string | null;
+  /** @nullable */
+  password?: string | null;
+  /** @nullable */
+  providerId?: string | null;
+  /** @nullable */
+  refreshToken?: string | null;
+  /** @nullable */
+  refreshTokenExpiresAt?: string | null;
+  /** @nullable */
+  scope?: string | null;
 };

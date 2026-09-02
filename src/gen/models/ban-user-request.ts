@@ -7,8 +7,8 @@
  */
 
 export type BanUserRequest = {
-	/** @nullable */
-	bannedUntil?: string | null;
-	/** @nullable */
-	reason?: string | null;
+  /** @nullable */
+  bannedUntil?: string | null;
+  /** @nullable */
+  reason?: string | null;
 };

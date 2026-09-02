@@ -5,11 +5,7 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-import {
-	GetMeResponse,
-	SignOutRequest,
-	SignOutResponse,
-} from "../authula-api.schemas.zod";
+import { GetMeResponse, SignOutRequest, SignOutResponse } from "../authula-api.schemas.zod";
 
 /**
  * Retrieves the authenticated user's profile and current session.

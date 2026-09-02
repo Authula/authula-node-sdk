@@ -7,6 +7,6 @@
  */
 
 export type SendEmailVerificationRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
+  /** @nullable */
+  callbackUrl?: string | null;
 };

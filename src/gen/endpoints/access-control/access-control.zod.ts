@@ -8,34 +8,34 @@
 import * as zod from "zod";
 
 import {
-	AddRolePermissionRequest,
-	AddRolePermissionResponse,
-	AssignUserRoleRequest,
-	AssignUserRoleResponse,
-	CheckUserPermissionsRequest,
-	CheckUserPermissionsResponse,
-	CreatePermissionRequest,
-	CreatePermissionResponse,
-	CreateRoleRequest,
-	CreateRoleResponse,
-	DeletePermissionResponse,
-	DeleteRoleResponse,
-	GetUserPermissionsResponse,
-	Permission,
-	RemoveRolePermissionResponse,
-	RemoveUserRoleResponse,
-	ReplaceRolePermissionResponse,
-	ReplaceRolePermissionsRequest,
-	ReplaceUserRolesRequest,
-	ReplaceUserRolesResponse,
-	Role,
-	RoleDetails,
-	UpdatePermissionRequest,
-	UpdatePermissionResponse,
-	UpdateRoleRequest,
-	UpdateRoleResponse,
-	UserPermissionInfo,
-	UserRoleInfo,
+  AddRolePermissionRequest,
+  AddRolePermissionResponse,
+  AssignUserRoleRequest,
+  AssignUserRoleResponse,
+  CheckUserPermissionsRequest,
+  CheckUserPermissionsResponse,
+  CreatePermissionRequest,
+  CreatePermissionResponse,
+  CreateRoleRequest,
+  CreateRoleResponse,
+  DeletePermissionResponse,
+  DeleteRoleResponse,
+  GetUserPermissionsResponse,
+  Permission,
+  RemoveRolePermissionResponse,
+  RemoveUserRoleResponse,
+  ReplaceRolePermissionResponse,
+  ReplaceRolePermissionsRequest,
+  ReplaceUserRolesRequest,
+  ReplaceUserRolesResponse,
+  Role,
+  RoleDetails,
+  UpdatePermissionRequest,
+  UpdatePermissionResponse,
+  UpdateRoleRequest,
+  UpdateRoleResponse,
+  UserPermissionInfo,
+  UserRoleInfo,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -58,7 +58,7 @@ export const CreatePermissionResponseSchema = CreatePermissionResponse;
  * @summary Get permission by key
  */
 export const GetPermissionByKeyParams = zod.object({
-	permission_key: zod.string(),
+  permission_key: zod.string(),
 });
 
 export const GetPermissionByKeyResponse = Permission;
@@ -68,7 +68,7 @@ export const GetPermissionByKeyResponse = Permission;
  * @summary Get permission by ID
  */
 export const GetPermissionParams = zod.object({
-	permission_id: zod.string(),
+  permission_id: zod.string(),
 });
 
 export const GetPermissionResponse = Permission;
@@ -78,7 +78,7 @@ export const GetPermissionResponse = Permission;
  * @summary Delete permission
  */
 export const DeletePermissionParams = zod.object({
-	permission_id: zod.string(),
+  permission_id: zod.string(),
 });
 
 export const DeletePermissionResponseSchema = DeletePermissionResponse;
@@ -88,7 +88,7 @@ export const DeletePermissionResponseSchema = DeletePermissionResponse;
  * @summary Update permission
  */
 export const UpdatePermissionParams = zod.object({
-	permission_id: zod.string(),
+  permission_id: zod.string(),
 });
 
 export const UpdatePermissionBody = UpdatePermissionRequest;
@@ -115,7 +115,7 @@ export const CreateRoleResponseSchema = CreateRoleResponse;
  * @summary Get role by name
  */
 export const GetRoleByNameParams = zod.object({
-	role_name: zod.string(),
+  role_name: zod.string(),
 });
 
 export const GetRoleByNameResponse = Role;
@@ -125,7 +125,7 @@ export const GetRoleByNameResponse = Role;
  * @summary Get role by ID
  */
 export const GetRoleParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const GetRoleResponse = RoleDetails;
@@ -135,7 +135,7 @@ export const GetRoleResponse = RoleDetails;
  * @summary Delete role
  */
 export const DeleteRoleParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const DeleteRoleResponseSchema = DeleteRoleResponse;
@@ -145,7 +145,7 @@ export const DeleteRoleResponseSchema = DeleteRoleResponse;
  * @summary Update role
  */
 export const UpdateRoleParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const UpdateRoleBody = UpdateRoleRequest;
@@ -157,20 +157,18 @@ export const UpdateRoleResponseSchema = UpdateRoleResponse;
  * @summary List role permissions
  */
 export const ListRolePermissionsParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const ListRolePermissionsResponseItem = UserPermissionInfo;
-export const ListRolePermissionsResponse = zod.array(
-	ListRolePermissionsResponseItem,
-);
+export const ListRolePermissionsResponse = zod.array(ListRolePermissionsResponseItem);
 
 /**
  * Replaces all permissions assigned to a role with a new set.
  * @summary Replace role permissions
  */
 export const ReplaceRolePermissionsParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const ReplaceRolePermissionsBody = ReplaceRolePermissionsRequest;
@@ -182,7 +180,7 @@ export const ReplaceRolePermissionsResponse = ReplaceRolePermissionResponse;
  * @summary Assign permission to role
  */
 export const AddRolePermissionParams = zod.object({
-	role_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const AddRolePermissionBody = AddRolePermissionRequest;
@@ -194,8 +192,8 @@ export const AddRolePermissionResponseSchema = AddRolePermissionResponse;
  * @summary Remove role permission
  */
 export const RemoveRolePermissionParams = zod.object({
-	role_id: zod.string(),
-	permission_id: zod.string(),
+  role_id: zod.string(),
+  permission_id: zod.string(),
 });
 
 export const RemoveRolePermissionResponseSchema = RemoveRolePermissionResponse;
@@ -205,7 +203,7 @@ export const RemoveRolePermissionResponseSchema = RemoveRolePermissionResponse;
  * @summary Get user permissions
  */
 export const GetUserPermissionsParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const GetUserPermissionsResponseSchema = GetUserPermissionsResponse;
@@ -215,7 +213,7 @@ export const GetUserPermissionsResponseSchema = GetUserPermissionsResponse;
  * @summary Check user permissions
  */
 export const CheckUserPermissionsParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const CheckUserPermissionsBody = CheckUserPermissionsRequest;
@@ -227,7 +225,7 @@ export const CheckUserPermissionsResponseSchema = CheckUserPermissionsResponse;
  * @summary List user roles
  */
 export const ListUserRolesParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const ListUserRolesResponseItem = UserRoleInfo;
@@ -238,7 +236,7 @@ export const ListUserRolesResponse = zod.array(ListUserRolesResponseItem);
  * @summary Replace user roles
  */
 export const ReplaceUserRolesParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const ReplaceUserRolesBody = ReplaceUserRolesRequest;
@@ -250,7 +248,7 @@ export const ReplaceUserRolesResponseSchema = ReplaceUserRolesResponse;
  * @summary Assign role to user
  */
 export const AssignUserRoleParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const AssignUserRoleBody = AssignUserRoleRequest;
@@ -262,8 +260,8 @@ export const AssignUserRoleResponseSchema = AssignUserRoleResponse;
  * @summary Remove user role
  */
 export const RemoveUserRoleParams = zod.object({
-	user_id: zod.string(),
-	role_id: zod.string(),
+  user_id: zod.string(),
+  role_id: zod.string(),
 });
 
 export const RemoveUserRoleResponseSchema = RemoveUserRoleResponse;

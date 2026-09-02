@@ -8,14 +8,14 @@
 import type { UserMetadata } from "./user-metadata";
 
 export type User = {
-	createdAt: string;
-	email: string;
-	emailVerified: boolean;
-	id: string;
-	/** @nullable */
-	image?: string | null;
-	/** @nullable */
-	metadata?: UserMetadata;
-	name: string;
-	updatedAt: string;
+  createdAt: string;
+  email: string;
+  emailVerified: boolean;
+  id: string;
+  /** @nullable */
+  image?: string | null;
+  /** @nullable */
+  metadata?: UserMetadata;
+  name: string;
+  updatedAt: string;
 };

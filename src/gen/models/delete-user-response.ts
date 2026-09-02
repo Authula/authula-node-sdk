@@ -7,5 +7,5 @@
  */
 
 export type DeleteUserResponse = {
-	message: string;
+  message: string;
 };

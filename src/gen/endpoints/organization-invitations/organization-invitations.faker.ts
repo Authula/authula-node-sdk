@@ -6,169 +6,145 @@
  * OpenAPI spec version: 0.1.0
  */
 import { faker } from "@faker-js/faker";
-import type {
-	GetOrganizationInvitationResponse,
-	ListOrganizationInvitationsResponse,
-	OrganizationInvitation,
-} from "../../models";
+
 import { OrganizationInvitationStatus } from "../../models";
+import type {
+  GetOrganizationInvitationResponse,
+  ListOrganizationInvitationsResponse,
+  OrganizationInvitation,
+} from "../../models";
 
 export const getListOrganizationInvitationsResponseMock = (
-	overrideResponse: Partial<
-		Extract<ListOrganizationInvitationsResponse, object>
-	> = {},
+  overrideResponse: Partial<Extract<ListOrganizationInvitationsResponse, object>> = {},
 ): ListOrganizationInvitationsResponse => ({
-	data: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		invitation: {
-			createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-			email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			status: faker.helpers.arrayElement(
-				Object.values(OrganizationInvitationStatus),
-			),
-		},
-		organization: {
-			id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			logo: faker.helpers.arrayElement([
-				faker.helpers.arrayElement([
-					faker.string.alpha({ length: { min: 10, max: 20 } }),
-					null,
-				]),
-				undefined,
-			]),
-			metadata: faker.helpers.arrayElement([
-				faker.helpers.arrayElement([
-					{
-						[faker.string.alphanumeric(5)]: {},
-					},
-					null,
-				]),
-				undefined,
-			]),
-			name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		},
-	})),
-	pagination: {
-		hasMore: faker.datatype.boolean(),
-		limit: faker.number.int(),
-		page: faker.number.int(),
-		total: faker.number.int(),
-		totalPages: faker.number.int(),
-	},
-	...overrideResponse,
+  data: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    invitation: {
+      createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+      email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+      id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+    },
+    organization: {
+      id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      logo: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+        undefined,
+      ]),
+      metadata: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([
+          {
+            [faker.string.alphanumeric(5)]: {},
+          },
+          null,
+        ]),
+        undefined,
+      ]),
+      name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    },
+  })),
+  pagination: {
+    hasMore: faker.datatype.boolean(),
+    limit: faker.number.int(),
+    page: faker.number.int(),
+    total: faker.number.int(),
+    totalPages: faker.number.int(),
+  },
+  ...overrideResponse,
 });
 
 export const getCreateOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+  ...overrideResponse,
 });
 
 export const getGetOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<
-		Extract<GetOrganizationInvitationResponse, object>
-	> = {},
+  overrideResponse: Partial<Extract<GetOrganizationInvitationResponse, object>> = {},
 ): GetOrganizationInvitationResponse => ({
-	invitation: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		status: faker.helpers.arrayElement(
-			Object.values(OrganizationInvitationStatus),
-		),
-	},
-	organization: {
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		logo: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	},
-	...overrideResponse,
+  invitation: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+  },
+  organization: {
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    logo: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  },
+  ...overrideResponse,
 });
 
 export const getAcceptOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+  ...overrideResponse,
 });
 
 export const getRejectOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+  ...overrideResponse,
 });
 
 export const getRevokeOrganizationInvitationResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationInvitation, object>> = {},
 ): OrganizationInvitation => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	role: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	status: faker.helpers.arrayElement(
-		Object.values(OrganizationInvitationStatus),
-	),
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  inviterId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  role: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  status: faker.helpers.arrayElement(Object.values(OrganizationInvitationStatus)),
+  ...overrideResponse,
 });

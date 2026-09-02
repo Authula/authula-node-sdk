@@ -8,6 +8,6 @@
 import type { ApiKey } from "./api-key";
 
 export type CreateApiKeyResponse = {
-	apiKey: ApiKey;
-	rawApiKey: string;
+  apiKey: ApiKey;
+  rawApiKey: string;
 };

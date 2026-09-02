@@ -7,6 +7,6 @@
  */
 
 export type VerifyBackupCodeRequest = {
-	code: string;
-	trustDevice?: boolean;
+  code: string;
+  trustDevice?: boolean;
 };

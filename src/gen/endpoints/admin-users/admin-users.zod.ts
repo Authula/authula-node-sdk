@@ -8,13 +8,13 @@
 import * as zod from "zod";
 
 import {
-	CreateUserRequest,
-	CreateUserResponse,
-	DeleteUserResponse,
-	GetUserByIDResponse,
-	UpdateUserRequest,
-	UpdateUserResponse,
-	UsersPage,
+  CreateUserRequest,
+  CreateUserResponse,
+  DeleteUserResponse,
+  GetUserByIDResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  UsersPage,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -22,8 +22,8 @@ import {
  * @summary List users
  */
 export const ListUsersQueryParams = zod.object({
-	cursor: zod.string().nullish(),
-	limit: zod.int().nullish(),
+  cursor: zod.string().nullish(),
+  limit: zod.int().nullish(),
 });
 
 export const ListUsersResponse = UsersPage;
@@ -41,7 +41,7 @@ export const CreateUserResponseSchema = CreateUserResponse;
  * @summary Get user by ID
  */
 export const GetUserParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const GetUserResponse = GetUserByIDResponse;
@@ -51,7 +51,7 @@ export const GetUserResponse = GetUserByIDResponse;
  * @summary Delete user
  */
 export const DeleteUserParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const DeleteUserResponseSchema = DeleteUserResponse;
@@ -61,7 +61,7 @@ export const DeleteUserResponseSchema = DeleteUserResponse;
  * @summary Update user
  */
 export const UpdateUserParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const UpdateUserBody = UpdateUserRequest;

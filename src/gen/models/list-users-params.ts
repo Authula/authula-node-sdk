@@ -7,12 +7,12 @@
  */
 
 export type ListUsersParams = {
-	/**
-	 * @nullable
-	 */
-	cursor?: string | null;
-	/**
-	 * @nullable
-	 */
-	limit?: number | null;
+  /**
+   * @nullable
+   */
+  cursor?: string | null;
+  /**
+   * @nullable
+   */
+  limit?: number | null;
 };

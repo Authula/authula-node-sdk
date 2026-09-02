@@ -7,5 +7,5 @@
  */
 
 export type ReplaceRolePermissionResponse = {
-	message: string;
+  message: string;
 };

@@ -8,5 +8,5 @@
 import type { AdminUserState } from "./admin-user-state";
 
 export type GetUserStateResponse = {
-	state: AdminUserState;
+  state: AdminUserState;
 };

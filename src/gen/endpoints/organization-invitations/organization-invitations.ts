@@ -5,71 +5,69 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	AcceptOrganizationInvitationParams,
-	AcceptOrganizationInvitationQuery,
-	CreateOrganizationInvitationParams,
-	CreateOrganizationInvitationRequest,
-	GetOrganizationInvitationResponse,
-	ListOrganizationInvitationsParams,
-	ListOrganizationInvitationsResponse,
-	OrganizationInvitation,
+  AcceptOrganizationInvitationParams,
+  AcceptOrganizationInvitationQuery,
+  CreateOrganizationInvitationParams,
+  CreateOrganizationInvitationRequest,
+  GetOrganizationInvitationResponse,
+  ListOrganizationInvitationsParams,
+  ListOrganizationInvitationsResponse,
+  OrganizationInvitation,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getListOrganizationInvitationsUrl = (
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
 ) => {
-	const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value !== undefined) {
-			normalizedParams.append(key, value === null ? "null" : String(value));
-		}
-	});
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
 
-	const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/organizations/${organizationId}/invitations?${stringifiedParams}`
-		: `/organizations/${organizationId}/invitations`;
+  return stringifiedParams.length > 0
+    ? `/organizations/${organizationId}/invitations?${stringifiedParams}`
+    : `/organizations/${organizationId}/invitations`;
 };
 
 /**
@@ -77,208 +75,165 @@ export const getListOrganizationInvitationsUrl = (
  * @summary List invitations
  */
 export const listOrganizationInvitations = async (
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<ListOrganizationInvitationsResponse> => {
-	return customFetch<ListOrganizationInvitationsResponse>(
-		getListOrganizationInvitationsUrl(organizationId, params),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<ListOrganizationInvitationsResponse>(
+    getListOrganizationInvitationsUrl(organizationId, params),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
 };
 
 export const getListOrganizationInvitationsQueryKey = (
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
 ) => {
-	return [
-		`/organizations/${organizationId}/invitations`,
-		...(params ? [params] : []),
-	] as const;
+  return [`/organizations/${organizationId}/invitations`, ...(params ? [params] : [])] as const;
 };
 
 export const getListOrganizationInvitationsQueryOptions = <
-	TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationInvitations>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getListOrganizationInvitationsQueryKey(organizationId, params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListOrganizationInvitationsQueryKey(organizationId, params);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof listOrganizationInvitations>>
-	> = ({ signal }) =>
-		listOrganizationInvitations(organizationId, params, {
-			signal,
-			...requestOptions,
-		});
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listOrganizationInvitations>>> = ({
+    signal,
+  }) => listOrganizationInvitations(organizationId, params, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled: organizationId !== null && organizationId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof listOrganizationInvitations>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled: organizationId !== null && organizationId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
 export type ListOrganizationInvitationsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof listOrganizationInvitations>>
+  Awaited<ReturnType<typeof listOrganizationInvitations>>
 >;
 export type ListOrganizationInvitationsQueryError = unknown;
 
 export function useListOrganizationInvitations<
-	TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	params: undefined | ListOrganizationInvitationsParams,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationInvitations>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listOrganizationInvitations>>,
-					TError,
-					Awaited<ReturnType<typeof listOrganizationInvitations>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  params: undefined | ListOrganizationInvitationsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listOrganizationInvitations>>,
+          TError,
+          Awaited<ReturnType<typeof listOrganizationInvitations>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListOrganizationInvitations<
-	TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationInvitations>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listOrganizationInvitations>>,
-					TError,
-					Awaited<ReturnType<typeof listOrganizationInvitations>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listOrganizationInvitations>>,
+          TError,
+          Awaited<ReturnType<typeof listOrganizationInvitations>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListOrganizationInvitations<
-	TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationInvitations>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List invitations
  */
 
 export function useListOrganizationInvitations<
-	TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationInvitations>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	params?: ListOrganizationInvitationsParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationInvitations>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getListOrganizationInvitationsQueryOptions(
-		organizationId,
-		params,
-		options,
-	);
+  organizationId: string,
+  params?: ListOrganizationInvitationsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationInvitations>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getListOrganizationInvitationsQueryOptions(organizationId, params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getCreateOrganizationInvitationUrl = (
-	organizationId: string,
-	params?: CreateOrganizationInvitationParams,
+  organizationId: string,
+  params?: CreateOrganizationInvitationParams,
 ) => {
-	const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value !== undefined) {
-			normalizedParams.append(key, value === null ? "null" : String(value));
-		}
-	});
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
 
-	const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/organizations/${organizationId}/invitations?${stringifiedParams}`
-		: `/organizations/${organizationId}/invitations`;
+  return stringifiedParams.length > 0
+    ? `/organizations/${organizationId}/invitations?${stringifiedParams}`
+    : `/organizations/${organizationId}/invitations`;
 };
 
 /**
@@ -286,126 +241,110 @@ export const getCreateOrganizationInvitationUrl = (
  * @summary Create invitation
  */
 export const createOrganizationInvitation = async (
-	organizationId: string,
-	createOrganizationInvitationRequest?: CreateOrganizationInvitationRequest,
-	params?: CreateOrganizationInvitationParams,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  createOrganizationInvitationRequest?: CreateOrganizationInvitationRequest,
+  params?: CreateOrganizationInvitationParams,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationInvitation> => {
-	return customFetch<OrganizationInvitation>(
-		getCreateOrganizationInvitationUrl(organizationId, params),
-		{
-			...options,
-			method: "POST",
-			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(createOrganizationInvitationRequest),
-		},
-	);
+  return customFetch<OrganizationInvitation>(
+    getCreateOrganizationInvitationUrl(organizationId, params),
+    {
+      ...options,
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
+      body: JSON.stringify(createOrganizationInvitationRequest),
+    },
+  );
 };
 
 export const getCreateOrganizationInvitationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof createOrganizationInvitation>>,
-		TError,
-		{
-			organizationId: string;
-			data?: CreateOrganizationInvitationRequest;
-			params?: CreateOrganizationInvitationParams;
-		},
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createOrganizationInvitation>>,
+    TError,
+    {
+      organizationId: string;
+      data?: CreateOrganizationInvitationRequest;
+      params?: CreateOrganizationInvitationParams;
+    },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof createOrganizationInvitation>>,
-	TError,
-	{
-		organizationId: string;
-		data?: CreateOrganizationInvitationRequest;
-		params?: CreateOrganizationInvitationParams;
-	},
-	TContext
+  Awaited<ReturnType<typeof createOrganizationInvitation>>,
+  TError,
+  {
+    organizationId: string;
+    data?: CreateOrganizationInvitationRequest;
+    params?: CreateOrganizationInvitationParams;
+  },
+  TContext
 > => {
-	const mutationKey = ["createOrganizationInvitation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["createOrganizationInvitation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof createOrganizationInvitation>>,
-		{
-			organizationId: string;
-			data?: CreateOrganizationInvitationRequest;
-			params?: CreateOrganizationInvitationParams;
-		}
-	> = (props) => {
-		const { organizationId, data, params } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createOrganizationInvitation>>,
+    {
+      organizationId: string;
+      data?: CreateOrganizationInvitationRequest;
+      params?: CreateOrganizationInvitationParams;
+    }
+  > = (props) => {
+    const { organizationId, data, params } = props ?? {};
 
-		return createOrganizationInvitation(
-			organizationId,
-			data,
-			params,
-			requestOptions,
-		);
-	};
+    return createOrganizationInvitation(organizationId, data, params, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type CreateOrganizationInvitationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof createOrganizationInvitation>>
+  Awaited<ReturnType<typeof createOrganizationInvitation>>
 >;
 export type CreateOrganizationInvitationMutationBody =
-	| CreateOrganizationInvitationRequest
-	| undefined;
+  | CreateOrganizationInvitationRequest
+  | undefined;
 export type CreateOrganizationInvitationMutationError = unknown;
 
 /**
  * @summary Create invitation
  */
-export const useCreateOrganizationInvitation = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof createOrganizationInvitation>>,
-			TError,
-			{
-				organizationId: string;
-				data?: CreateOrganizationInvitationRequest;
-				params?: CreateOrganizationInvitationParams;
-			},
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useCreateOrganizationInvitation = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createOrganizationInvitation>>,
+      TError,
+      {
+        organizationId: string;
+        data?: CreateOrganizationInvitationRequest;
+        params?: CreateOrganizationInvitationParams;
+      },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof createOrganizationInvitation>>,
-	TError,
-	{
-		organizationId: string;
-		data?: CreateOrganizationInvitationRequest;
-		params?: CreateOrganizationInvitationParams;
-	},
-	TContext
+  Awaited<ReturnType<typeof createOrganizationInvitation>>,
+  TError,
+  {
+    organizationId: string;
+    data?: CreateOrganizationInvitationRequest;
+    params?: CreateOrganizationInvitationParams;
+  },
+  TContext
 > => {
-	return useMutation(
-		getCreateOrganizationInvitationMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getCreateOrganizationInvitationMutationOptions(options), queryClient);
 };
-export const getGetOrganizationInvitationUrl = (
-	organizationId: string,
-	invitationId: string,
-) => {
-	return `/organizations/${organizationId}/invitations/${invitationId}`;
+export const getGetOrganizationInvitationUrl = (organizationId: string, invitationId: string) => {
+  return `/organizations/${organizationId}/invitations/${invitationId}`;
 };
 
 /**
@@ -413,212 +352,174 @@ export const getGetOrganizationInvitationUrl = (
  * @summary Get invitation
  */
 export const getOrganizationInvitation = async (
-	organizationId: string,
-	invitationId: string,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  invitationId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<GetOrganizationInvitationResponse> => {
-	return customFetch<GetOrganizationInvitationResponse>(
-		getGetOrganizationInvitationUrl(organizationId, invitationId),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<GetOrganizationInvitationResponse>(
+    getGetOrganizationInvitationUrl(organizationId, invitationId),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
 };
 
 export const getGetOrganizationInvitationQueryKey = (
-	organizationId: string,
-	invitationId: string,
+  organizationId: string,
+  invitationId: string,
 ) => {
-	return [
-		`/organizations/${organizationId}/invitations/${invitationId}`,
-	] as const;
+  return [`/organizations/${organizationId}/invitations/${invitationId}`] as const;
 };
 
 export const getGetOrganizationInvitationQueryOptions = <
-	TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	invitationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationInvitation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  organizationId: string,
+  invitationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getGetOrganizationInvitationQueryKey(organizationId, invitationId);
+  const queryKey =
+    queryOptions?.queryKey ?? getGetOrganizationInvitationQueryKey(organizationId, invitationId);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getOrganizationInvitation>>
-	> = ({ signal }) =>
-		getOrganizationInvitation(organizationId, invitationId, {
-			signal,
-			...requestOptions,
-		});
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getOrganizationInvitation>>> = ({
+    signal,
+  }) => getOrganizationInvitation(organizationId, invitationId, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled:
-			organizationId !== null &&
-			organizationId !== undefined &&
-			invitationId !== null &&
-			invitationId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getOrganizationInvitation>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled:
+      organizationId !== null &&
+      organizationId !== undefined &&
+      invitationId !== null &&
+      invitationId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
 export type GetOrganizationInvitationQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getOrganizationInvitation>>
+  Awaited<ReturnType<typeof getOrganizationInvitation>>
 >;
 export type GetOrganizationInvitationQueryError = unknown;
 
 export function useGetOrganizationInvitation<
-	TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	invitationId: string,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationInvitation>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getOrganizationInvitation>>,
-					TError,
-					Awaited<ReturnType<typeof getOrganizationInvitation>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  invitationId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getOrganizationInvitation>>,
+          TError,
+          Awaited<ReturnType<typeof getOrganizationInvitation>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetOrganizationInvitation<
-	TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	invitationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationInvitation>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getOrganizationInvitation>>,
-					TError,
-					Awaited<ReturnType<typeof getOrganizationInvitation>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  invitationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getOrganizationInvitation>>,
+          TError,
+          Awaited<ReturnType<typeof getOrganizationInvitation>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetOrganizationInvitation<
-	TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	invitationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationInvitation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  invitationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get invitation
  */
 
 export function useGetOrganizationInvitation<
-	TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationInvitation>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	invitationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationInvitation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetOrganizationInvitationQueryOptions(
-		organizationId,
-		invitationId,
-		options,
-	);
+  organizationId: string,
+  invitationId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationInvitation>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetOrganizationInvitationQueryOptions(
+    organizationId,
+    invitationId,
+    options,
+  );
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getAcceptOrganizationInvitationUrl = (
-	organizationId: string,
-	invitationId: string,
-	params?: AcceptOrganizationInvitationParams,
+  organizationId: string,
+  invitationId: string,
+  params?: AcceptOrganizationInvitationParams,
 ) => {
-	const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value !== undefined) {
-			normalizedParams.append(key, value === null ? "null" : String(value));
-		}
-	});
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
 
-	const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/organizations/${organizationId}/invitations/${invitationId}/accept?${stringifiedParams}`
-		: `/organizations/${organizationId}/invitations/${invitationId}/accept`;
+  return stringifiedParams.length > 0
+    ? `/organizations/${organizationId}/invitations/${invitationId}/accept?${stringifiedParams}`
+    : `/organizations/${organizationId}/invitations/${invitationId}/accept`;
 };
 
 /**
@@ -626,133 +527,119 @@ export const getAcceptOrganizationInvitationUrl = (
  * @summary Accept invitation
  */
 export const acceptOrganizationInvitation = async (
-	organizationId: string,
-	invitationId: string,
-	acceptOrganizationInvitationQuery?: AcceptOrganizationInvitationQuery,
-	params?: AcceptOrganizationInvitationParams,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  invitationId: string,
+  acceptOrganizationInvitationQuery?: AcceptOrganizationInvitationQuery,
+  params?: AcceptOrganizationInvitationParams,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationInvitation> => {
-	return customFetch<OrganizationInvitation>(
-		getAcceptOrganizationInvitationUrl(organizationId, invitationId, params),
-		{
-			...options,
-			method: "PATCH",
-			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(acceptOrganizationInvitationQuery),
-		},
-	);
+  return customFetch<OrganizationInvitation>(
+    getAcceptOrganizationInvitationUrl(organizationId, invitationId, params),
+    {
+      ...options,
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", ...options?.headers },
+      body: JSON.stringify(acceptOrganizationInvitationQuery),
+    },
+  );
 };
 
 export const getAcceptOrganizationInvitationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
-		TError,
-		{
-			organizationId: string;
-			invitationId: string;
-			data?: AcceptOrganizationInvitationQuery;
-			params?: AcceptOrganizationInvitationParams;
-		},
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
+    TError,
+    {
+      organizationId: string;
+      invitationId: string;
+      data?: AcceptOrganizationInvitationQuery;
+      params?: AcceptOrganizationInvitationParams;
+    },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
-	TError,
-	{
-		organizationId: string;
-		invitationId: string;
-		data?: AcceptOrganizationInvitationQuery;
-		params?: AcceptOrganizationInvitationParams;
-	},
-	TContext
+  Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
+  TError,
+  {
+    organizationId: string;
+    invitationId: string;
+    data?: AcceptOrganizationInvitationQuery;
+    params?: AcceptOrganizationInvitationParams;
+  },
+  TContext
 > => {
-	const mutationKey = ["acceptOrganizationInvitation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["acceptOrganizationInvitation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
-		{
-			organizationId: string;
-			invitationId: string;
-			data?: AcceptOrganizationInvitationQuery;
-			params?: AcceptOrganizationInvitationParams;
-		}
-	> = (props) => {
-		const { organizationId, invitationId, data, params } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
+    {
+      organizationId: string;
+      invitationId: string;
+      data?: AcceptOrganizationInvitationQuery;
+      params?: AcceptOrganizationInvitationParams;
+    }
+  > = (props) => {
+    const { organizationId, invitationId, data, params } = props ?? {};
 
-		return acceptOrganizationInvitation(
-			organizationId,
-			invitationId,
-			data,
-			params,
-			requestOptions,
-		);
-	};
+    return acceptOrganizationInvitation(organizationId, invitationId, data, params, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type AcceptOrganizationInvitationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof acceptOrganizationInvitation>>
+  Awaited<ReturnType<typeof acceptOrganizationInvitation>>
 >;
 export type AcceptOrganizationInvitationMutationBody =
-	| AcceptOrganizationInvitationQuery
-	| undefined;
+  | AcceptOrganizationInvitationQuery
+  | undefined;
 export type AcceptOrganizationInvitationMutationError = unknown;
 
 /**
  * @summary Accept invitation
  */
-export const useAcceptOrganizationInvitation = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
-			TError,
-			{
-				organizationId: string;
-				invitationId: string;
-				data?: AcceptOrganizationInvitationQuery;
-				params?: AcceptOrganizationInvitationParams;
-			},
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useAcceptOrganizationInvitation = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
+      TError,
+      {
+        organizationId: string;
+        invitationId: string;
+        data?: AcceptOrganizationInvitationQuery;
+        params?: AcceptOrganizationInvitationParams;
+      },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
-	TError,
-	{
-		organizationId: string;
-		invitationId: string;
-		data?: AcceptOrganizationInvitationQuery;
-		params?: AcceptOrganizationInvitationParams;
-	},
-	TContext
+  Awaited<ReturnType<typeof acceptOrganizationInvitation>>,
+  TError,
+  {
+    organizationId: string;
+    invitationId: string;
+    data?: AcceptOrganizationInvitationQuery;
+    params?: AcceptOrganizationInvitationParams;
+  },
+  TContext
 > => {
-	return useMutation(
-		getAcceptOrganizationInvitationMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getAcceptOrganizationInvitationMutationOptions(options), queryClient);
 };
 export const getRejectOrganizationInvitationUrl = (
-	organizationId: string,
-	invitationId: string,
+  organizationId: string,
+  invitationId: string,
 ) => {
-	return `/organizations/${organizationId}/invitations/${invitationId}/reject`;
+  return `/organizations/${organizationId}/invitations/${invitationId}/reject`;
 };
 
 /**
@@ -760,63 +647,57 @@ export const getRejectOrganizationInvitationUrl = (
  * @summary Reject invitation
  */
 export const rejectOrganizationInvitation = async (
-	organizationId: string,
-	invitationId: string,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  invitationId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationInvitation> => {
-	return customFetch<OrganizationInvitation>(
-		getRejectOrganizationInvitationUrl(organizationId, invitationId),
-		{
-			...options,
-			method: "PATCH",
-		},
-	);
+  return customFetch<OrganizationInvitation>(
+    getRejectOrganizationInvitationUrl(organizationId, invitationId),
+    {
+      ...options,
+      method: "PATCH",
+    },
+  );
 };
 
 export const getRejectOrganizationInvitationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
-		TError,
-		{ organizationId: string; invitationId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
+    TError,
+    { organizationId: string; invitationId: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
+  Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
+  TError,
+  { organizationId: string; invitationId: string },
+  TContext
 > => {
-	const mutationKey = ["rejectOrganizationInvitation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["rejectOrganizationInvitation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
-		{ organizationId: string; invitationId: string }
-	> = (props) => {
-		const { organizationId, invitationId } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
+    { organizationId: string; invitationId: string }
+  > = (props) => {
+    const { organizationId, invitationId } = props ?? {};
 
-		return rejectOrganizationInvitation(
-			organizationId,
-			invitationId,
-			requestOptions,
-		);
-	};
+    return rejectOrganizationInvitation(organizationId, invitationId, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type RejectOrganizationInvitationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof rejectOrganizationInvitation>>
+  Awaited<ReturnType<typeof rejectOrganizationInvitation>>
 >;
 
 export type RejectOrganizationInvitationMutationError = unknown;
@@ -824,36 +705,30 @@ export type RejectOrganizationInvitationMutationError = unknown;
 /**
  * @summary Reject invitation
  */
-export const useRejectOrganizationInvitation = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
-			TError,
-			{ organizationId: string; invitationId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useRejectOrganizationInvitation = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
+      TError,
+      { organizationId: string; invitationId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
+  Awaited<ReturnType<typeof rejectOrganizationInvitation>>,
+  TError,
+  { organizationId: string; invitationId: string },
+  TContext
 > => {
-	return useMutation(
-		getRejectOrganizationInvitationMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getRejectOrganizationInvitationMutationOptions(options), queryClient);
 };
 export const getRevokeOrganizationInvitationUrl = (
-	organizationId: string,
-	invitationId: string,
+  organizationId: string,
+  invitationId: string,
 ) => {
-	return `/organizations/${organizationId}/invitations/${invitationId}/revoke`;
+  return `/organizations/${organizationId}/invitations/${invitationId}/revoke`;
 };
 
 /**
@@ -861,63 +736,57 @@ export const getRevokeOrganizationInvitationUrl = (
  * @summary Revoke invitation
  */
 export const revokeOrganizationInvitation = async (
-	organizationId: string,
-	invitationId: string,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  invitationId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationInvitation> => {
-	return customFetch<OrganizationInvitation>(
-		getRevokeOrganizationInvitationUrl(organizationId, invitationId),
-		{
-			...options,
-			method: "PATCH",
-		},
-	);
+  return customFetch<OrganizationInvitation>(
+    getRevokeOrganizationInvitationUrl(organizationId, invitationId),
+    {
+      ...options,
+      method: "PATCH",
+    },
+  );
 };
 
 export const getRevokeOrganizationInvitationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-		TError,
-		{ organizationId: string; invitationId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+    TError,
+    { organizationId: string; invitationId: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
+  Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+  TError,
+  { organizationId: string; invitationId: string },
+  TContext
 > => {
-	const mutationKey = ["revokeOrganizationInvitation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["revokeOrganizationInvitation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-		{ organizationId: string; invitationId: string }
-	> = (props) => {
-		const { organizationId, invitationId } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+    { organizationId: string; invitationId: string }
+  > = (props) => {
+    const { organizationId, invitationId } = props ?? {};
 
-		return revokeOrganizationInvitation(
-			organizationId,
-			invitationId,
-			requestOptions,
-		);
-	};
+    return revokeOrganizationInvitation(organizationId, invitationId, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type RevokeOrganizationInvitationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>
+  Awaited<ReturnType<typeof revokeOrganizationInvitation>>
 >;
 
 export type RevokeOrganizationInvitationMutationError = unknown;
@@ -925,28 +794,22 @@ export type RevokeOrganizationInvitationMutationError = unknown;
 /**
  * @summary Revoke invitation
  */
-export const useRevokeOrganizationInvitation = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-			TError,
-			{ organizationId: string; invitationId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useRevokeOrganizationInvitation = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+      TError,
+      { organizationId: string; invitationId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
-	TError,
-	{ organizationId: string; invitationId: string },
-	TContext
+  Awaited<ReturnType<typeof revokeOrganizationInvitation>>,
+  TError,
+  { organizationId: string; invitationId: string },
+  TContext
 > => {
-	return useMutation(
-		getRevokeOrganizationInvitationMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getRevokeOrganizationInvitationMutationOptions(options), queryClient);
 };

@@ -8,5 +8,5 @@
 import type { Account } from "./account";
 
 export type UserAccountsResponse = {
-	accounts: Account[];
+  accounts: Account[];
 };

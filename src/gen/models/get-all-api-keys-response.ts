@@ -8,8 +8,8 @@
 import type { ApiKey } from "./api-key";
 
 export type GetAllApiKeysResponse = {
-	items: ApiKey[];
-	limit: number;
-	page: number;
-	total: number;
+  items: ApiKey[];
+  limit: number;
+  page: number;
+  total: number;
 };

@@ -9,6 +9,6 @@ import type { OrganizationInvitation } from "./organization-invitation";
 import type { OrganizationSummary } from "./organization-summary";
 
 export type GetOrganizationInvitationResponse = {
-	invitation: OrganizationInvitation;
-	organization: OrganizationSummary;
+  invitation: OrganizationInvitation;
+  organization: OrganizationSummary;
 };

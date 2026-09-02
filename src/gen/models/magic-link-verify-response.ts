@@ -7,6 +7,6 @@
  */
 
 export type MagicLinkVerifyResponse = {
-	message: string;
-	token?: string;
+  message: string;
+  token?: string;
 };

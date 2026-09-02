@@ -6,16 +6,16 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
-	ChangeEmailResponse,
-	ChangePasswordRequest,
-	ChangePasswordResponse,
-	RequestEmailChangeRequest,
-	RequestPasswordResetRequest,
-	SendEmailVerificationRequest,
-	SignInRequest,
-	SignInResponse,
-	SignUpRequest,
-	SignUpResponse,
+  ChangeEmailResponse,
+  ChangePasswordRequest,
+  ChangePasswordResponse,
+  RequestEmailChangeRequest,
+  RequestPasswordResetRequest,
+  SendEmailVerificationRequest,
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
 } from "../authula-api.schemas.zod";
 
 /**

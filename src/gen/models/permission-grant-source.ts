@@ -7,10 +7,10 @@
  */
 
 export type PermissionGrantSource = {
-	/** @nullable */
-	grantedAt?: string | null;
-	/** @nullable */
-	grantedByUserId?: string | null;
-	roleId: string;
-	roleName: string;
+  /** @nullable */
+  grantedAt?: string | null;
+  /** @nullable */
+  grantedByUserId?: string | null;
+  roleId: string;
+  roleName: string;
 };

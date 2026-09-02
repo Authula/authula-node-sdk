@@ -7,5 +7,5 @@
  */
 
 export type AddOrganizationTeamMemberRequest = {
-	memberId: string;
+  memberId: string;
 };

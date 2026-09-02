@@ -7,5 +7,5 @@
  */
 
 export type MagicLinkExchangeRequest = {
-	token: string;
+  token: string;
 };

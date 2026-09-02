@@ -7,7 +7,7 @@
  */
 
 export type RequestEmailChangeRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
-	newEmail: string;
+  /** @nullable */
+  callbackUrl?: string | null;
+  newEmail: string;
 };

@@ -10,49 +10,46 @@ import { faker } from "@faker-js/faker";
 import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../models";
 
 export const getGetJWKSResponseMock = (
-	overrideResponse: Partial<Extract<WellKnownJWKSResponse, object>> = {},
+  overrideResponse: Partial<Extract<WellKnownJWKSResponse, object>> = {},
 ): WellKnownJWKSResponse => ({
-	keys: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		alg: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		crv: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		e: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		kid: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		kty: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		n: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		use: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-		x: faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			undefined,
-		]),
-	})),
-	...overrideResponse,
+  keys: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    alg: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    crv: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    e: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    kid: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    kty: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    n: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    use: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+    x: faker.helpers.arrayElement([
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      undefined,
+    ]),
+  })),
+  ...overrideResponse,
 });
 
 export const getRefreshTokenResponseMock = (
-	overrideResponse: Partial<Extract<RefreshTokenResponse, object>> = {},
+  overrideResponse: Partial<Extract<RefreshTokenResponse, object>> = {},
 ): RefreshTokenResponse => ({
-	accessToken: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	refreshToken: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  accessToken: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  refreshToken: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });

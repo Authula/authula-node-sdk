@@ -9,6 +9,6 @@ import type { Role } from "./role";
 import type { UserPermissionInfo } from "./user-permission-info";
 
 export type RoleDetails = {
-	permissions: UserPermissionInfo[];
-	role: Role;
+  permissions: UserPermissionInfo[];
+  role: Role;
 };

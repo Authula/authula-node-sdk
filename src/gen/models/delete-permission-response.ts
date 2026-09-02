@@ -7,5 +7,5 @@
  */
 
 export type DeletePermissionResponse = {
-	message: string;
+  message: string;
 };

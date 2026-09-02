@@ -8,5 +8,5 @@
 import type { UserPermissionInfo } from "./user-permission-info";
 
 export type GetUserPermissionsResponse = {
-	permissions: UserPermissionInfo[];
+  permissions: UserPermissionInfo[];
 };

@@ -18,7 +18,7 @@ export class AuthulaClient {
   constructor(options: AuthulaClientOptions) {
     this.plugins = options.plugins || [];
 
-    const { plugins, ...rest } = options;
+    const { plugins: _, ...rest } = options;
     this.config = rest;
 
     for (const plugin of this.plugins) {
@@ -58,9 +58,7 @@ export class AuthulaClient {
     return all ? all[name] : undefined;
   }
 
-  public async getAllCookies(): Promise<
-    Record<string, string | undefined> | undefined
-  > {
+  public async getAllCookies(): Promise<Record<string, string | undefined> | undefined> {
     if (this.config.cookies) {
       try {
         const store = await this.config.cookies();

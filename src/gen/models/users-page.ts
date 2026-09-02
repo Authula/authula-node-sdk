@@ -8,7 +8,7 @@
 import type { User } from "./user";
 
 export type UsersPage = {
-	/** @nullable */
-	nextCursor?: string | null;
-	users: User[];
+  /** @nullable */
+  nextCursor?: string | null;
+  users: User[];
 };

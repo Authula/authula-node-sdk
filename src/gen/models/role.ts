@@ -7,12 +7,12 @@
  */
 
 export type Role = {
-	createdAt: string;
-	/** @nullable */
-	description?: string | null;
-	id: string;
-	isSystem: boolean;
-	name: string;
-	updatedAt: string;
-	weight: number;
+  createdAt: string;
+  /** @nullable */
+  description?: string | null;
+  id: string;
+  isSystem: boolean;
+  name: string;
+  updatedAt: string;
+  weight: number;
 };

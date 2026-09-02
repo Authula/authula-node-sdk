@@ -8,14 +8,14 @@
 import type { UpdateUserRequestMetadata } from "./update-user-request-metadata";
 
 export type UpdateUserRequest = {
-	/** @nullable */
-	email?: string | null;
-	/** @nullable */
-	emailVerified?: boolean | null;
-	/** @nullable */
-	image?: string | null;
-	/** @nullable */
-	metadata?: UpdateUserRequestMetadata;
-	/** @nullable */
-	name?: string | null;
+  /** @nullable */
+  email?: string | null;
+  /** @nullable */
+  emailVerified?: boolean | null;
+  /** @nullable */
+  image?: string | null;
+  /** @nullable */
+  metadata?: UpdateUserRequestMetadata;
+  /** @nullable */
+  name?: string | null;
 };

@@ -7,5 +7,5 @@
  */
 
 export type ChangePasswordResponse = {
-	message: string;
+  message: string;
 };

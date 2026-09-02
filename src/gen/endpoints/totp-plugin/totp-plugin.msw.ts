@@ -5,185 +5,184 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	DisableResponse,
-	EnableResponse,
-	GenerateBackupCodesResponse,
-	GetTOTPURIResponse,
-	VerifyBackupCodeResponse,
-	VerifyTOTPResponse,
+  DisableResponse,
+  EnableResponse,
+  GenerateBackupCodesResponse,
+  GetTOTPURIResponse,
+  VerifyBackupCodeResponse,
+  VerifyTOTPResponse,
 } from "../../models";
 
 import {
-	getDisableTotpResponseMock,
-	getEnableTotpResponseMock,
-	getGenerateTotpBackupCodesResponseMock,
-	getGetTotpURIResponseMock,
-	getVerifyTotpBackupCodeResponseMock,
-	getVerifyTotpResponseMock,
+  getDisableTotpResponseMock,
+  getEnableTotpResponseMock,
+  getGenerateTotpBackupCodesResponseMock,
+  getGetTotpURIResponseMock,
+  getVerifyTotpBackupCodeResponseMock,
+  getVerifyTotpResponseMock,
 } from "./totp-plugin.faker";
 
 export {
-	getDisableTotpResponseMock,
-	getEnableTotpResponseMock,
-	getGenerateTotpBackupCodesResponseMock,
-	getGetTotpURIResponseMock,
-	getVerifyTotpBackupCodeResponseMock,
-	getVerifyTotpResponseMock,
+  getDisableTotpResponseMock,
+  getEnableTotpResponseMock,
+  getGenerateTotpBackupCodesResponseMock,
+  getGetTotpURIResponseMock,
+  getVerifyTotpResponseMock,
+  getVerifyTotpBackupCodeResponseMock,
 } from "./totp-plugin.faker";
 
 export const getDisableTotpMockHandler = (
-	overrideResponse?:
-		| DisableResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<DisableResponse> | DisableResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DisableResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<DisableResponse> | DisableResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/totp/disable",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDisableTotpResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/totp/disable",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDisableTotpResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getEnableTotpMockHandler = (
-	overrideResponse?:
-		| EnableResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<EnableResponse> | EnableResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | EnableResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<EnableResponse> | EnableResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/totp/enable",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getEnableTotpResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/totp/enable",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEnableTotpResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGenerateTotpBackupCodesMockHandler = (
-	overrideResponse?:
-		| GenerateBackupCodesResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<GenerateBackupCodesResponse> | GenerateBackupCodesResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GenerateBackupCodesResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<GenerateBackupCodesResponse> | GenerateBackupCodesResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/totp/generate-backup-codes",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGenerateTotpBackupCodesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/totp/generate-backup-codes",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGenerateTotpBackupCodesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetTotpURIMockHandler = (
-	overrideResponse?:
-		| GetTOTPURIResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetTOTPURIResponse> | GetTOTPURIResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetTOTPURIResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetTOTPURIResponse> | GetTOTPURIResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/totp/get-uri",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetTotpURIResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/totp/get-uri",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetTotpURIResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getVerifyTotpMockHandler = (
-	overrideResponse?:
-		| VerifyTOTPResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<VerifyTOTPResponse> | VerifyTOTPResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | VerifyTOTPResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<VerifyTOTPResponse> | VerifyTOTPResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/totp/verify",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyTotpResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/totp/verify",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVerifyTotpResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getVerifyTotpBackupCodeMockHandler = (
-	overrideResponse?:
-		| VerifyBackupCodeResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<VerifyBackupCodeResponse> | VerifyBackupCodeResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | VerifyBackupCodeResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<VerifyBackupCodeResponse> | VerifyBackupCodeResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/totp/verify-backup-code",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyTotpBackupCodeResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/totp/verify-backup-code",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVerifyTotpBackupCodeResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getTotpPluginMock = () => [
-	getDisableTotpMockHandler(),
-	getEnableTotpMockHandler(),
-	getGenerateTotpBackupCodesMockHandler(),
-	getGetTotpURIMockHandler(),
-	getVerifyTotpMockHandler(),
-	getVerifyTotpBackupCodeMockHandler(),
+  getDisableTotpMockHandler(),
+  getEnableTotpMockHandler(),
+  getGenerateTotpBackupCodesMockHandler(),
+  getGetTotpURIMockHandler(),
+  getVerifyTotpMockHandler(),
+  getVerifyTotpBackupCodeMockHandler(),
 ];

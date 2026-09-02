@@ -7,8 +7,8 @@
  */
 
 export type OrganizationTeamMember = {
-	createdAt: string;
-	id: string;
-	memberId: string;
-	teamId: string;
+  createdAt: string;
+  id: string;
+  memberId: string;
+  teamId: string;
 };

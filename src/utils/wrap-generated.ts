@@ -4,15 +4,11 @@ function isHookKey(key: string): boolean {
   return key.startsWith("use") && key[3] === key[3]?.toUpperCase();
 }
 
-export function wrapGenerated<T extends Record<string, any>>(
-  mod: T,
-  client: AuthulaClient,
-): T {
+export function wrapGenerated<T extends Record<string, any>>(mod: T, client: AuthulaClient): T {
   const baseUrl = client.config.url.replace(/\/+$/, "");
   const cookies = client.config.cookies;
   const onBeforeFetch = (ctx: any) => client.runBeforeFetch(ctx);
-  const onAfterFetch = (ctx: any, res: Response) =>
-    client.runAfterFetch(ctx, res);
+  const onAfterFetch = (ctx: any, res: Response) => client.runAfterFetch(ctx, res);
 
   const wrapped: Record<string, any> = {};
   for (const [key, value] of Object.entries(mod)) {
@@ -34,7 +30,7 @@ export function wrapGenerated<T extends Record<string, any>>(
         const existing = args[optionsIdx] ?? {};
         args[optionsIdx] = {
           ...(typeof existing === "object" && existing !== null ? existing : {}),
-          request: { ...(existing?.request ?? {}), ...ctx },
+          request: { ...existing?.request, ...ctx },
         };
         return value(...args);
       };

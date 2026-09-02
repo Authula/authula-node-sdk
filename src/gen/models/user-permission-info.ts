@@ -8,14 +8,14 @@
 import type { PermissionGrantSource } from "./permission-grant-source";
 
 export type UserPermissionInfo = {
-	/** @nullable */
-	grantedAt?: string | null;
-	/** @nullable */
-	grantedByUserId?: string | null;
-	/** @nullable */
-	permissionDescription?: string | null;
-	permissionId: string;
-	permissionKey: string;
-	/** @nullable */
-	sources?: PermissionGrantSource[] | null;
+  /** @nullable */
+  grantedAt?: string | null;
+  /** @nullable */
+  grantedByUserId?: string | null;
+  /** @nullable */
+  permissionDescription?: string | null;
+  permissionId: string;
+  permissionKey: string;
+  /** @nullable */
+  sources?: PermissionGrantSource[] | null;
 };

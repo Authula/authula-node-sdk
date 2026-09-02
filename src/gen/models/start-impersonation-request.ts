@@ -7,8 +7,8 @@
  */
 
 export type StartImpersonationRequest = {
-	/** @nullable */
-	expiresInSeconds?: number | null;
-	reason: string;
-	targetUserId: string;
+  /** @nullable */
+  expiresInSeconds?: number | null;
+  reason: string;
+  targetUserId: string;
 };

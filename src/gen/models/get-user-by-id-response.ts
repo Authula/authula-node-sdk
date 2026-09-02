@@ -8,5 +8,5 @@
 import type { User } from "./user";
 
 export type GetUserByIDResponse = {
-	user: User;
+  user: User;
 };

@@ -5,9 +5,8 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type { GetMeResponse, SignOutResponse } from "../../models";
 
@@ -16,53 +15,50 @@ import { getGetMeResponseMock, getSignOutResponseMock } from "./core.faker";
 export { getGetMeResponseMock, getSignOutResponseMock } from "./core.faker";
 
 export const getGetMeMockHandler = (
-	overrideResponse?:
-		| GetMeResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetMeResponse> | GetMeResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetMeResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetMeResponse> | GetMeResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/me",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetMeResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/me",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetMeResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getSignOutMockHandler = (
-	overrideResponse?:
-		| SignOutResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<SignOutResponse> | SignOutResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | SignOutResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<SignOutResponse> | SignOutResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/sign-out",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getSignOutResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/sign-out",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSignOutResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
-export const getCoreMock = () => [
-	getGetMeMockHandler(),
-	getSignOutMockHandler(),
-];
+export const getCoreMock = () => [getGetMeMockHandler(), getSignOutMockHandler()];

@@ -8,5 +8,5 @@
 import type { Permission } from "./permission";
 
 export type CreatePermissionResponse = {
-	permission: Permission;
+  permission: Permission;
 };

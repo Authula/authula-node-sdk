@@ -7,5 +7,5 @@
  */
 
 export type AddRolePermissionResponse = {
-	message: string;
+  message: string;
 };

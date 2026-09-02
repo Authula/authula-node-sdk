@@ -7,5 +7,5 @@
  */
 
 export type DeleteRoleResponse = {
-	message: string;
+  message: string;
 };

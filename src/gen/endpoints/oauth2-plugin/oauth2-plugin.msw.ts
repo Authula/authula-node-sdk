@@ -5,70 +5,63 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type { AuthorizeResponse, CallbackResponse } from "../../models";
 
-import {
-	getOauthAuthorizeResponseMock,
-	getOauthCallbackResponseMock,
-} from "./oauth2-plugin.faker";
+import { getOauthAuthorizeResponseMock, getOauthCallbackResponseMock } from "./oauth2-plugin.faker";
 
-export {
-	getOauthAuthorizeResponseMock,
-	getOauthCallbackResponseMock,
-} from "./oauth2-plugin.faker";
+export { getOauthAuthorizeResponseMock, getOauthCallbackResponseMock } from "./oauth2-plugin.faker";
 
 export const getOauthAuthorizeMockHandler = (
-	overrideResponse?:
-		| AuthorizeResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<AuthorizeResponse> | AuthorizeResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AuthorizeResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<AuthorizeResponse> | AuthorizeResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/oauth2/authorize/:provider",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getOauthAuthorizeResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/oauth2/authorize/:provider",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getOauthAuthorizeResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getOauthCallbackMockHandler = (
-	overrideResponse?:
-		| CallbackResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<CallbackResponse> | CallbackResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CallbackResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<CallbackResponse> | CallbackResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/oauth2/callback/:provider",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getOauthCallbackResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/oauth2/callback/:provider",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getOauthCallbackResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getOauth2PluginMock = () => [
-	getOauthAuthorizeMockHandler(),
-	getOauthCallbackMockHandler(),
+  getOauthAuthorizeMockHandler(),
+  getOauthCallbackMockHandler(),
 ];

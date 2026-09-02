@@ -7,6 +7,6 @@
  */
 
 export type CreateOrganizationInvitationRequest = {
-	email: string;
-	role: string;
+  email: string;
+  role: string;
 };

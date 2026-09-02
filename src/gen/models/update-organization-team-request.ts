@@ -8,11 +8,11 @@
 import type { UpdateOrganizationTeamRequestMetadata } from "./update-organization-team-request-metadata";
 
 export type UpdateOrganizationTeamRequest = {
-	/** @nullable */
-	description?: string | null;
-	/** @nullable */
-	metadata?: UpdateOrganizationTeamRequestMetadata;
-	name: string;
-	/** @nullable */
-	slug?: string | null;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  metadata?: UpdateOrganizationTeamRequestMetadata;
+  name: string;
+  /** @nullable */
+  slug?: string | null;
 };

@@ -7,8 +7,8 @@
  */
 
 export type SignInRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
-	email: string;
-	password: string;
+  /** @nullable */
+  callbackUrl?: string | null;
+  email: string;
+  password: string;
 };

@@ -5,54 +5,52 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	MagicLinkExchangeRequest,
-	MagicLinkExchangeResponse,
-	MagicLinkSignInRequest,
-	MagicLinkSignInResponse,
-	MagicLinkVerifyResponse,
-	VerifyMagicLinkParams,
+  MagicLinkExchangeRequest,
+  MagicLinkExchangeResponse,
+  MagicLinkSignInRequest,
+  MagicLinkSignInResponse,
+  MagicLinkVerifyResponse,
+  VerifyMagicLinkParams,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getExchangeMagicLinkUrl = () => {
-	return `/magic-link/exchange`;
+  return `/magic-link/exchange`;
 };
 
 /**
@@ -60,87 +58,83 @@ export const getExchangeMagicLinkUrl = () => {
  * @summary Exchange magic link token for session
  */
 export const exchangeMagicLink = async (
-	magicLinkExchangeRequest?: MagicLinkExchangeRequest,
-	options?: Parameters<typeof customFetch>[1],
+  magicLinkExchangeRequest?: MagicLinkExchangeRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<MagicLinkExchangeResponse> => {
-	return customFetch<MagicLinkExchangeResponse>(getExchangeMagicLinkUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(magicLinkExchangeRequest),
-	});
+  return customFetch<MagicLinkExchangeResponse>(getExchangeMagicLinkUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(magicLinkExchangeRequest),
+  });
 };
 
 export const getExchangeMagicLinkMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof exchangeMagicLink>>,
-		TError,
-		{ data?: MagicLinkExchangeRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof exchangeMagicLink>>,
+    TError,
+    { data?: MagicLinkExchangeRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof exchangeMagicLink>>,
-	TError,
-	{ data?: MagicLinkExchangeRequest },
-	TContext
+  Awaited<ReturnType<typeof exchangeMagicLink>>,
+  TError,
+  { data?: MagicLinkExchangeRequest },
+  TContext
 > => {
-	const mutationKey = ["exchangeMagicLink"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["exchangeMagicLink"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof exchangeMagicLink>>,
-		{ data?: MagicLinkExchangeRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof exchangeMagicLink>>,
+    { data?: MagicLinkExchangeRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return exchangeMagicLink(data, requestOptions);
-	};
+    return exchangeMagicLink(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type ExchangeMagicLinkMutationResult = NonNullable<
-	Awaited<ReturnType<typeof exchangeMagicLink>>
+  Awaited<ReturnType<typeof exchangeMagicLink>>
 >;
-export type ExchangeMagicLinkMutationBody =
-	| MagicLinkExchangeRequest
-	| undefined;
+export type ExchangeMagicLinkMutationBody = MagicLinkExchangeRequest | undefined;
 export type ExchangeMagicLinkMutationError = unknown;
 
 /**
  * @summary Exchange magic link token for session
  */
 export const useExchangeMagicLink = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof exchangeMagicLink>>,
-			TError,
-			{ data?: MagicLinkExchangeRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof exchangeMagicLink>>,
+      TError,
+      { data?: MagicLinkExchangeRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof exchangeMagicLink>>,
-	TError,
-	{ data?: MagicLinkExchangeRequest },
-	TContext
+  Awaited<ReturnType<typeof exchangeMagicLink>>,
+  TError,
+  { data?: MagicLinkExchangeRequest },
+  TContext
 > => {
-	return useMutation(getExchangeMagicLinkMutationOptions(options), queryClient);
+  return useMutation(getExchangeMagicLinkMutationOptions(options), queryClient);
 };
 export const getSignInWithMagicLinkUrl = () => {
-	return `/magic-link/sign-in`;
+  return `/magic-link/sign-in`;
 };
 
 /**
@@ -148,102 +142,95 @@ export const getSignInWithMagicLinkUrl = () => {
  * @summary Sign in with magic link
  */
 export const signInWithMagicLink = async (
-	magicLinkSignInRequest?: MagicLinkSignInRequest,
-	options?: Parameters<typeof customFetch>[1],
+  magicLinkSignInRequest?: MagicLinkSignInRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<MagicLinkSignInResponse> => {
-	return customFetch<MagicLinkSignInResponse>(getSignInWithMagicLinkUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(magicLinkSignInRequest),
-	});
+  return customFetch<MagicLinkSignInResponse>(getSignInWithMagicLinkUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(magicLinkSignInRequest),
+  });
 };
 
 export const getSignInWithMagicLinkMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof signInWithMagicLink>>,
-		TError,
-		{ data?: MagicLinkSignInRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof signInWithMagicLink>>,
+    TError,
+    { data?: MagicLinkSignInRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof signInWithMagicLink>>,
-	TError,
-	{ data?: MagicLinkSignInRequest },
-	TContext
+  Awaited<ReturnType<typeof signInWithMagicLink>>,
+  TError,
+  { data?: MagicLinkSignInRequest },
+  TContext
 > => {
-	const mutationKey = ["signInWithMagicLink"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["signInWithMagicLink"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof signInWithMagicLink>>,
-		{ data?: MagicLinkSignInRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof signInWithMagicLink>>,
+    { data?: MagicLinkSignInRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return signInWithMagicLink(data, requestOptions);
-	};
+    return signInWithMagicLink(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type SignInWithMagicLinkMutationResult = NonNullable<
-	Awaited<ReturnType<typeof signInWithMagicLink>>
+  Awaited<ReturnType<typeof signInWithMagicLink>>
 >;
-export type SignInWithMagicLinkMutationBody =
-	| MagicLinkSignInRequest
-	| undefined;
+export type SignInWithMagicLinkMutationBody = MagicLinkSignInRequest | undefined;
 export type SignInWithMagicLinkMutationError = unknown;
 
 /**
  * @summary Sign in with magic link
  */
 export const useSignInWithMagicLink = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof signInWithMagicLink>>,
-			TError,
-			{ data?: MagicLinkSignInRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof signInWithMagicLink>>,
+      TError,
+      { data?: MagicLinkSignInRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof signInWithMagicLink>>,
-	TError,
-	{ data?: MagicLinkSignInRequest },
-	TContext
+  Awaited<ReturnType<typeof signInWithMagicLink>>,
+  TError,
+  { data?: MagicLinkSignInRequest },
+  TContext
 > => {
-	return useMutation(
-		getSignInWithMagicLinkMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getSignInWithMagicLinkMutationOptions(options), queryClient);
 };
 export const getVerifyMagicLinkUrl = (params: VerifyMagicLinkParams) => {
-	const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value !== undefined) {
-			normalizedParams.append(key, value === null ? "null" : String(value));
-		}
-	});
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
 
-	const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/magic-link/verify?${stringifiedParams}`
-		: `/magic-link/verify`;
+  return stringifiedParams.length > 0
+    ? `/magic-link/verify?${stringifiedParams}`
+    : `/magic-link/verify`;
 };
 
 /**
@@ -251,157 +238,115 @@ export const getVerifyMagicLinkUrl = (params: VerifyMagicLinkParams) => {
  * @summary Verify magic link token
  */
 export const verifyMagicLink = async (
-	params: VerifyMagicLinkParams,
-	options?: Parameters<typeof customFetch>[1],
+  params: VerifyMagicLinkParams,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<MagicLinkVerifyResponse> => {
-	return customFetch<MagicLinkVerifyResponse>(getVerifyMagicLinkUrl(params), {
-		...options,
-		method: "GET",
-	});
+  return customFetch<MagicLinkVerifyResponse>(getVerifyMagicLinkUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getVerifyMagicLinkQueryKey = (params?: VerifyMagicLinkParams) => {
-	return [`/magic-link/verify`, ...(params ? [params] : [])] as const;
+  return [`/magic-link/verify`, ...(params ? [params] : [])] as const;
 };
 
 export const getVerifyMagicLinkQueryOptions = <
-	TData = Awaited<ReturnType<typeof verifyMagicLink>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof verifyMagicLink>>,
+  TError = unknown,
 >(
-	params: VerifyMagicLinkParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof verifyMagicLink>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  params: VerifyMagicLinkParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyMagicLink>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getVerifyMagicLinkQueryKey(params);
+  const queryKey = queryOptions?.queryKey ?? getVerifyMagicLinkQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof verifyMagicLink>>> = ({
-		signal,
-	}) => verifyMagicLink(params, { signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof verifyMagicLink>>> = ({ signal }) =>
+    verifyMagicLink(params, { signal, ...requestOptions });
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof verifyMagicLink>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof verifyMagicLink>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type VerifyMagicLinkQueryResult = NonNullable<
-	Awaited<ReturnType<typeof verifyMagicLink>>
->;
+export type VerifyMagicLinkQueryResult = NonNullable<Awaited<ReturnType<typeof verifyMagicLink>>>;
 export type VerifyMagicLinkQueryError = unknown;
 
 export function useVerifyMagicLink<
-	TData = Awaited<ReturnType<typeof verifyMagicLink>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof verifyMagicLink>>,
+  TError = unknown,
 >(
-	params: VerifyMagicLinkParams,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof verifyMagicLink>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof verifyMagicLink>>,
-					TError,
-					Awaited<ReturnType<typeof verifyMagicLink>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  params: VerifyMagicLinkParams,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyMagicLink>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof verifyMagicLink>>,
+          TError,
+          Awaited<ReturnType<typeof verifyMagicLink>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useVerifyMagicLink<
-	TData = Awaited<ReturnType<typeof verifyMagicLink>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof verifyMagicLink>>,
+  TError = unknown,
 >(
-	params: VerifyMagicLinkParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof verifyMagicLink>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof verifyMagicLink>>,
-					TError,
-					Awaited<ReturnType<typeof verifyMagicLink>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  params: VerifyMagicLinkParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyMagicLink>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof verifyMagicLink>>,
+          TError,
+          Awaited<ReturnType<typeof verifyMagicLink>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useVerifyMagicLink<
-	TData = Awaited<ReturnType<typeof verifyMagicLink>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof verifyMagicLink>>,
+  TError = unknown,
 >(
-	params: VerifyMagicLinkParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof verifyMagicLink>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  params: VerifyMagicLinkParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyMagicLink>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Verify magic link token
  */
 
 export function useVerifyMagicLink<
-	TData = Awaited<ReturnType<typeof verifyMagicLink>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof verifyMagicLink>>,
+  TError = unknown,
 >(
-	params: VerifyMagicLinkParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof verifyMagicLink>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getVerifyMagicLinkQueryOptions(params, options);
+  params: VerifyMagicLinkParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyMagicLink>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getVerifyMagicLinkQueryOptions(params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }

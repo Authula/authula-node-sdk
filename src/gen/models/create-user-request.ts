@@ -8,12 +8,12 @@
 import type { CreateUserRequestMetadata } from "./create-user-request-metadata";
 
 export type CreateUserRequest = {
-	email: string;
-	/** @nullable */
-	emailVerified?: boolean | null;
-	/** @nullable */
-	image?: string | null;
-	/** @nullable */
-	metadata?: CreateUserRequestMetadata;
-	name: string;
+  email: string;
+  /** @nullable */
+  emailVerified?: boolean | null;
+  /** @nullable */
+  image?: string | null;
+  /** @nullable */
+  metadata?: CreateUserRequestMetadata;
+  name: string;
 };

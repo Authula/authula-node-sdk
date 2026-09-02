@@ -8,13 +8,13 @@
 import type { SignUpRequestMetadata } from "./sign-up-request-metadata";
 
 export type SignUpRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
-	email: string;
-	/** @nullable */
-	image?: string | null;
-	/** @nullable */
-	metadata?: SignUpRequestMetadata;
-	name: string;
-	password: string;
+  /** @nullable */
+  callbackUrl?: string | null;
+  email: string;
+  /** @nullable */
+  image?: string | null;
+  /** @nullable */
+  metadata?: SignUpRequestMetadata;
+  name: string;
+  password: string;
 };

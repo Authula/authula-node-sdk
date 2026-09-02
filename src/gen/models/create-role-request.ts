@@ -7,10 +7,10 @@
  */
 
 export type CreateRoleRequest = {
-	/** @nullable */
-	description?: string | null;
-	isSystem: boolean;
-	name: string;
-	/** @nullable */
-	weight?: number | null;
+  /** @nullable */
+  description?: string | null;
+  isSystem: boolean;
+  name: string;
+  /** @nullable */
+  weight?: number | null;
 };

@@ -7,24 +7,24 @@
  */
 
 export type Account = {
-	/** @nullable */
-	accessToken?: string | null;
-	/** @nullable */
-	accessTokenExpiresAt?: string | null;
-	accountId: string;
-	createdAt: string;
-	id: string;
-	/** @nullable */
-	idToken?: string | null;
-	/** @nullable */
-	password?: string | null;
-	providerId: string;
-	/** @nullable */
-	refreshToken?: string | null;
-	/** @nullable */
-	refreshTokenExpiresAt?: string | null;
-	/** @nullable */
-	scope?: string | null;
-	updatedAt: string;
-	userId: string;
+  /** @nullable */
+  accessToken?: string | null;
+  /** @nullable */
+  accessTokenExpiresAt?: string | null;
+  accountId: string;
+  createdAt: string;
+  id: string;
+  /** @nullable */
+  idToken?: string | null;
+  /** @nullable */
+  password?: string | null;
+  providerId: string;
+  /** @nullable */
+  refreshToken?: string | null;
+  /** @nullable */
+  refreshTokenExpiresAt?: string | null;
+  /** @nullable */
+  scope?: string | null;
+  updatedAt: string;
+  userId: string;
 };

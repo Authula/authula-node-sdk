@@ -5,56 +5,54 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	DisableResponse,
-	EnableResponse,
-	GenerateBackupCodesResponse,
-	GetTOTPURIResponse,
-	VerifyBackupCodeRequest,
-	VerifyBackupCodeResponse,
-	VerifyTOTPRequest,
-	VerifyTOTPResponse,
+  DisableResponse,
+  EnableResponse,
+  GenerateBackupCodesResponse,
+  GetTOTPURIResponse,
+  VerifyBackupCodeRequest,
+  VerifyBackupCodeResponse,
+  VerifyTOTPRequest,
+  VerifyTOTPResponse,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getDisableTotpUrl = () => {
-	return `/totp/disable`;
+  return `/totp/disable`;
 };
 
 /**
@@ -62,53 +60,33 @@ export const getDisableTotpUrl = () => {
  * @summary Disable TOTP
  */
 export const disableTotp = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<DisableResponse> => {
-	return customFetch<DisableResponse>(getDisableTotpUrl(), {
-		...options,
-		method: "POST",
-	});
+  return customFetch<DisableResponse>(getDisableTotpUrl(), {
+    ...options,
+    method: "POST",
+  });
 };
 
-export const getDisableTotpMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof disableTotp>>,
-		TError,
-		void,
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-	Awaited<ReturnType<typeof disableTotp>>,
-	TError,
-	void,
-	TContext
-> => {
-	const mutationKey = ["disableTotp"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+export const getDisableTotpMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof disableTotp>>, TError, void, TContext>;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<Awaited<ReturnType<typeof disableTotp>>, TError, void, TContext> => {
+  const mutationKey = ["disableTotp"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof disableTotp>>,
-		void
-	> = () => {
-		return disableTotp(requestOptions);
-	};
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof disableTotp>>, void> = () => {
+    return disableTotp(requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
-export type DisableTotpMutationResult = NonNullable<
-	Awaited<ReturnType<typeof disableTotp>>
->;
+export type DisableTotpMutationResult = NonNullable<Awaited<ReturnType<typeof disableTotp>>>;
 
 export type DisableTotpMutationError = unknown;
 
@@ -116,26 +94,16 @@ export type DisableTotpMutationError = unknown;
  * @summary Disable TOTP
  */
 export const useDisableTotp = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof disableTotp>>,
-			TError,
-			void,
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseMutationResult<
-	Awaited<ReturnType<typeof disableTotp>>,
-	TError,
-	void,
-	TContext
-> => {
-	return useMutation(getDisableTotpMutationOptions(options), queryClient);
+  options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof disableTotp>>, TError, void, TContext>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<Awaited<ReturnType<typeof disableTotp>>, TError, void, TContext> => {
+  return useMutation(getDisableTotpMutationOptions(options), queryClient);
 };
 export const getEnableTotpUrl = () => {
-	return `/totp/enable`;
+  return `/totp/enable`;
 };
 
 /**
@@ -143,53 +111,33 @@ export const getEnableTotpUrl = () => {
  * @summary Enable TOTP
  */
 export const enableTotp = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<EnableResponse> => {
-	return customFetch<EnableResponse>(getEnableTotpUrl(), {
-		...options,
-		method: "POST",
-	});
+  return customFetch<EnableResponse>(getEnableTotpUrl(), {
+    ...options,
+    method: "POST",
+  });
 };
 
-export const getEnableTotpMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof enableTotp>>,
-		TError,
-		void,
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-	Awaited<ReturnType<typeof enableTotp>>,
-	TError,
-	void,
-	TContext
-> => {
-	const mutationKey = ["enableTotp"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+export const getEnableTotpMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<Awaited<ReturnType<typeof enableTotp>>, TError, void, TContext>;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<Awaited<ReturnType<typeof enableTotp>>, TError, void, TContext> => {
+  const mutationKey = ["enableTotp"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof enableTotp>>,
-		void
-	> = () => {
-		return enableTotp(requestOptions);
-	};
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof enableTotp>>, void> = () => {
+    return enableTotp(requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
-export type EnableTotpMutationResult = NonNullable<
-	Awaited<ReturnType<typeof enableTotp>>
->;
+export type EnableTotpMutationResult = NonNullable<Awaited<ReturnType<typeof enableTotp>>>;
 
 export type EnableTotpMutationError = unknown;
 
@@ -197,26 +145,16 @@ export type EnableTotpMutationError = unknown;
  * @summary Enable TOTP
  */
 export const useEnableTotp = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof enableTotp>>,
-			TError,
-			void,
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseMutationResult<
-	Awaited<ReturnType<typeof enableTotp>>,
-	TError,
-	void,
-	TContext
-> => {
-	return useMutation(getEnableTotpMutationOptions(options), queryClient);
+  options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof enableTotp>>, TError, void, TContext>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<Awaited<ReturnType<typeof enableTotp>>, TError, void, TContext> => {
+  return useMutation(getEnableTotpMutationOptions(options), queryClient);
 };
 export const getGenerateTotpBackupCodesUrl = () => {
-	return `/totp/generate-backup-codes`;
+  return `/totp/generate-backup-codes`;
 };
 
 /**
@@ -224,55 +162,50 @@ export const getGenerateTotpBackupCodesUrl = () => {
  * @summary Generate backup codes
  */
 export const generateTotpBackupCodes = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<GenerateBackupCodesResponse> => {
-	return customFetch<GenerateBackupCodesResponse>(
-		getGenerateTotpBackupCodesUrl(),
-		{
-			...options,
-			method: "POST",
-		},
-	);
+  return customFetch<GenerateBackupCodesResponse>(getGenerateTotpBackupCodesUrl(), {
+    ...options,
+    method: "POST",
+  });
 };
 
 export const getGenerateTotpBackupCodesMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof generateTotpBackupCodes>>,
-		TError,
-		void,
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateTotpBackupCodes>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof generateTotpBackupCodes>>,
-	TError,
-	void,
-	TContext
+  Awaited<ReturnType<typeof generateTotpBackupCodes>>,
+  TError,
+  void,
+  TContext
 > => {
-	const mutationKey = ["generateTotpBackupCodes"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["generateTotpBackupCodes"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof generateTotpBackupCodes>>,
-		void
-	> = () => {
-		return generateTotpBackupCodes(requestOptions);
-	};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateTotpBackupCodes>>,
+    void
+  > = () => {
+    return generateTotpBackupCodes(requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type GenerateTotpBackupCodesMutationResult = NonNullable<
-	Awaited<ReturnType<typeof generateTotpBackupCodes>>
+  Awaited<ReturnType<typeof generateTotpBackupCodes>>
 >;
 
 export type GenerateTotpBackupCodesMutationError = unknown;
@@ -280,33 +213,27 @@ export type GenerateTotpBackupCodesMutationError = unknown;
 /**
  * @summary Generate backup codes
  */
-export const useGenerateTotpBackupCodes = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof generateTotpBackupCodes>>,
-			TError,
-			void,
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useGenerateTotpBackupCodes = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof generateTotpBackupCodes>>,
+      TError,
+      void,
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof generateTotpBackupCodes>>,
-	TError,
-	void,
-	TContext
+  Awaited<ReturnType<typeof generateTotpBackupCodes>>,
+  TError,
+  void,
+  TContext
 > => {
-	return useMutation(
-		getGenerateTotpBackupCodesMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getGenerateTotpBackupCodesMutationOptions(options), queryClient);
 };
 export const getGetTotpURIUrl = () => {
-	return `/totp/get-uri`;
+  return `/totp/get-uri`;
 };
 
 /**
@@ -314,135 +241,101 @@ export const getGetTotpURIUrl = () => {
  * @summary Get TOTP URI
  */
 export const getTotpURI = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<GetTOTPURIResponse> => {
-	return customFetch<GetTOTPURIResponse>(getGetTotpURIUrl(), {
-		...options,
-		method: "GET",
-	});
+  return customFetch<GetTOTPURIResponse>(getGetTotpURIUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getGetTotpURIQueryKey = () => {
-	return [`/totp/get-uri`] as const;
+  return [`/totp/get-uri`] as const;
 };
 
 export const getGetTotpURIQueryOptions = <
-	TData = Awaited<ReturnType<typeof getTotpURI>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getTotpURI>>,
+  TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>>;
+  request?: SecondParameter<typeof customFetch>;
 }) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getGetTotpURIQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetTotpURIQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getTotpURI>>> = ({
-		signal,
-	}) => getTotpURI({ signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTotpURI>>> = ({ signal }) =>
+    getTotpURI({ signal, ...requestOptions });
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof getTotpURI>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTotpURI>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetTotpURIQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getTotpURI>>
->;
+export type GetTotpURIQueryResult = NonNullable<Awaited<ReturnType<typeof getTotpURI>>>;
 export type GetTotpURIQueryError = unknown;
 
-export function useGetTotpURI<
-	TData = Awaited<ReturnType<typeof getTotpURI>>,
-	TError = unknown,
->(
-	options: {
-		query: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getTotpURI>>,
-					TError,
-					Awaited<ReturnType<typeof getTotpURI>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetTotpURI<
-	TData = Awaited<ReturnType<typeof getTotpURI>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getTotpURI>>,
-					TError,
-					Awaited<ReturnType<typeof getTotpURI>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetTotpURI<
-	TData = Awaited<ReturnType<typeof getTotpURI>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+export function useGetTotpURI<TData = Awaited<ReturnType<typeof getTotpURI>>, TError = unknown>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getTotpURI>>,
+          TError,
+          Awaited<ReturnType<typeof getTotpURI>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetTotpURI<TData = Awaited<ReturnType<typeof getTotpURI>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getTotpURI>>,
+          TError,
+          Awaited<ReturnType<typeof getTotpURI>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetTotpURI<TData = Awaited<ReturnType<typeof getTotpURI>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get TOTP URI
  */
 
-export function useGetTotpURI<
-	TData = Awaited<ReturnType<typeof getTotpURI>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetTotpURIQueryOptions(options);
+export function useGetTotpURI<TData = Awaited<ReturnType<typeof getTotpURI>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getTotpURI>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetTotpURIQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getVerifyTotpUrl = () => {
-	return `/totp/verify`;
+  return `/totp/verify`;
 };
 
 /**
@@ -450,58 +343,51 @@ export const getVerifyTotpUrl = () => {
  * @summary Verify TOTP code
  */
 export const verifyTotp = async (
-	verifyTOTPRequest?: VerifyTOTPRequest,
-	options?: Parameters<typeof customFetch>[1],
+  verifyTOTPRequest?: VerifyTOTPRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<VerifyTOTPResponse> => {
-	return customFetch<VerifyTOTPResponse>(getVerifyTotpUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(verifyTOTPRequest),
-	});
+  return customFetch<VerifyTOTPResponse>(getVerifyTotpUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(verifyTOTPRequest),
+  });
 };
 
-export const getVerifyTotpMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof verifyTotp>>,
-		TError,
-		{ data?: VerifyTOTPRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+export const getVerifyTotpMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof verifyTotp>>,
+    TError,
+    { data?: VerifyTOTPRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof verifyTotp>>,
-	TError,
-	{ data?: VerifyTOTPRequest },
-	TContext
+  Awaited<ReturnType<typeof verifyTotp>>,
+  TError,
+  { data?: VerifyTOTPRequest },
+  TContext
 > => {
-	const mutationKey = ["verifyTotp"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["verifyTotp"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof verifyTotp>>,
-		{ data?: VerifyTOTPRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof verifyTotp>>,
+    { data?: VerifyTOTPRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return verifyTotp(data, requestOptions);
-	};
+    return verifyTotp(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
-export type VerifyTotpMutationResult = NonNullable<
-	Awaited<ReturnType<typeof verifyTotp>>
->;
+export type VerifyTotpMutationResult = NonNullable<Awaited<ReturnType<typeof verifyTotp>>>;
 export type VerifyTotpMutationBody = VerifyTOTPRequest | undefined;
 export type VerifyTotpMutationError = unknown;
 
@@ -509,26 +395,26 @@ export type VerifyTotpMutationError = unknown;
  * @summary Verify TOTP code
  */
 export const useVerifyTotp = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof verifyTotp>>,
-			TError,
-			{ data?: VerifyTOTPRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof verifyTotp>>,
+      TError,
+      { data?: VerifyTOTPRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof verifyTotp>>,
-	TError,
-	{ data?: VerifyTOTPRequest },
-	TContext
+  Awaited<ReturnType<typeof verifyTotp>>,
+  TError,
+  { data?: VerifyTOTPRequest },
+  TContext
 > => {
-	return useMutation(getVerifyTotpMutationOptions(options), queryClient);
+  return useMutation(getVerifyTotpMutationOptions(options), queryClient);
 };
 export const getVerifyTotpBackupCodeUrl = () => {
-	return `/totp/verify-backup-code`;
+  return `/totp/verify-backup-code`;
 };
 
 /**
@@ -536,85 +422,78 @@ export const getVerifyTotpBackupCodeUrl = () => {
  * @summary Verify backup code
  */
 export const verifyTotpBackupCode = async (
-	verifyBackupCodeRequest?: VerifyBackupCodeRequest,
-	options?: Parameters<typeof customFetch>[1],
+  verifyBackupCodeRequest?: VerifyBackupCodeRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<VerifyBackupCodeResponse> => {
-	return customFetch<VerifyBackupCodeResponse>(getVerifyTotpBackupCodeUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(verifyBackupCodeRequest),
-	});
+  return customFetch<VerifyBackupCodeResponse>(getVerifyTotpBackupCodeUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(verifyBackupCodeRequest),
+  });
 };
 
 export const getVerifyTotpBackupCodeMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof verifyTotpBackupCode>>,
-		TError,
-		{ data?: VerifyBackupCodeRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof verifyTotpBackupCode>>,
+    TError,
+    { data?: VerifyBackupCodeRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof verifyTotpBackupCode>>,
-	TError,
-	{ data?: VerifyBackupCodeRequest },
-	TContext
+  Awaited<ReturnType<typeof verifyTotpBackupCode>>,
+  TError,
+  { data?: VerifyBackupCodeRequest },
+  TContext
 > => {
-	const mutationKey = ["verifyTotpBackupCode"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["verifyTotpBackupCode"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof verifyTotpBackupCode>>,
-		{ data?: VerifyBackupCodeRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof verifyTotpBackupCode>>,
+    { data?: VerifyBackupCodeRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return verifyTotpBackupCode(data, requestOptions);
-	};
+    return verifyTotpBackupCode(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type VerifyTotpBackupCodeMutationResult = NonNullable<
-	Awaited<ReturnType<typeof verifyTotpBackupCode>>
+  Awaited<ReturnType<typeof verifyTotpBackupCode>>
 >;
-export type VerifyTotpBackupCodeMutationBody =
-	| VerifyBackupCodeRequest
-	| undefined;
+export type VerifyTotpBackupCodeMutationBody = VerifyBackupCodeRequest | undefined;
 export type VerifyTotpBackupCodeMutationError = unknown;
 
 /**
  * @summary Verify backup code
  */
 export const useVerifyTotpBackupCode = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof verifyTotpBackupCode>>,
-			TError,
-			{ data?: VerifyBackupCodeRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof verifyTotpBackupCode>>,
+      TError,
+      { data?: VerifyBackupCodeRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof verifyTotpBackupCode>>,
-	TError,
-	{ data?: VerifyBackupCodeRequest },
-	TContext
+  Awaited<ReturnType<typeof verifyTotpBackupCode>>,
+  TError,
+  { data?: VerifyBackupCodeRequest },
+  TContext
 > => {
-	return useMutation(
-		getVerifyTotpBackupCodeMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getVerifyTotpBackupCodeMutationOptions(options), queryClient);
 };

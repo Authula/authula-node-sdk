@@ -7,5 +7,5 @@
  */
 
 export type CreateOrganizationInvitationParams = {
-	redirectUrl?: string;
+  redirectUrl?: string;
 };

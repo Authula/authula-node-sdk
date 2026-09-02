@@ -8,14 +8,14 @@
 import type { OrganizationTeamMetadata } from "./organization-team-metadata";
 
 export type OrganizationTeam = {
-	createdAt: string;
-	/** @nullable */
-	description?: string | null;
-	id: string;
-	/** @nullable */
-	metadata?: OrganizationTeamMetadata;
-	name: string;
-	organizationId: string;
-	slug: string;
-	updatedAt: string;
+  createdAt: string;
+  /** @nullable */
+  description?: string | null;
+  id: string;
+  /** @nullable */
+  metadata?: OrganizationTeamMetadata;
+  name: string;
+  organizationId: string;
+  slug: string;
+  updatedAt: string;
 };

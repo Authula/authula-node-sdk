@@ -5,159 +5,154 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	DeleteOrganizationTeamResponse,
-	ListOrganizationTeamsResponse,
-	OrganizationTeam,
+  DeleteOrganizationTeamResponse,
+  ListOrganizationTeamsResponse,
+  OrganizationTeam,
 } from "../../models";
 
 import {
-	getCreateOrganizationTeamResponseMock,
-	getDeleteOrganizationTeamResponseMock,
-	getGetOrganizationTeamResponseMock,
-	getListOrganizationTeamsResponseMock,
-	getUpdateOrganizationTeamResponseMock,
+  getCreateOrganizationTeamResponseMock,
+  getDeleteOrganizationTeamResponseMock,
+  getGetOrganizationTeamResponseMock,
+  getListOrganizationTeamsResponseMock,
+  getUpdateOrganizationTeamResponseMock,
 } from "./organization-teams.faker";
 
 export {
-	getCreateOrganizationTeamResponseMock,
-	getDeleteOrganizationTeamResponseMock,
-	getGetOrganizationTeamResponseMock,
-	getListOrganizationTeamsResponseMock,
-	getUpdateOrganizationTeamResponseMock,
+  getListOrganizationTeamsResponseMock,
+  getCreateOrganizationTeamResponseMock,
+  getGetOrganizationTeamResponseMock,
+  getDeleteOrganizationTeamResponseMock,
+  getUpdateOrganizationTeamResponseMock,
 } from "./organization-teams.faker";
 
 export const getListOrganizationTeamsMockHandler = (
-	overrideResponse?:
-		| ListOrganizationTeamsResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) =>
-				| Promise<ListOrganizationTeamsResponse>
-				| ListOrganizationTeamsResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ListOrganizationTeamsResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ListOrganizationTeamsResponse> | ListOrganizationTeamsResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/organizations/:organizationId/teams",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListOrganizationTeamsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/organizations/:organizationId/teams",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListOrganizationTeamsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateOrganizationTeamMockHandler = (
-	overrideResponse?:
-		| OrganizationTeam
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<OrganizationTeam> | OrganizationTeam),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | OrganizationTeam
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<OrganizationTeam> | OrganizationTeam),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/organizations/:organizationId/teams",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateOrganizationTeamResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/organizations/:organizationId/teams",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateOrganizationTeamResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetOrganizationTeamMockHandler = (
-	overrideResponse?:
-		| OrganizationTeam
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<OrganizationTeam> | OrganizationTeam),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | OrganizationTeam
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<OrganizationTeam> | OrganizationTeam),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/organizations/:organizationId/teams/:teamId",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetOrganizationTeamResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/organizations/:organizationId/teams/:teamId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetOrganizationTeamResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteOrganizationTeamMockHandler = (
-	overrideResponse?:
-		| DeleteOrganizationTeamResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) =>
-				| Promise<DeleteOrganizationTeamResponse>
-				| DeleteOrganizationTeamResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteOrganizationTeamResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteOrganizationTeamResponse> | DeleteOrganizationTeamResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/organizations/:organizationId/teams/:teamId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteOrganizationTeamResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/organizations/:organizationId/teams/:teamId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteOrganizationTeamResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateOrganizationTeamMockHandler = (
-	overrideResponse?:
-		| OrganizationTeam
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<OrganizationTeam> | OrganizationTeam),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | OrganizationTeam
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<OrganizationTeam> | OrganizationTeam),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/organizations/:organizationId/teams/:teamId",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateOrganizationTeamResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/organizations/:organizationId/teams/:teamId",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateOrganizationTeamResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getOrganizationTeamsMock = () => [
-	getListOrganizationTeamsMockHandler(),
-	getCreateOrganizationTeamMockHandler(),
-	getGetOrganizationTeamMockHandler(),
-	getDeleteOrganizationTeamMockHandler(),
-	getUpdateOrganizationTeamMockHandler(),
+  getListOrganizationTeamsMockHandler(),
+  getCreateOrganizationTeamMockHandler(),
+  getGetOrganizationTeamMockHandler(),
+  getDeleteOrganizationTeamMockHandler(),
+  getUpdateOrganizationTeamMockHandler(),
 ];

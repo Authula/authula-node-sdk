@@ -7,16 +7,16 @@
  */
 
 export type AdminUserState = {
-	banned: boolean;
-	/** @nullable */
-	bannedAt?: string | null;
-	/** @nullable */
-	bannedByUserId?: string | null;
-	/** @nullable */
-	bannedReason?: string | null;
-	/** @nullable */
-	bannedUntil?: string | null;
-	createdAt: string;
-	updatedAt: string;
-	userId: string;
+  banned: boolean;
+  /** @nullable */
+  bannedAt?: string | null;
+  /** @nullable */
+  bannedByUserId?: string | null;
+  /** @nullable */
+  bannedReason?: string | null;
+  /** @nullable */
+  bannedUntil?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
 };

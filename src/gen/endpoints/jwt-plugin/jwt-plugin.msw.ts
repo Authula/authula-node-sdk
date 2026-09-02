@@ -5,70 +5,60 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../models";
 
-import {
-	getGetJWKSResponseMock,
-	getRefreshTokenResponseMock,
-} from "./jwt-plugin.faker";
+import { getGetJWKSResponseMock, getRefreshTokenResponseMock } from "./jwt-plugin.faker";
 
-export {
-	getGetJWKSResponseMock,
-	getRefreshTokenResponseMock,
-} from "./jwt-plugin.faker";
+export { getGetJWKSResponseMock, getRefreshTokenResponseMock } from "./jwt-plugin.faker";
 
 export const getGetJWKSMockHandler = (
-	overrideResponse?:
-		| WellKnownJWKSResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<WellKnownJWKSResponse> | WellKnownJWKSResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | WellKnownJWKSResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<WellKnownJWKSResponse> | WellKnownJWKSResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/.well-known/jwks.json",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetJWKSResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/.well-known/jwks.json",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetJWKSResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRefreshTokenMockHandler = (
-	overrideResponse?:
-		| RefreshTokenResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<RefreshTokenResponse> | RefreshTokenResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | RefreshTokenResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<RefreshTokenResponse> | RefreshTokenResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/token/refresh",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRefreshTokenResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/token/refresh",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRefreshTokenResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
-export const getJwtPluginMock = () => [
-	getGetJWKSMockHandler(),
-	getRefreshTokenMockHandler(),
-];
+export const getJwtPluginMock = () => [getGetJWKSMockHandler(), getRefreshTokenMockHandler()];

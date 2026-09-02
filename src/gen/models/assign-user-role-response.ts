@@ -7,5 +7,5 @@
  */
 
 export type AssignUserRoleResponse = {
-	message: string;
+  message: string;
 };

@@ -7,5 +7,5 @@
  */
 
 export type RemoveRolePermissionResponse = {
-	message: string;
+  message: string;
 };

@@ -7,5 +7,5 @@
  */
 
 export type AddRolePermissionRequest = {
-	permissionId: string;
+  permissionId: string;
 };

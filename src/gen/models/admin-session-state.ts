@@ -7,21 +7,21 @@
  */
 
 export type AdminSessionState = {
-	createdAt: string;
-	/** @nullable */
-	impersonationExpiresAt?: string | null;
-	/** @nullable */
-	impersonationReason?: string | null;
-	/** @nullable */
-	impersonatorSessionId?: string | null;
-	/** @nullable */
-	impersonatorUserId?: string | null;
-	/** @nullable */
-	revokedAt?: string | null;
-	/** @nullable */
-	revokedByUserId?: string | null;
-	/** @nullable */
-	revokedReason?: string | null;
-	sessionId: string;
-	updatedAt: string;
+  createdAt: string;
+  /** @nullable */
+  impersonationExpiresAt?: string | null;
+  /** @nullable */
+  impersonationReason?: string | null;
+  /** @nullable */
+  impersonatorSessionId?: string | null;
+  /** @nullable */
+  impersonatorUserId?: string | null;
+  /** @nullable */
+  revokedAt?: string | null;
+  /** @nullable */
+  revokedByUserId?: string | null;
+  /** @nullable */
+  revokedReason?: string | null;
+  sessionId: string;
+  updatedAt: string;
 };

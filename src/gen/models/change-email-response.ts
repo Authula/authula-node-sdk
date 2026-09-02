@@ -7,5 +7,5 @@
  */
 
 export type ChangeEmailResponse = {
-	message: string;
+  message: string;
 };

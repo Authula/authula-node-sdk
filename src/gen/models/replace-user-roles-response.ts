@@ -7,5 +7,5 @@
  */
 
 export type ReplaceUserRolesResponse = {
-	message: string;
+  message: string;
 };

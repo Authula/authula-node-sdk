@@ -7,5 +7,5 @@
  */
 
 export type AuthorizeResponse = {
-	authUrl: string;
+  authUrl: string;
 };

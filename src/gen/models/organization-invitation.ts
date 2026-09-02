@@ -8,12 +8,12 @@
 import type { OrganizationInvitationStatus } from "./organization-invitation-status";
 
 export type OrganizationInvitation = {
-	createdAt: string;
-	email: string;
-	expiresAt: string;
-	id: string;
-	inviterId: string;
-	organizationId: string;
-	role: string;
-	status: OrganizationInvitationStatus;
+  createdAt: string;
+  email: string;
+  expiresAt: string;
+  id: string;
+  inviterId: string;
+  organizationId: string;
+  role: string;
+  status: OrganizationInvitationStatus;
 };

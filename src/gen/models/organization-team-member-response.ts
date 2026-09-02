@@ -8,8 +8,8 @@
 import type { OrganizationMemberResponse } from "./organization-member-response";
 
 export type OrganizationTeamMemberResponse = {
-	createdAt: string;
-	id: string;
-	member: OrganizationMemberResponse;
-	teamId: string;
+  createdAt: string;
+  id: string;
+  member: OrganizationMemberResponse;
+  teamId: string;
 };

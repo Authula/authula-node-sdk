@@ -9,6 +9,4 @@
 /**
  * @nullable
  */
-export type UpdateOrganizationRequestMetadata = {
-	[key: string]: unknown;
-} | null;
+export type UpdateOrganizationRequestMetadata = { [key: string]: unknown } | null;

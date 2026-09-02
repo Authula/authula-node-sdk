@@ -8,146 +8,128 @@
 import { faker } from "@faker-js/faker";
 
 import type {
-	CreateUserResponse,
-	DeleteUserResponse,
-	GetUserByIDResponse,
-	UpdateUserResponse,
-	UsersPage,
+  CreateUserResponse,
+  DeleteUserResponse,
+  GetUserByIDResponse,
+  UpdateUserResponse,
+  UsersPage,
 } from "../../models";
 
 export const getListUsersResponseMock = (
-	overrideResponse: Partial<Extract<UsersPage, object>> = {},
+  overrideResponse: Partial<Extract<UsersPage, object>> = {},
 ): UsersPage => ({
-	nextCursor: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	users: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	})),
-	...overrideResponse,
+  nextCursor: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  users: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  })),
+  ...overrideResponse,
 });
 
 export const getCreateUserResponseMock = (
-	overrideResponse: Partial<Extract<CreateUserResponse, object>> = {},
+  overrideResponse: Partial<Extract<CreateUserResponse, object>> = {},
 ): CreateUserResponse => ({
-	user: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  user: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getGetUserResponseMock = (
-	overrideResponse: Partial<Extract<GetUserByIDResponse, object>> = {},
+  overrideResponse: Partial<Extract<GetUserByIDResponse, object>> = {},
 ): GetUserByIDResponse => ({
-	user: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  user: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getDeleteUserResponseMock = (
-	overrideResponse: Partial<Extract<DeleteUserResponse, object>> = {},
+  overrideResponse: Partial<Extract<DeleteUserResponse, object>> = {},
 ): DeleteUserResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getUpdateUserResponseMock = (
-	overrideResponse: Partial<Extract<UpdateUserResponse, object>> = {},
+  overrideResponse: Partial<Extract<UpdateUserResponse, object>> = {},
 ): UpdateUserResponse => ({
-	user: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  user: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });

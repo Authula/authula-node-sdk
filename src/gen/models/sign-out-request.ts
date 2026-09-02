@@ -7,8 +7,8 @@
  */
 
 export type SignOutRequest = {
-	/** @nullable */
-	sessionId?: string | null;
-	/** @nullable */
-	signOutAll?: boolean | null;
+  /** @nullable */
+  sessionId?: string | null;
+  /** @nullable */
+  signOutAll?: boolean | null;
 };

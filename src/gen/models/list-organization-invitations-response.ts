@@ -9,6 +9,6 @@ import type { GetOrganizationInvitationResponse } from "./get-organization-invit
 import type { Pagination } from "./pagination";
 
 export type ListOrganizationInvitationsResponse = {
-	data: GetOrganizationInvitationResponse[];
-	pagination: Pagination;
+  data: GetOrganizationInvitationResponse[];
+  pagination: Pagination;
 };

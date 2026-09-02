@@ -7,6 +7,6 @@
  */
 
 export type UpdatePermissionRequest = {
-	/** @nullable */
-	description?: string | null;
+  /** @nullable */
+  description?: string | null;
 };

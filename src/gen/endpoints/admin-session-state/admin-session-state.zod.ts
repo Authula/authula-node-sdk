@@ -8,14 +8,14 @@
 import * as zod from "zod";
 
 import {
-	AdminSessionState,
-	CreateSessionStateRequest,
-	DeleteSessionStateResponse,
-	GetSessionStateResponse,
-	RevokeSessionRequest,
-	RevokeSessionResponse,
-	UpsertSessionStateRequest,
-	UpsertSessionStateResponse,
+  AdminSessionState,
+  CreateSessionStateRequest,
+  DeleteSessionStateResponse,
+  GetSessionStateResponse,
+  RevokeSessionRequest,
+  RevokeSessionResponse,
+  UpsertSessionStateRequest,
+  UpsertSessionStateResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -23,16 +23,14 @@ import {
  * @summary List revoked session states
  */
 export const ListRevokedSessionStatesResponseItem = AdminSessionState;
-export const ListRevokedSessionStatesResponse = zod.array(
-	ListRevokedSessionStatesResponseItem,
-);
+export const ListRevokedSessionStatesResponse = zod.array(ListRevokedSessionStatesResponseItem);
 
 /**
  * Revokes a session.
  * @summary Revoke session
  */
 export const RevokeSessionParams = zod.object({
-	session_id: zod.string(),
+  session_id: zod.string(),
 });
 
 export const RevokeSessionBody = RevokeSessionRequest;
@@ -44,7 +42,7 @@ export const RevokeSessionResponseSchema = RevokeSessionResponse;
  * @summary Get session state
  */
 export const GetSessionStateParams = zod.object({
-	session_id: zod.string(),
+  session_id: zod.string(),
 });
 
 export const GetSessionStateResponseSchema = GetSessionStateResponse;
@@ -54,7 +52,7 @@ export const GetSessionStateResponseSchema = GetSessionStateResponse;
  * @summary Create session state
  */
 export const CreateSessionStateParams = zod.object({
-	session_id: zod.string(),
+  session_id: zod.string(),
 });
 
 export const CreateSessionStateBody = CreateSessionStateRequest;
@@ -66,7 +64,7 @@ export const CreateSessionStateResponse = UpsertSessionStateResponse;
  * @summary Delete session state
  */
 export const DeleteSessionStateParams = zod.object({
-	session_id: zod.string(),
+  session_id: zod.string(),
 });
 
 export const DeleteSessionStateResponseSchema = DeleteSessionStateResponse;
@@ -76,7 +74,7 @@ export const DeleteSessionStateResponseSchema = DeleteSessionStateResponse;
  * @summary Update session state
  */
 export const UpdateSessionStateParams = zod.object({
-	session_id: zod.string(),
+  session_id: zod.string(),
 });
 
 export const UpdateSessionStateBody = UpsertSessionStateRequest;

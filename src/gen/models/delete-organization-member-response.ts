@@ -7,5 +7,5 @@
  */
 
 export type DeleteOrganizationMemberResponse = {
-	message: string;
+  message: string;
 };

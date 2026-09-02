@@ -7,5 +7,5 @@
  */
 
 export type ReplaceUserRolesRequest = {
-	roleIds: string[];
+  roleIds: string[];
 };

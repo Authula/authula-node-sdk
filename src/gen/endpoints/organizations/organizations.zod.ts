@@ -8,11 +8,11 @@
 import * as zod from "zod";
 
 import {
-	CreateOrganizationRequest,
-	DeleteOrganizationResponse,
-	ListOrganizationsResponse,
-	Organization,
-	UpdateOrganizationRequest,
+  CreateOrganizationRequest,
+  DeleteOrganizationResponse,
+  ListOrganizationsResponse,
+  Organization,
+  UpdateOrganizationRequest,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -23,8 +23,8 @@ export const listOrganizationsQueryPageDefault = 1;
 export const listOrganizationsQueryLimitDefault = 10;
 
 export const ListOrganizationsQueryParams = zod.object({
-	page: zod.int().default(listOrganizationsQueryPageDefault),
-	limit: zod.int().default(listOrganizationsQueryLimitDefault),
+  page: zod.int().default(listOrganizationsQueryPageDefault),
+  limit: zod.int().default(listOrganizationsQueryLimitDefault),
 });
 
 export const ListOrganizationsResponseSchema = ListOrganizationsResponse;
@@ -42,7 +42,7 @@ export const CreateOrganizationResponse = Organization;
  * @summary Get organization
  */
 export const GetOrganizationParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const GetOrganizationResponse = Organization;
@@ -52,7 +52,7 @@ export const GetOrganizationResponse = Organization;
  * @summary Delete organization
  */
 export const DeleteOrganizationParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const DeleteOrganizationResponseSchema = DeleteOrganizationResponse;
@@ -62,7 +62,7 @@ export const DeleteOrganizationResponseSchema = DeleteOrganizationResponse;
  * @summary Update organization
  */
 export const UpdateOrganizationParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const UpdateOrganizationBody = UpdateOrganizationRequest;

@@ -7,9 +7,9 @@
  */
 
 export type Pagination = {
-	hasMore: boolean;
-	limit: number;
-	page: number;
-	total: number;
-	totalPages: number;
+  hasMore: boolean;
+  limit: number;
+  page: number;
+  total: number;
+  totalPages: number;
 };

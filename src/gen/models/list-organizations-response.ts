@@ -9,6 +9,6 @@ import type { Organization } from "./organization";
 import type { Pagination } from "./pagination";
 
 export type ListOrganizationsResponse = {
-	data: Organization[];
-	pagination: Pagination;
+  data: Organization[];
+  pagination: Pagination;
 };

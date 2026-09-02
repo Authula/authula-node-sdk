@@ -8,20 +8,20 @@
 import type { UpdateApiKeyRequestMetadata } from "./update-api-key-request-metadata";
 
 export type UpdateApiKeyRequest = {
-	/** @nullable */
-	enabled?: boolean | null;
-	/** @nullable */
-	expiresAt?: string | null;
-	/** @nullable */
-	metadata?: UpdateApiKeyRequestMetadata;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	permissions?: string[] | null;
-	/** @nullable */
-	rateLimitEnabled?: boolean | null;
-	/** @nullable */
-	rateLimitMaxRequests?: number | null;
-	/** @nullable */
-	rateLimitTimeWindow?: number | null;
+  /** @nullable */
+  enabled?: boolean | null;
+  /** @nullable */
+  expiresAt?: string | null;
+  /** @nullable */
+  metadata?: UpdateApiKeyRequestMetadata;
+  /** @nullable */
+  name?: string | null;
+  /** @nullable */
+  permissions?: string[] | null;
+  /** @nullable */
+  rateLimitEnabled?: boolean | null;
+  /** @nullable */
+  rateLimitMaxRequests?: number | null;
+  /** @nullable */
+  rateLimitTimeWindow?: number | null;
 };

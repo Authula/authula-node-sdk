@@ -7,6 +7,6 @@
  */
 
 export type VerifyTOTPRequest = {
-	code: string;
-	trustDevice?: boolean;
+  code: string;
+  trustDevice?: boolean;
 };

@@ -5,53 +5,51 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	GetImpersonationByIDResponse,
-	Impersonation,
-	StartImpersonationRequest,
-	StartImpersonationResponse,
-	StopImpersonationResponse,
+  GetImpersonationByIDResponse,
+  Impersonation,
+  StartImpersonationRequest,
+  StartImpersonationResponse,
+  StopImpersonationResponse,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getListImpersonationsUrl = () => {
-	return `/admin/impersonations`;
+  return `/admin/impersonations`;
 };
 
 /**
@@ -59,155 +57,117 @@ export const getListImpersonationsUrl = () => {
  * @summary List impersonations
  */
 export const listImpersonations = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<Impersonation[] | null> => {
-	return customFetch<Impersonation[] | null>(getListImpersonationsUrl(), {
-		...options,
-		method: "GET",
-	});
+  return customFetch<Impersonation[] | null>(getListImpersonationsUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getListImpersonationsQueryKey = () => {
-	return [`/admin/impersonations`] as const;
+  return [`/admin/impersonations`] as const;
 };
 
 export const getListImpersonationsQueryOptions = <
-	TData = Awaited<ReturnType<typeof listImpersonations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listImpersonations>>,
+  TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<
-			Awaited<ReturnType<typeof listImpersonations>>,
-			TError,
-			TData
-		>
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listImpersonations>>, TError, TData>>;
+  request?: SecondParameter<typeof customFetch>;
 }) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getListImpersonationsQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getListImpersonationsQueryKey();
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof listImpersonations>>
-	> = ({ signal }) => listImpersonations({ signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listImpersonations>>> = ({ signal }) =>
+    listImpersonations({ signal, ...requestOptions });
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof listImpersonations>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listImpersonations>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type ListImpersonationsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof listImpersonations>>
+  Awaited<ReturnType<typeof listImpersonations>>
 >;
 export type ListImpersonationsQueryError = unknown;
 
 export function useListImpersonations<
-	TData = Awaited<ReturnType<typeof listImpersonations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listImpersonations>>,
+  TError = unknown,
 >(
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listImpersonations>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listImpersonations>>,
-					TError,
-					Awaited<ReturnType<typeof listImpersonations>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof listImpersonations>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listImpersonations>>,
+          TError,
+          Awaited<ReturnType<typeof listImpersonations>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListImpersonations<
-	TData = Awaited<ReturnType<typeof listImpersonations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listImpersonations>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listImpersonations>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listImpersonations>>,
-					TError,
-					Awaited<ReturnType<typeof listImpersonations>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listImpersonations>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listImpersonations>>,
+          TError,
+          Awaited<ReturnType<typeof listImpersonations>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListImpersonations<
-	TData = Awaited<ReturnType<typeof listImpersonations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listImpersonations>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listImpersonations>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listImpersonations>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List impersonations
  */
 
 export function useListImpersonations<
-	TData = Awaited<ReturnType<typeof listImpersonations>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listImpersonations>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listImpersonations>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getListImpersonationsQueryOptions(options);
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listImpersonations>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getListImpersonationsQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getStartImpersonationUrl = () => {
-	return `/admin/impersonations`;
+  return `/admin/impersonations`;
 };
 
 /**
@@ -215,90 +175,83 @@ export const getStartImpersonationUrl = () => {
  * @summary Start impersonation
  */
 export const startImpersonation = async (
-	startImpersonationRequest?: StartImpersonationRequest,
-	options?: Parameters<typeof customFetch>[1],
+  startImpersonationRequest?: StartImpersonationRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<StartImpersonationResponse> => {
-	return customFetch<StartImpersonationResponse>(getStartImpersonationUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(startImpersonationRequest),
-	});
+  return customFetch<StartImpersonationResponse>(getStartImpersonationUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(startImpersonationRequest),
+  });
 };
 
 export const getStartImpersonationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof startImpersonation>>,
-		TError,
-		{ data?: StartImpersonationRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof startImpersonation>>,
+    TError,
+    { data?: StartImpersonationRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof startImpersonation>>,
-	TError,
-	{ data?: StartImpersonationRequest },
-	TContext
+  Awaited<ReturnType<typeof startImpersonation>>,
+  TError,
+  { data?: StartImpersonationRequest },
+  TContext
 > => {
-	const mutationKey = ["startImpersonation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["startImpersonation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof startImpersonation>>,
-		{ data?: StartImpersonationRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof startImpersonation>>,
+    { data?: StartImpersonationRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return startImpersonation(data, requestOptions);
-	};
+    return startImpersonation(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type StartImpersonationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof startImpersonation>>
+  Awaited<ReturnType<typeof startImpersonation>>
 >;
-export type StartImpersonationMutationBody =
-	| StartImpersonationRequest
-	| undefined;
+export type StartImpersonationMutationBody = StartImpersonationRequest | undefined;
 export type StartImpersonationMutationError = unknown;
 
 /**
  * @summary Start impersonation
  */
 export const useStartImpersonation = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof startImpersonation>>,
-			TError,
-			{ data?: StartImpersonationRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof startImpersonation>>,
+      TError,
+      { data?: StartImpersonationRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof startImpersonation>>,
-	TError,
-	{ data?: StartImpersonationRequest },
-	TContext
+  Awaited<ReturnType<typeof startImpersonation>>,
+  TError,
+  { data?: StartImpersonationRequest },
+  TContext
 > => {
-	return useMutation(
-		getStartImpersonationMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getStartImpersonationMutationOptions(options), queryClient);
 };
 export const getGetImpersonationUrl = (impersonationId: string) => {
-	return `/admin/impersonations/${impersonationId}`;
+  return `/admin/impersonations/${impersonationId}`;
 };
 
 /**
@@ -306,176 +259,124 @@ export const getGetImpersonationUrl = (impersonationId: string) => {
  * @summary Get impersonation by ID
  */
 export const getImpersonation = async (
-	impersonationId: string,
-	options?: Parameters<typeof customFetch>[1],
+  impersonationId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<GetImpersonationByIDResponse> => {
-	return customFetch<GetImpersonationByIDResponse>(
-		getGetImpersonationUrl(impersonationId),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<GetImpersonationByIDResponse>(getGetImpersonationUrl(impersonationId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getGetImpersonationQueryKey = (impersonationId: string) => {
-	return [`/admin/impersonations/${impersonationId}`] as const;
+  return [`/admin/impersonations/${impersonationId}`] as const;
 };
 
 export const getGetImpersonationQueryOptions = <
-	TData = Awaited<ReturnType<typeof getImpersonation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getImpersonation>>,
+  TError = unknown,
 >(
-	impersonationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getImpersonation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  impersonationId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetImpersonationQueryKey(impersonationId);
+  const queryKey = queryOptions?.queryKey ?? getGetImpersonationQueryKey(impersonationId);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getImpersonation>>
-	> = ({ signal }) =>
-		getImpersonation(impersonationId, { signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getImpersonation>>> = ({ signal }) =>
+    getImpersonation(impersonationId, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled: impersonationId !== null && impersonationId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getImpersonation>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled: impersonationId !== null && impersonationId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
-export type GetImpersonationQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getImpersonation>>
->;
+export type GetImpersonationQueryResult = NonNullable<Awaited<ReturnType<typeof getImpersonation>>>;
 export type GetImpersonationQueryError = unknown;
 
 export function useGetImpersonation<
-	TData = Awaited<ReturnType<typeof getImpersonation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getImpersonation>>,
+  TError = unknown,
 >(
-	impersonationId: string,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getImpersonation>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getImpersonation>>,
-					TError,
-					Awaited<ReturnType<typeof getImpersonation>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  impersonationId: string,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getImpersonation>>,
+          TError,
+          Awaited<ReturnType<typeof getImpersonation>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetImpersonation<
-	TData = Awaited<ReturnType<typeof getImpersonation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getImpersonation>>,
+  TError = unknown,
 >(
-	impersonationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getImpersonation>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getImpersonation>>,
-					TError,
-					Awaited<ReturnType<typeof getImpersonation>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  impersonationId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getImpersonation>>,
+          TError,
+          Awaited<ReturnType<typeof getImpersonation>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetImpersonation<
-	TData = Awaited<ReturnType<typeof getImpersonation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getImpersonation>>,
+  TError = unknown,
 >(
-	impersonationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getImpersonation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  impersonationId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get impersonation by ID
  */
 
 export function useGetImpersonation<
-	TData = Awaited<ReturnType<typeof getImpersonation>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getImpersonation>>,
+  TError = unknown,
 >(
-	impersonationId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getImpersonation>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetImpersonationQueryOptions(
-		impersonationId,
-		options,
-	);
+  impersonationId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getImpersonation>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetImpersonationQueryOptions(impersonationId, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getStopImpersonationUrl = (impersonationId: string) => {
-	return `/admin/impersonations/${impersonationId}/stop`;
+  return `/admin/impersonations/${impersonationId}/stop`;
 };
 
 /**
@@ -483,58 +384,53 @@ export const getStopImpersonationUrl = (impersonationId: string) => {
  * @summary Stop impersonation
  */
 export const stopImpersonation = async (
-	impersonationId: string,
-	options?: Parameters<typeof customFetch>[1],
+  impersonationId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<StopImpersonationResponse> => {
-	return customFetch<StopImpersonationResponse>(
-		getStopImpersonationUrl(impersonationId),
-		{
-			...options,
-			method: "POST",
-		},
-	);
+  return customFetch<StopImpersonationResponse>(getStopImpersonationUrl(impersonationId), {
+    ...options,
+    method: "POST",
+  });
 };
 
 export const getStopImpersonationMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof stopImpersonation>>,
-		TError,
-		{ impersonationId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof stopImpersonation>>,
+    TError,
+    { impersonationId: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof stopImpersonation>>,
-	TError,
-	{ impersonationId: string },
-	TContext
+  Awaited<ReturnType<typeof stopImpersonation>>,
+  TError,
+  { impersonationId: string },
+  TContext
 > => {
-	const mutationKey = ["stopImpersonation"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["stopImpersonation"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof stopImpersonation>>,
-		{ impersonationId: string }
-	> = (props) => {
-		const { impersonationId } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof stopImpersonation>>,
+    { impersonationId: string }
+  > = (props) => {
+    const { impersonationId } = props ?? {};
 
-		return stopImpersonation(impersonationId, requestOptions);
-	};
+    return stopImpersonation(impersonationId, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type StopImpersonationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof stopImpersonation>>
+  Awaited<ReturnType<typeof stopImpersonation>>
 >;
 
 export type StopImpersonationMutationError = unknown;
@@ -543,21 +439,21 @@ export type StopImpersonationMutationError = unknown;
  * @summary Stop impersonation
  */
 export const useStopImpersonation = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof stopImpersonation>>,
-			TError,
-			{ impersonationId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof stopImpersonation>>,
+      TError,
+      { impersonationId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof stopImpersonation>>,
-	TError,
-	{ impersonationId: string },
-	TContext
+  Awaited<ReturnType<typeof stopImpersonation>>,
+  TError,
+  { impersonationId: string },
+  TContext
 > => {
-	return useMutation(getStopImpersonationMutationOptions(options), queryClient);
+  return useMutation(getStopImpersonationMutationOptions(options), queryClient);
 };

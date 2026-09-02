@@ -8,12 +8,12 @@
 import * as zod from "zod";
 
 import {
-	AddOrganizationMemberRequest,
-	DeleteOrganizationMemberResponse,
-	ListOrganizationMembersResponse,
-	OrganizationMember,
-	OrganizationMemberResponse,
-	UpdateOrganizationMemberRequest,
+  AddOrganizationMemberRequest,
+  DeleteOrganizationMemberResponse,
+  ListOrganizationMembersResponse,
+  OrganizationMember,
+  OrganizationMemberResponse,
+  UpdateOrganizationMemberRequest,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -21,26 +21,25 @@ import {
  * @summary List members
  */
 export const ListOrganizationMembersParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const listOrganizationMembersQueryPageDefault = 1;
 export const listOrganizationMembersQueryLimitDefault = 10;
 
 export const ListOrganizationMembersQueryParams = zod.object({
-	page: zod.int().default(listOrganizationMembersQueryPageDefault),
-	limit: zod.int().default(listOrganizationMembersQueryLimitDefault),
+  page: zod.int().default(listOrganizationMembersQueryPageDefault),
+  limit: zod.int().default(listOrganizationMembersQueryLimitDefault),
 });
 
-export const ListOrganizationMembersResponseSchema =
-	ListOrganizationMembersResponse;
+export const ListOrganizationMembersResponseSchema = ListOrganizationMembersResponse;
 
 /**
  * Adds a user as a member of an organization with the specified role.
  * @summary Add member
  */
 export const AddOrganizationMemberParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const AddOrganizationMemberBody = AddOrganizationMemberRequest;
@@ -52,8 +51,8 @@ export const AddOrganizationMemberResponse = OrganizationMember;
  * @summary Get member by user ID
  */
 export const GetOrganizationMemberByUserIDParams = zod.object({
-	organization_id: zod.string(),
-	user_id: zod.string(),
+  organization_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const GetOrganizationMemberByUserIDResponse = OrganizationMemberResponse;
@@ -63,8 +62,8 @@ export const GetOrganizationMemberByUserIDResponse = OrganizationMemberResponse;
  * @summary Get member
  */
 export const GetOrganizationMemberParams = zod.object({
-	organization_id: zod.string(),
-	member_id: zod.string(),
+  organization_id: zod.string(),
+  member_id: zod.string(),
 });
 
 export const GetOrganizationMemberResponse = OrganizationMemberResponse;
@@ -74,20 +73,19 @@ export const GetOrganizationMemberResponse = OrganizationMemberResponse;
  * @summary Delete member
  */
 export const DeleteOrganizationMemberParams = zod.object({
-	organization_id: zod.string(),
-	member_id: zod.string(),
+  organization_id: zod.string(),
+  member_id: zod.string(),
 });
 
-export const DeleteOrganizationMemberResponseSchema =
-	DeleteOrganizationMemberResponse;
+export const DeleteOrganizationMemberResponseSchema = DeleteOrganizationMemberResponse;
 
 /**
  * Updates the role of an organization member.
  * @summary Update member
  */
 export const UpdateOrganizationMemberParams = zod.object({
-	organization_id: zod.string(),
-	member_id: zod.string(),
+  organization_id: zod.string(),
+  member_id: zod.string(),
 });
 
 export const UpdateOrganizationMemberBody = UpdateOrganizationMemberRequest;

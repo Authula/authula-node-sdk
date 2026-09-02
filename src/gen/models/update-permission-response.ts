@@ -8,5 +8,5 @@
 import type { Permission } from "./permission";
 
 export type UpdatePermissionResponse = {
-	permission: Permission;
+  permission: Permission;
 };

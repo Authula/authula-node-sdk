@@ -5,155 +5,154 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	DeleteOrganizationResponse,
-	ListOrganizationsResponse,
-	Organization,
+  DeleteOrganizationResponse,
+  ListOrganizationsResponse,
+  Organization,
 } from "../../models";
 
 import {
-	getCreateOrganizationResponseMock,
-	getDeleteOrganizationResponseMock,
-	getGetOrganizationResponseMock,
-	getListOrganizationsResponseMock,
-	getUpdateOrganizationResponseMock,
+  getCreateOrganizationResponseMock,
+  getDeleteOrganizationResponseMock,
+  getGetOrganizationResponseMock,
+  getListOrganizationsResponseMock,
+  getUpdateOrganizationResponseMock,
 } from "./organizations.faker";
 
 export {
-	getCreateOrganizationResponseMock,
-	getDeleteOrganizationResponseMock,
-	getGetOrganizationResponseMock,
-	getListOrganizationsResponseMock,
-	getUpdateOrganizationResponseMock,
+  getListOrganizationsResponseMock,
+  getCreateOrganizationResponseMock,
+  getGetOrganizationResponseMock,
+  getDeleteOrganizationResponseMock,
+  getUpdateOrganizationResponseMock,
 } from "./organizations.faker";
 
 export const getListOrganizationsMockHandler = (
-	overrideResponse?:
-		| ListOrganizationsResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<ListOrganizationsResponse> | ListOrganizationsResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ListOrganizationsResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ListOrganizationsResponse> | ListOrganizationsResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/organizations",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListOrganizationsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/organizations",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListOrganizationsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateOrganizationMockHandler = (
-	overrideResponse?:
-		| Organization
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<Organization> | Organization),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Organization
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<Organization> | Organization),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/organizations",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateOrganizationResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/organizations",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateOrganizationResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetOrganizationMockHandler = (
-	overrideResponse?:
-		| Organization
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Organization> | Organization),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Organization
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<Organization> | Organization),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/organizations/:organizationId",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetOrganizationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/organizations/:organizationId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetOrganizationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteOrganizationMockHandler = (
-	overrideResponse?:
-		| DeleteOrganizationResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteOrganizationResponse> | DeleteOrganizationResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteOrganizationResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteOrganizationResponse> | DeleteOrganizationResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/organizations/:organizationId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteOrganizationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/organizations/:organizationId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteOrganizationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateOrganizationMockHandler = (
-	overrideResponse?:
-		| Organization
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<Organization> | Organization),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Organization
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<Organization> | Organization),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/organizations/:organizationId",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateOrganizationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/organizations/:organizationId",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateOrganizationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getOrganizationsMock = () => [
-	getListOrganizationsMockHandler(),
-	getCreateOrganizationMockHandler(),
-	getGetOrganizationMockHandler(),
-	getDeleteOrganizationMockHandler(),
-	getUpdateOrganizationMockHandler(),
+  getListOrganizationsMockHandler(),
+  getCreateOrganizationMockHandler(),
+  getGetOrganizationMockHandler(),
+  getDeleteOrganizationMockHandler(),
+  getUpdateOrganizationMockHandler(),
 ];

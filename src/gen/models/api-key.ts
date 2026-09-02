@@ -8,25 +8,25 @@
 import type { ApiKeyMetadata } from "./api-key-metadata";
 
 export type ApiKey = {
-	createdAt: string;
-	enabled: boolean;
-	/** @nullable */
-	expiresAt?: string | null;
-	id: string;
-	keyHash: string;
-	last: string;
-	/** @nullable */
-	lastRequestedAt?: string | null;
-	/** @nullable */
-	metadata?: ApiKeyMetadata;
-	name: string;
-	ownerId: string;
-	ownerType: string;
-	/** @nullable */
-	permissions?: string[] | null;
-	/** @nullable */
-	prefix?: string | null;
-	rateLimitEnabled: boolean;
-	start: string;
-	updatedAt: string;
+  createdAt: string;
+  enabled: boolean;
+  /** @nullable */
+  expiresAt?: string | null;
+  id: string;
+  keyHash: string;
+  last: string;
+  /** @nullable */
+  lastRequestedAt?: string | null;
+  /** @nullable */
+  metadata?: ApiKeyMetadata;
+  name: string;
+  ownerId: string;
+  ownerType: string;
+  /** @nullable */
+  permissions?: string[] | null;
+  /** @nullable */
+  prefix?: string | null;
+  rateLimitEnabled: boolean;
+  start: string;
+  updatedAt: string;
 };

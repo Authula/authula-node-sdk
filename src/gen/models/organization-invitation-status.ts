@@ -10,12 +10,12 @@
  * The type of the invitation status
  */
 export type OrganizationInvitationStatus =
-	(typeof OrganizationInvitationStatus)[keyof typeof OrganizationInvitationStatus];
+  (typeof OrganizationInvitationStatus)[keyof typeof OrganizationInvitationStatus];
 
 export const OrganizationInvitationStatus = {
-	pending: "pending",
-	accepted: "accepted",
-	rejected: "rejected",
-	revoked: "revoked",
-	expired: "expired",
+  pending: "pending",
+  accepted: "accepted",
+  rejected: "rejected",
+  revoked: "revoked",
+  expired: "expired",
 } as const;

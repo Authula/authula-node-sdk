@@ -8,5 +8,5 @@
 import type { Impersonation } from "./impersonation";
 
 export type StartImpersonationResponse = {
-	impersonation: Impersonation;
+  impersonation: Impersonation;
 };

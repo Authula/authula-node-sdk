@@ -8,489 +8,381 @@
 import { faker } from "@faker-js/faker";
 
 import type {
-	AddRolePermissionResponse,
-	AssignUserRoleResponse,
-	CheckUserPermissionsResponse,
-	CreatePermissionResponse,
-	CreateRoleResponse,
-	DeletePermissionResponse,
-	DeleteRoleResponse,
-	GetUserPermissionsResponse,
-	Permission,
-	RemoveRolePermissionResponse,
-	RemoveUserRoleResponse,
-	ReplaceRolePermissionResponse,
-	ReplaceUserRolesResponse,
-	Role,
-	RoleDetails,
-	UpdatePermissionResponse,
-	UpdateRoleResponse,
-	UserPermissionInfo,
-	UserRoleInfo,
+  AddRolePermissionResponse,
+  AssignUserRoleResponse,
+  CheckUserPermissionsResponse,
+  CreatePermissionResponse,
+  CreateRoleResponse,
+  DeletePermissionResponse,
+  DeleteRoleResponse,
+  GetUserPermissionsResponse,
+  Permission,
+  RemoveRolePermissionResponse,
+  RemoveUserRoleResponse,
+  ReplaceRolePermissionResponse,
+  ReplaceUserRolesResponse,
+  Role,
+  RoleDetails,
+  UpdatePermissionResponse,
+  UpdateRoleResponse,
+  UserPermissionInfo,
+  UserRoleInfo,
 } from "../../models";
 
 export const getListPermissionsResponseMock = (): Permission[] | null =>
-	Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		key: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	}));
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    key: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  }));
 
 export const getCreatePermissionResponseMock = (
-	overrideResponse: Partial<Extract<CreatePermissionResponse, object>> = {},
+  overrideResponse: Partial<Extract<CreatePermissionResponse, object>> = {},
 ): CreatePermissionResponse => ({
-	permission: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		key: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  permission: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    key: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getGetPermissionByKeyResponseMock = (
-	overrideResponse: Partial<Extract<Permission, object>> = {},
+  overrideResponse: Partial<Extract<Permission, object>> = {},
 ): Permission => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	isSystem: faker.datatype.boolean(),
-	key: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  isSystem: faker.datatype.boolean(),
+  key: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  ...overrideResponse,
 });
 
 export const getGetPermissionResponseMock = (
-	overrideResponse: Partial<Extract<Permission, object>> = {},
+  overrideResponse: Partial<Extract<Permission, object>> = {},
 ): Permission => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	isSystem: faker.datatype.boolean(),
-	key: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  isSystem: faker.datatype.boolean(),
+  key: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  ...overrideResponse,
 });
 
 export const getDeletePermissionResponseMock = (
-	overrideResponse: Partial<Extract<DeletePermissionResponse, object>> = {},
+  overrideResponse: Partial<Extract<DeletePermissionResponse, object>> = {},
 ): DeletePermissionResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getUpdatePermissionResponseMock = (
-	overrideResponse: Partial<Extract<UpdatePermissionResponse, object>> = {},
+  overrideResponse: Partial<Extract<UpdatePermissionResponse, object>> = {},
 ): UpdatePermissionResponse => ({
-	permission: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		key: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  permission: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    key: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getListRolesResponseMock = (): Role[] | null =>
-	Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		weight: faker.number.int(),
-	}));
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    weight: faker.number.int(),
+  }));
 
 export const getCreateRoleResponseMock = (
-	overrideResponse: Partial<Extract<CreateRoleResponse, object>> = {},
+  overrideResponse: Partial<Extract<CreateRoleResponse, object>> = {},
 ): CreateRoleResponse => ({
-	role: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		weight: faker.number.int(),
-	},
-	...overrideResponse,
+  role: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    weight: faker.number.int(),
+  },
+  ...overrideResponse,
 });
 
 export const getGetRoleByNameResponseMock = (
-	overrideResponse: Partial<Extract<Role, object>> = {},
+  overrideResponse: Partial<Extract<Role, object>> = {},
 ): Role => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	isSystem: faker.datatype.boolean(),
-	name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	weight: faker.number.int(),
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  isSystem: faker.datatype.boolean(),
+  name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  weight: faker.number.int(),
+  ...overrideResponse,
 });
 
 export const getGetRoleResponseMock = (
-	overrideResponse: Partial<Extract<RoleDetails, object>> = {},
+  overrideResponse: Partial<Extract<RoleDetails, object>> = {},
 ): RoleDetails => ({
-	permissions: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		grantedAt: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.date.past().toISOString().slice(0, 19) + "Z",
-				null,
-			]),
-			undefined,
-		]),
-		grantedByUserId: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionDescription: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		sources: faker.helpers.arrayElement([
-			Array.from(
-				{ length: faker.number.int({ min: 1, max: 10 }) },
-				(_, i) => i + 1,
-			).map(() => ({
-				grantedAt: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.date.past().toISOString().slice(0, 19) + "Z",
-						null,
-					]),
-					undefined,
-				]),
-				grantedByUserId: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.string.alpha({ length: { min: 10, max: 20 } }),
-						null,
-					]),
-					undefined,
-				]),
-				roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-				roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			})),
-			undefined,
-		]),
-	})),
-	role: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		weight: faker.number.int(),
-	},
-	...overrideResponse,
+  permissions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
+    () => ({
+      grantedAt: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+        undefined,
+      ]),
+      grantedByUserId: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+        undefined,
+      ]),
+      permissionDescription: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+        undefined,
+      ]),
+      permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      sources: faker.helpers.arrayElement([
+        Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+          grantedAt: faker.helpers.arrayElement([
+            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+            undefined,
+          ]),
+          grantedByUserId: faker.helpers.arrayElement([
+            faker.helpers.arrayElement([
+              faker.string.alpha({ length: { min: 10, max: 20 } }),
+              null,
+            ]),
+            undefined,
+          ]),
+          roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+          roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        })),
+        undefined,
+      ]),
+    }),
+  ),
+  role: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    weight: faker.number.int(),
+  },
+  ...overrideResponse,
 });
 
 export const getDeleteRoleResponseMock = (
-	overrideResponse: Partial<Extract<DeleteRoleResponse, object>> = {},
+  overrideResponse: Partial<Extract<DeleteRoleResponse, object>> = {},
 ): DeleteRoleResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getUpdateRoleResponseMock = (
-	overrideResponse: Partial<Extract<UpdateRoleResponse, object>> = {},
+  overrideResponse: Partial<Extract<UpdateRoleResponse, object>> = {},
 ): UpdateRoleResponse => ({
-	role: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		isSystem: faker.datatype.boolean(),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		weight: faker.number.int(),
-	},
-	...overrideResponse,
+  role: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    isSystem: faker.datatype.boolean(),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    weight: faker.number.int(),
+  },
+  ...overrideResponse,
 });
 
-export const getListRolePermissionsResponseMock = ():
-	| UserPermissionInfo[]
-	| null =>
-	Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		grantedAt: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.date.past().toISOString().slice(0, 19) + "Z",
-				null,
-			]),
-			undefined,
-		]),
-		grantedByUserId: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionDescription: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		sources: faker.helpers.arrayElement([
-			Array.from(
-				{ length: faker.number.int({ min: 1, max: 10 }) },
-				(_, i) => i + 1,
-			).map(() => ({
-				grantedAt: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.date.past().toISOString().slice(0, 19) + "Z",
-						null,
-					]),
-					undefined,
-				]),
-				grantedByUserId: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.string.alpha({ length: { min: 10, max: 20 } }),
-						null,
-					]),
-					undefined,
-				]),
-				roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-				roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			})),
-			undefined,
-		]),
-	}));
+export const getListRolePermissionsResponseMock = (): UserPermissionInfo[] | null =>
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    grantedAt: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+      undefined,
+    ]),
+    grantedByUserId: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    permissionDescription: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    sources: faker.helpers.arrayElement([
+      Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        grantedAt: faker.helpers.arrayElement([
+          faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+          undefined,
+        ]),
+        grantedByUserId: faker.helpers.arrayElement([
+          faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+          undefined,
+        ]),
+        roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      })),
+      undefined,
+    ]),
+  }));
 
 export const getReplaceRolePermissionsResponseMock = (
-	overrideResponse: Partial<
-		Extract<ReplaceRolePermissionResponse, object>
-	> = {},
+  overrideResponse: Partial<Extract<ReplaceRolePermissionResponse, object>> = {},
 ): ReplaceRolePermissionResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getAddRolePermissionResponseMock = (
-	overrideResponse: Partial<Extract<AddRolePermissionResponse, object>> = {},
+  overrideResponse: Partial<Extract<AddRolePermissionResponse, object>> = {},
 ): AddRolePermissionResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getRemoveRolePermissionResponseMock = (
-	overrideResponse: Partial<Extract<RemoveRolePermissionResponse, object>> = {},
+  overrideResponse: Partial<Extract<RemoveRolePermissionResponse, object>> = {},
 ): RemoveRolePermissionResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getGetUserPermissionsResponseMock = (
-	overrideResponse: Partial<Extract<GetUserPermissionsResponse, object>> = {},
+  overrideResponse: Partial<Extract<GetUserPermissionsResponse, object>> = {},
 ): GetUserPermissionsResponse => ({
-	permissions: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		grantedAt: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.date.past().toISOString().slice(0, 19) + "Z",
-				null,
-			]),
-			undefined,
-		]),
-		grantedByUserId: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionDescription: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		sources: faker.helpers.arrayElement([
-			Array.from(
-				{ length: faker.number.int({ min: 1, max: 10 }) },
-				(_, i) => i + 1,
-			).map(() => ({
-				grantedAt: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.date.past().toISOString().slice(0, 19) + "Z",
-						null,
-					]),
-					undefined,
-				]),
-				grantedByUserId: faker.helpers.arrayElement([
-					faker.helpers.arrayElement([
-						faker.string.alpha({ length: { min: 10, max: 20 } }),
-						null,
-					]),
-					undefined,
-				]),
-				roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-				roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
-			})),
-			undefined,
-		]),
-	})),
-	...overrideResponse,
+  permissions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
+    () => ({
+      grantedAt: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+        undefined,
+      ]),
+      grantedByUserId: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+        undefined,
+      ]),
+      permissionDescription: faker.helpers.arrayElement([
+        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+        undefined,
+      ]),
+      permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
+      sources: faker.helpers.arrayElement([
+        Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+          grantedAt: faker.helpers.arrayElement([
+            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+            undefined,
+          ]),
+          grantedByUserId: faker.helpers.arrayElement([
+            faker.helpers.arrayElement([
+              faker.string.alpha({ length: { min: 10, max: 20 } }),
+              null,
+            ]),
+            undefined,
+          ]),
+          roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+          roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        })),
+        undefined,
+      ]),
+    }),
+  ),
+  ...overrideResponse,
 });
 
 export const getCheckUserPermissionsResponseMock = (
-	overrideResponse: Partial<Extract<CheckUserPermissionsResponse, object>> = {},
+  overrideResponse: Partial<Extract<CheckUserPermissionsResponse, object>> = {},
 ): CheckUserPermissionsResponse => ({
-	hasPermissions: faker.datatype.boolean(),
-	...overrideResponse,
+  hasPermissions: faker.datatype.boolean(),
+  ...overrideResponse,
 });
 
 export const getListUserRolesResponseMock = (): UserRoleInfo[] | null =>
-	Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		assignedAt: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.date.past().toISOString().slice(0, 19) + "Z",
-				null,
-			]),
-			undefined,
-		]),
-		assignedByUserId: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		expiresAt: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.date.past().toISOString().slice(0, 19) + "Z",
-				null,
-			]),
-			undefined,
-		]),
-		roleDescription: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		roleWeight: faker.number.int(),
-	}));
+  Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    assignedAt: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+      undefined,
+    ]),
+    assignedByUserId: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    expiresAt: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
+      undefined,
+    ]),
+    roleDescription: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    roleWeight: faker.number.int(),
+  }));
 
 export const getReplaceUserRolesResponseMock = (
-	overrideResponse: Partial<Extract<ReplaceUserRolesResponse, object>> = {},
+  overrideResponse: Partial<Extract<ReplaceUserRolesResponse, object>> = {},
 ): ReplaceUserRolesResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getAssignUserRoleResponseMock = (
-	overrideResponse: Partial<Extract<AssignUserRoleResponse, object>> = {},
+  overrideResponse: Partial<Extract<AssignUserRoleResponse, object>> = {},
 ): AssignUserRoleResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getRemoveUserRoleResponseMock = (
-	overrideResponse: Partial<Extract<RemoveUserRoleResponse, object>> = {},
+  overrideResponse: Partial<Extract<RemoveUserRoleResponse, object>> = {},
 ): RemoveUserRoleResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });

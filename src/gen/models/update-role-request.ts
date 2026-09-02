@@ -7,10 +7,10 @@
  */
 
 export type UpdateRoleRequest = {
-	/** @nullable */
-	description?: string | null;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	weight?: number | null;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  name?: string | null;
+  /** @nullable */
+  weight?: number | null;
 };

@@ -7,5 +7,5 @@
  */
 
 export type CheckUserPermissionsResponse = {
-	hasPermissions: boolean;
+  hasPermissions: boolean;
 };

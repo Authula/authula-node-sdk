@@ -7,20 +7,20 @@
  */
 
 export type Impersonation = {
-	/** @nullable */
-	actorSessionId?: string | null;
-	actorUserId: string;
-	createdAt: string;
-	/** @nullable */
-	endedAt?: string | null;
-	/** @nullable */
-	endedByUserId?: string | null;
-	expiresAt: string;
-	id: string;
-	/** @nullable */
-	impersonationSessionId?: string | null;
-	reason: string;
-	startedAt: string;
-	targetUserId: string;
-	updatedAt: string;
+  /** @nullable */
+  actorSessionId?: string | null;
+  actorUserId: string;
+  createdAt: string;
+  /** @nullable */
+  endedAt?: string | null;
+  /** @nullable */
+  endedByUserId?: string | null;
+  expiresAt: string;
+  id: string;
+  /** @nullable */
+  impersonationSessionId?: string | null;
+  reason: string;
+  startedAt: string;
+  targetUserId: string;
+  updatedAt: string;
 };

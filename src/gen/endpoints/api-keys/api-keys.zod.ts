@@ -8,15 +8,15 @@
 import * as zod from "zod";
 
 import {
-	CreateApiKeyRequest,
-	CreateApiKeyResponse,
-	DeleteApiKeyResponse,
-	GetAllApiKeysResponse,
-	GetApiKeyResponse,
-	UpdateApiKeyRequest,
-	UpdateApiKeyResponse,
-	VerifyApiKeyRequest,
-	VerifyApiKeyResponse,
+  CreateApiKeyRequest,
+  CreateApiKeyResponse,
+  DeleteApiKeyResponse,
+  GetAllApiKeysResponse,
+  GetApiKeyResponse,
+  UpdateApiKeyRequest,
+  UpdateApiKeyResponse,
+  VerifyApiKeyRequest,
+  VerifyApiKeyResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -24,10 +24,10 @@ import {
  * @summary List API keys
  */
 export const ListApiKeysQueryParams = zod.object({
-	ownerType: zod.string().nullish(),
-	ownerId: zod.string().nullish(),
-	page: zod.int().nullish(),
-	limit: zod.int().nullish(),
+  ownerType: zod.string().nullish(),
+  ownerId: zod.string().nullish(),
+  page: zod.int().nullish(),
+  limit: zod.int().nullish(),
 });
 
 export const ListApiKeysResponse = GetAllApiKeysResponse;
@@ -53,7 +53,7 @@ export const VerifyApiKeyResponseSchema = VerifyApiKeyResponse;
  * @summary Get API key by ID
  */
 export const GetApiKeyParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const GetApiKeyResponseSchema = GetApiKeyResponse;
@@ -63,7 +63,7 @@ export const GetApiKeyResponseSchema = GetApiKeyResponse;
  * @summary Delete API key
  */
 export const DeleteApiKeyParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const DeleteApiKeyResponseSchema = DeleteApiKeyResponse;
@@ -73,7 +73,7 @@ export const DeleteApiKeyResponseSchema = DeleteApiKeyResponse;
  * @summary Update API key
  */
 export const UpdateApiKeyParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const UpdateApiKeyBody = UpdateApiKeyRequest;

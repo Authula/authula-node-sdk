@@ -5,640 +5,625 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	AddRolePermissionResponse,
-	AssignUserRoleResponse,
-	CheckUserPermissionsResponse,
-	CreatePermissionResponse,
-	CreateRoleResponse,
-	DeletePermissionResponse,
-	DeleteRoleResponse,
-	GetUserPermissionsResponse,
-	Permission,
-	RemoveRolePermissionResponse,
-	RemoveUserRoleResponse,
-	ReplaceRolePermissionResponse,
-	ReplaceUserRolesResponse,
-	Role,
-	RoleDetails,
-	UpdatePermissionResponse,
-	UpdateRoleResponse,
-	UserPermissionInfo,
-	UserRoleInfo,
+  AddRolePermissionResponse,
+  AssignUserRoleResponse,
+  CheckUserPermissionsResponse,
+  CreatePermissionResponse,
+  CreateRoleResponse,
+  DeletePermissionResponse,
+  DeleteRoleResponse,
+  GetUserPermissionsResponse,
+  Permission,
+  RemoveRolePermissionResponse,
+  RemoveUserRoleResponse,
+  ReplaceRolePermissionResponse,
+  ReplaceUserRolesResponse,
+  Role,
+  RoleDetails,
+  UpdatePermissionResponse,
+  UpdateRoleResponse,
+  UserPermissionInfo,
+  UserRoleInfo,
 } from "../../models";
 
 import {
-	getAddRolePermissionResponseMock,
-	getAssignUserRoleResponseMock,
-	getCheckUserPermissionsResponseMock,
-	getCreatePermissionResponseMock,
-	getCreateRoleResponseMock,
-	getDeletePermissionResponseMock,
-	getDeleteRoleResponseMock,
-	getGetPermissionByKeyResponseMock,
-	getGetPermissionResponseMock,
-	getGetRoleByNameResponseMock,
-	getGetRoleResponseMock,
-	getGetUserPermissionsResponseMock,
-	getListPermissionsResponseMock,
-	getListRolePermissionsResponseMock,
-	getListRolesResponseMock,
-	getListUserRolesResponseMock,
-	getRemoveRolePermissionResponseMock,
-	getRemoveUserRoleResponseMock,
-	getReplaceRolePermissionsResponseMock,
-	getReplaceUserRolesResponseMock,
-	getUpdatePermissionResponseMock,
-	getUpdateRoleResponseMock,
+  getAddRolePermissionResponseMock,
+  getAssignUserRoleResponseMock,
+  getCheckUserPermissionsResponseMock,
+  getCreatePermissionResponseMock,
+  getCreateRoleResponseMock,
+  getDeletePermissionResponseMock,
+  getDeleteRoleResponseMock,
+  getGetPermissionByKeyResponseMock,
+  getGetPermissionResponseMock,
+  getGetRoleByNameResponseMock,
+  getGetRoleResponseMock,
+  getGetUserPermissionsResponseMock,
+  getListPermissionsResponseMock,
+  getListRolePermissionsResponseMock,
+  getListRolesResponseMock,
+  getListUserRolesResponseMock,
+  getRemoveRolePermissionResponseMock,
+  getRemoveUserRoleResponseMock,
+  getReplaceRolePermissionsResponseMock,
+  getReplaceUserRolesResponseMock,
+  getUpdatePermissionResponseMock,
+  getUpdateRoleResponseMock,
 } from "./access-control.faker";
 
 export {
-	getAddRolePermissionResponseMock,
-	getAssignUserRoleResponseMock,
-	getCheckUserPermissionsResponseMock,
-	getCreatePermissionResponseMock,
-	getCreateRoleResponseMock,
-	getDeletePermissionResponseMock,
-	getDeleteRoleResponseMock,
-	getGetPermissionByKeyResponseMock,
-	getGetPermissionResponseMock,
-	getGetRoleByNameResponseMock,
-	getGetRoleResponseMock,
-	getGetUserPermissionsResponseMock,
-	getListPermissionsResponseMock,
-	getListRolePermissionsResponseMock,
-	getListRolesResponseMock,
-	getListUserRolesResponseMock,
-	getRemoveRolePermissionResponseMock,
-	getRemoveUserRoleResponseMock,
-	getReplaceRolePermissionsResponseMock,
-	getReplaceUserRolesResponseMock,
-	getUpdatePermissionResponseMock,
-	getUpdateRoleResponseMock,
+  getListPermissionsResponseMock,
+  getCreatePermissionResponseMock,
+  getGetPermissionByKeyResponseMock,
+  getGetPermissionResponseMock,
+  getDeletePermissionResponseMock,
+  getUpdatePermissionResponseMock,
+  getListRolesResponseMock,
+  getCreateRoleResponseMock,
+  getGetRoleByNameResponseMock,
+  getGetRoleResponseMock,
+  getDeleteRoleResponseMock,
+  getUpdateRoleResponseMock,
+  getListRolePermissionsResponseMock,
+  getReplaceRolePermissionsResponseMock,
+  getAddRolePermissionResponseMock,
+  getRemoveRolePermissionResponseMock,
+  getGetUserPermissionsResponseMock,
+  getCheckUserPermissionsResponseMock,
+  getListUserRolesResponseMock,
+  getReplaceUserRolesResponseMock,
+  getAssignUserRoleResponseMock,
+  getRemoveUserRoleResponseMock,
 } from "./access-control.faker";
 
 export const getListPermissionsMockHandler = (
-	overrideResponse?:
-		| Permission[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Permission[] | null> | Permission[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Permission[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<Permission[] | null> | Permission[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/permissions",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListPermissionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/permissions",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListPermissionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreatePermissionMockHandler = (
-	overrideResponse?:
-		| CreatePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<CreatePermissionResponse> | CreatePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CreatePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<CreatePermissionResponse> | CreatePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/access-control/permissions",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreatePermissionResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/access-control/permissions",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreatePermissionResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetPermissionByKeyMockHandler = (
-	overrideResponse?:
-		| Permission
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Permission> | Permission),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Permission
+    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Permission> | Permission),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/permissions/by-key/:permissionKey",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetPermissionByKeyResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/permissions/by-key/:permissionKey",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetPermissionByKeyResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetPermissionMockHandler = (
-	overrideResponse?:
-		| Permission
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Permission> | Permission),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Permission
+    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Permission> | Permission),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/permissions/:permissionId",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetPermissionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/permissions/:permissionId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetPermissionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeletePermissionMockHandler = (
-	overrideResponse?:
-		| DeletePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeletePermissionResponse> | DeletePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeletePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeletePermissionResponse> | DeletePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/access-control/permissions/:permissionId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeletePermissionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/access-control/permissions/:permissionId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeletePermissionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdatePermissionMockHandler = (
-	overrideResponse?:
-		| UpdatePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpdatePermissionResponse> | UpdatePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpdatePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpdatePermissionResponse> | UpdatePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/access-control/permissions/:permissionId",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdatePermissionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/access-control/permissions/:permissionId",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdatePermissionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getListRolesMockHandler = (
-	overrideResponse?:
-		| Role[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Role[] | null> | Role[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Role[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<Role[] | null> | Role[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/roles",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListRolesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/roles",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListRolesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateRoleMockHandler = (
-	overrideResponse?:
-		| CreateRoleResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<CreateRoleResponse> | CreateRoleResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CreateRoleResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<CreateRoleResponse> | CreateRoleResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/access-control/roles",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateRoleResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/access-control/roles",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateRoleResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetRoleByNameMockHandler = (
-	overrideResponse?:
-		| Role
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Role> | Role),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Role
+    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<Role> | Role),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/roles/by-name/:roleName",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetRoleByNameResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/roles/by-name/:roleName",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetRoleByNameResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetRoleMockHandler = (
-	overrideResponse?:
-		| RoleDetails
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<RoleDetails> | RoleDetails),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | RoleDetails
+    | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<RoleDetails> | RoleDetails),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/roles/:roleId",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetRoleResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/roles/:roleId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetRoleResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteRoleMockHandler = (
-	overrideResponse?:
-		| DeleteRoleResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteRoleResponse> | DeleteRoleResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteRoleResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteRoleResponse> | DeleteRoleResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/access-control/roles/:roleId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteRoleResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/access-control/roles/:roleId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteRoleResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateRoleMockHandler = (
-	overrideResponse?:
-		| UpdateRoleResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpdateRoleResponse> | UpdateRoleResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpdateRoleResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpdateRoleResponse> | UpdateRoleResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/access-control/roles/:roleId",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateRoleResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/access-control/roles/:roleId",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateRoleResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getListRolePermissionsMockHandler = (
-	overrideResponse?:
-		| UserPermissionInfo[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<UserPermissionInfo[] | null> | UserPermissionInfo[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UserPermissionInfo[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<UserPermissionInfo[] | null> | UserPermissionInfo[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/roles/:roleId/permissions",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListRolePermissionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/roles/:roleId/permissions",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListRolePermissionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getReplaceRolePermissionsMockHandler = (
-	overrideResponse?:
-		| ReplaceRolePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.put>[1]>[0],
-		  ) =>
-				| Promise<ReplaceRolePermissionResponse>
-				| ReplaceRolePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ReplaceRolePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.put>[1]>[0],
+      ) => Promise<ReplaceRolePermissionResponse> | ReplaceRolePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.put(
-		"*/access-control/roles/:roleId/permissions",
-		async (info: Parameters<Parameters<typeof http.put>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getReplaceRolePermissionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.put(
+    "*/access-control/roles/:roleId/permissions",
+    async (info: Parameters<Parameters<typeof http.put>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getReplaceRolePermissionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getAddRolePermissionMockHandler = (
-	overrideResponse?:
-		| AddRolePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<AddRolePermissionResponse> | AddRolePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AddRolePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<AddRolePermissionResponse> | AddRolePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/access-control/roles/:roleId/permissions",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getAddRolePermissionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/access-control/roles/:roleId/permissions",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getAddRolePermissionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRemoveRolePermissionMockHandler = (
-	overrideResponse?:
-		| RemoveRolePermissionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) =>
-				| Promise<RemoveRolePermissionResponse>
-				| RemoveRolePermissionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | RemoveRolePermissionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<RemoveRolePermissionResponse> | RemoveRolePermissionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/access-control/roles/:roleId/permissions/:permissionId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRemoveRolePermissionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/access-control/roles/:roleId/permissions/:permissionId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRemoveRolePermissionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetUserPermissionsMockHandler = (
-	overrideResponse?:
-		| GetUserPermissionsResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetUserPermissionsResponse> | GetUserPermissionsResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetUserPermissionsResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetUserPermissionsResponse> | GetUserPermissionsResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/users/:userId/permissions",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetUserPermissionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/users/:userId/permissions",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetUserPermissionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCheckUserPermissionsMockHandler = (
-	overrideResponse?:
-		| CheckUserPermissionsResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) =>
-				| Promise<CheckUserPermissionsResponse>
-				| CheckUserPermissionsResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CheckUserPermissionsResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<CheckUserPermissionsResponse> | CheckUserPermissionsResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/access-control/users/:userId/permissions/check",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCheckUserPermissionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/access-control/users/:userId/permissions/check",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCheckUserPermissionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getListUserRolesMockHandler = (
-	overrideResponse?:
-		| UserRoleInfo[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<UserRoleInfo[] | null> | UserRoleInfo[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UserRoleInfo[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<UserRoleInfo[] | null> | UserRoleInfo[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/access-control/users/:userId/roles",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListUserRolesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/access-control/users/:userId/roles",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListUserRolesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getReplaceUserRolesMockHandler = (
-	overrideResponse?:
-		| ReplaceUserRolesResponse
-		| ((
-				info: Parameters<Parameters<typeof http.put>[1]>[0],
-		  ) => Promise<ReplaceUserRolesResponse> | ReplaceUserRolesResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ReplaceUserRolesResponse
+    | ((
+        info: Parameters<Parameters<typeof http.put>[1]>[0],
+      ) => Promise<ReplaceUserRolesResponse> | ReplaceUserRolesResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.put(
-		"*/access-control/users/:userId/roles",
-		async (info: Parameters<Parameters<typeof http.put>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getReplaceUserRolesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.put(
+    "*/access-control/users/:userId/roles",
+    async (info: Parameters<Parameters<typeof http.put>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getReplaceUserRolesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getAssignUserRoleMockHandler = (
-	overrideResponse?:
-		| AssignUserRoleResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<AssignUserRoleResponse> | AssignUserRoleResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AssignUserRoleResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<AssignUserRoleResponse> | AssignUserRoleResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/access-control/users/:userId/roles",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getAssignUserRoleResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/access-control/users/:userId/roles",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getAssignUserRoleResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRemoveUserRoleMockHandler = (
-	overrideResponse?:
-		| RemoveUserRoleResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<RemoveUserRoleResponse> | RemoveUserRoleResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | RemoveUserRoleResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<RemoveUserRoleResponse> | RemoveUserRoleResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/access-control/users/:userId/roles/:roleId",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRemoveUserRoleResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/access-control/users/:userId/roles/:roleId",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRemoveUserRoleResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getAccessControlMock = () => [
-	getListPermissionsMockHandler(),
-	getCreatePermissionMockHandler(),
-	getGetPermissionByKeyMockHandler(),
-	getGetPermissionMockHandler(),
-	getDeletePermissionMockHandler(),
-	getUpdatePermissionMockHandler(),
-	getListRolesMockHandler(),
-	getCreateRoleMockHandler(),
-	getGetRoleByNameMockHandler(),
-	getGetRoleMockHandler(),
-	getDeleteRoleMockHandler(),
-	getUpdateRoleMockHandler(),
-	getListRolePermissionsMockHandler(),
-	getReplaceRolePermissionsMockHandler(),
-	getAddRolePermissionMockHandler(),
-	getRemoveRolePermissionMockHandler(),
-	getGetUserPermissionsMockHandler(),
-	getCheckUserPermissionsMockHandler(),
-	getListUserRolesMockHandler(),
-	getReplaceUserRolesMockHandler(),
-	getAssignUserRoleMockHandler(),
-	getRemoveUserRoleMockHandler(),
+  getListPermissionsMockHandler(),
+  getCreatePermissionMockHandler(),
+  getGetPermissionByKeyMockHandler(),
+  getGetPermissionMockHandler(),
+  getDeletePermissionMockHandler(),
+  getUpdatePermissionMockHandler(),
+  getListRolesMockHandler(),
+  getCreateRoleMockHandler(),
+  getGetRoleByNameMockHandler(),
+  getGetRoleMockHandler(),
+  getDeleteRoleMockHandler(),
+  getUpdateRoleMockHandler(),
+  getListRolePermissionsMockHandler(),
+  getReplaceRolePermissionsMockHandler(),
+  getAddRolePermissionMockHandler(),
+  getRemoveRolePermissionMockHandler(),
+  getGetUserPermissionsMockHandler(),
+  getCheckUserPermissionsMockHandler(),
+  getListUserRolesMockHandler(),
+  getReplaceUserRolesMockHandler(),
+  getAssignUserRoleMockHandler(),
+  getRemoveUserRoleMockHandler(),
 ];

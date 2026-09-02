@@ -8,5 +8,5 @@
 import type { AdminSessionState } from "./admin-session-state";
 
 export type RevokeSessionResponse = {
-	state: AdminSessionState;
+  state: AdminSessionState;
 };

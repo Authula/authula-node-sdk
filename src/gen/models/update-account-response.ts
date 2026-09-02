@@ -8,5 +8,5 @@
 import type { Account } from "./account";
 
 export type UpdateAccountResponse = {
-	account: Account;
+  account: Account;
 };

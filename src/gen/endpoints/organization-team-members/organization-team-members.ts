@@ -5,70 +5,68 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	AddOrganizationTeamMemberRequest,
-	DeleteOrganizationTeamMemberResponse,
-	ListOrganizationTeamMembersParams,
-	ListOrganizationTeamMembersResponse,
-	OrganizationTeamMember,
-	OrganizationTeamMemberResponse,
+  AddOrganizationTeamMemberRequest,
+  DeleteOrganizationTeamMemberResponse,
+  ListOrganizationTeamMembersParams,
+  ListOrganizationTeamMembersResponse,
+  OrganizationTeamMember,
+  OrganizationTeamMemberResponse,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getListOrganizationTeamMembersUrl = (
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
 ) => {
-	const normalizedParams = new URLSearchParams();
+  const normalizedParams = new URLSearchParams();
 
-	Object.entries(params || {}).forEach(([key, value]) => {
-		if (value !== undefined) {
-			normalizedParams.append(key, value === null ? "null" : String(value));
-		}
-	});
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : String(value));
+    }
+  });
 
-	const stringifiedParams = normalizedParams.toString();
+  const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/organizations/${organizationId}/teams/${teamId}/members?${stringifiedParams}`
-		: `/organizations/${organizationId}/teams/${teamId}/members`;
+  return stringifiedParams.length > 0
+    ? `/organizations/${organizationId}/teams/${teamId}/members?${stringifiedParams}`
+    : `/organizations/${organizationId}/teams/${teamId}/members`;
 };
 
 /**
@@ -76,208 +74,170 @@ export const getListOrganizationTeamMembersUrl = (
  * @summary List team members
  */
 export const listOrganizationTeamMembers = async (
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<ListOrganizationTeamMembersResponse> => {
-	return customFetch<ListOrganizationTeamMembersResponse>(
-		getListOrganizationTeamMembersUrl(organizationId, teamId, params),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<ListOrganizationTeamMembersResponse>(
+    getListOrganizationTeamMembersUrl(organizationId, teamId, params),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
 };
 
 export const getListOrganizationTeamMembersQueryKey = (
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
 ) => {
-	return [
-		`/organizations/${organizationId}/teams/${teamId}/members`,
-		...(params ? [params] : []),
-	] as const;
+  return [
+    `/organizations/${organizationId}/teams/${teamId}/members`,
+    ...(params ? [params] : []),
+  ] as const;
 };
 
 export const getListOrganizationTeamMembersQueryOptions = <
-	TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getListOrganizationTeamMembersQueryKey(organizationId, teamId, params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListOrganizationTeamMembersQueryKey(organizationId, teamId, params);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof listOrganizationTeamMembers>>
-	> = ({ signal }) =>
-		listOrganizationTeamMembers(organizationId, teamId, params, {
-			signal,
-			...requestOptions,
-		});
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listOrganizationTeamMembers>>> = ({
+    signal,
+  }) => listOrganizationTeamMembers(organizationId, teamId, params, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled:
-			organizationId !== null &&
-			organizationId !== undefined &&
-			teamId !== null &&
-			teamId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled:
+      organizationId !== null &&
+      organizationId !== undefined &&
+      teamId !== null &&
+      teamId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
 export type ListOrganizationTeamMembersQueryResult = NonNullable<
-	Awaited<ReturnType<typeof listOrganizationTeamMembers>>
+  Awaited<ReturnType<typeof listOrganizationTeamMembers>>
 >;
 export type ListOrganizationTeamMembersQueryError = unknown;
 
 export function useListOrganizationTeamMembers<
-	TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	params: undefined | ListOrganizationTeamMembersParams,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-					TError,
-					Awaited<ReturnType<typeof listOrganizationTeamMembers>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  params: undefined | ListOrganizationTeamMembersParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+          TError,
+          Awaited<ReturnType<typeof listOrganizationTeamMembers>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListOrganizationTeamMembers<
-	TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-					TError,
-					Awaited<ReturnType<typeof listOrganizationTeamMembers>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+          TError,
+          Awaited<ReturnType<typeof listOrganizationTeamMembers>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListOrganizationTeamMembers<
-	TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List team members
  */
 
 export function useListOrganizationTeamMembers<
-	TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	params?: ListOrganizationTeamMembersParams,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listOrganizationTeamMembers>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getListOrganizationTeamMembersQueryOptions(
-		organizationId,
-		teamId,
-		params,
-		options,
-	);
+  organizationId: string,
+  teamId: string,
+  params?: ListOrganizationTeamMembersParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listOrganizationTeamMembers>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getListOrganizationTeamMembersQueryOptions(
+    organizationId,
+    teamId,
+    params,
+    options,
+  );
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
-export const getAddOrganizationTeamMemberUrl = (
-	organizationId: string,
-	teamId: string,
-) => {
-	return `/organizations/${organizationId}/teams/${teamId}/members`;
+export const getAddOrganizationTeamMemberUrl = (organizationId: string, teamId: string) => {
+  return `/organizations/${organizationId}/teams/${teamId}/members`;
 };
 
 /**
@@ -285,127 +245,92 @@ export const getAddOrganizationTeamMemberUrl = (
  * @summary Add team member
  */
 export const addOrganizationTeamMember = async (
-	organizationId: string,
-	teamId: string,
-	addOrganizationTeamMemberRequest?: AddOrganizationTeamMemberRequest,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  teamId: string,
+  addOrganizationTeamMemberRequest?: AddOrganizationTeamMemberRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationTeamMember> => {
-	return customFetch<OrganizationTeamMember>(
-		getAddOrganizationTeamMemberUrl(organizationId, teamId),
-		{
-			...options,
-			method: "POST",
-			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(addOrganizationTeamMemberRequest),
-		},
-	);
+  return customFetch<OrganizationTeamMember>(
+    getAddOrganizationTeamMemberUrl(organizationId, teamId),
+    {
+      ...options,
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
+      body: JSON.stringify(addOrganizationTeamMemberRequest),
+    },
+  );
 };
 
 export const getAddOrganizationTeamMemberMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof addOrganizationTeamMember>>,
-		TError,
-		{
-			organizationId: string;
-			teamId: string;
-			data?: AddOrganizationTeamMemberRequest;
-		},
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof addOrganizationTeamMember>>,
+    TError,
+    { organizationId: string; teamId: string; data?: AddOrganizationTeamMemberRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof addOrganizationTeamMember>>,
-	TError,
-	{
-		organizationId: string;
-		teamId: string;
-		data?: AddOrganizationTeamMemberRequest;
-	},
-	TContext
+  Awaited<ReturnType<typeof addOrganizationTeamMember>>,
+  TError,
+  { organizationId: string; teamId: string; data?: AddOrganizationTeamMemberRequest },
+  TContext
 > => {
-	const mutationKey = ["addOrganizationTeamMember"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["addOrganizationTeamMember"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof addOrganizationTeamMember>>,
-		{
-			organizationId: string;
-			teamId: string;
-			data?: AddOrganizationTeamMemberRequest;
-		}
-	> = (props) => {
-		const { organizationId, teamId, data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof addOrganizationTeamMember>>,
+    { organizationId: string; teamId: string; data?: AddOrganizationTeamMemberRequest }
+  > = (props) => {
+    const { organizationId, teamId, data } = props ?? {};
 
-		return addOrganizationTeamMember(
-			organizationId,
-			teamId,
-			data,
-			requestOptions,
-		);
-	};
+    return addOrganizationTeamMember(organizationId, teamId, data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type AddOrganizationTeamMemberMutationResult = NonNullable<
-	Awaited<ReturnType<typeof addOrganizationTeamMember>>
+  Awaited<ReturnType<typeof addOrganizationTeamMember>>
 >;
-export type AddOrganizationTeamMemberMutationBody =
-	| AddOrganizationTeamMemberRequest
-	| undefined;
+export type AddOrganizationTeamMemberMutationBody = AddOrganizationTeamMemberRequest | undefined;
 export type AddOrganizationTeamMemberMutationError = unknown;
 
 /**
  * @summary Add team member
  */
-export const useAddOrganizationTeamMember = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof addOrganizationTeamMember>>,
-			TError,
-			{
-				organizationId: string;
-				teamId: string;
-				data?: AddOrganizationTeamMemberRequest;
-			},
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useAddOrganizationTeamMember = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof addOrganizationTeamMember>>,
+      TError,
+      { organizationId: string; teamId: string; data?: AddOrganizationTeamMemberRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof addOrganizationTeamMember>>,
-	TError,
-	{
-		organizationId: string;
-		teamId: string;
-		data?: AddOrganizationTeamMemberRequest;
-	},
-	TContext
+  Awaited<ReturnType<typeof addOrganizationTeamMember>>,
+  TError,
+  { organizationId: string; teamId: string; data?: AddOrganizationTeamMemberRequest },
+  TContext
 > => {
-	return useMutation(
-		getAddOrganizationTeamMemberMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getAddOrganizationTeamMemberMutationOptions(options), queryClient);
 };
 export const getGetOrganizationTeamMemberUrl = (
-	organizationId: string,
-	teamId: string,
-	memberId: string,
+  organizationId: string,
+  teamId: string,
+  memberId: string,
 ) => {
-	return `/organizations/${organizationId}/teams/${teamId}/members/${memberId}`;
+  return `/organizations/${organizationId}/teams/${teamId}/members/${memberId}`;
 };
 
 /**
@@ -413,210 +338,173 @@ export const getGetOrganizationTeamMemberUrl = (
  * @summary Get team member
  */
 export const getOrganizationTeamMember = async (
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<OrganizationTeamMemberResponse> => {
-	return customFetch<OrganizationTeamMemberResponse>(
-		getGetOrganizationTeamMemberUrl(organizationId, teamId, memberId),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<OrganizationTeamMemberResponse>(
+    getGetOrganizationTeamMemberUrl(organizationId, teamId, memberId),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
 };
 
 export const getGetOrganizationTeamMemberQueryKey = (
-	organizationId: string,
-	teamId: string,
-	memberId: string,
+  organizationId: string,
+  teamId: string,
+  memberId: string,
 ) => {
-	return [
-		`/organizations/${organizationId}/teams/${teamId}/members/${memberId}`,
-	] as const;
+  return [`/organizations/${organizationId}/teams/${teamId}/members/${memberId}`] as const;
 };
 
 export const getGetOrganizationTeamMemberQueryOptions = <
-	TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getGetOrganizationTeamMemberQueryKey(organizationId, teamId, memberId);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetOrganizationTeamMemberQueryKey(organizationId, teamId, memberId);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getOrganizationTeamMember>>
-	> = ({ signal }) =>
-		getOrganizationTeamMember(organizationId, teamId, memberId, {
-			signal,
-			...requestOptions,
-		});
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getOrganizationTeamMember>>> = ({
+    signal,
+  }) => getOrganizationTeamMember(organizationId, teamId, memberId, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled:
-			organizationId !== null &&
-			organizationId !== undefined &&
-			teamId !== null &&
-			teamId !== undefined &&
-			memberId !== null &&
-			memberId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled:
+      organizationId !== null &&
+      organizationId !== undefined &&
+      teamId !== null &&
+      teamId !== undefined &&
+      memberId !== null &&
+      memberId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
 export type GetOrganizationTeamMemberQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getOrganizationTeamMember>>
+  Awaited<ReturnType<typeof getOrganizationTeamMember>>
 >;
 export type GetOrganizationTeamMemberQueryError = unknown;
 
 export function useGetOrganizationTeamMember<
-	TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-					TError,
-					Awaited<ReturnType<typeof getOrganizationTeamMember>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+          TError,
+          Awaited<ReturnType<typeof getOrganizationTeamMember>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetOrganizationTeamMember<
-	TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-					TError,
-					Awaited<ReturnType<typeof getOrganizationTeamMember>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+          TError,
+          Awaited<ReturnType<typeof getOrganizationTeamMember>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetOrganizationTeamMember<
-	TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get team member
  */
 
 export function useGetOrganizationTeamMember<
-	TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getOrganizationTeamMember>>,
+  TError = unknown,
 >(
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getOrganizationTeamMember>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetOrganizationTeamMemberQueryOptions(
-		organizationId,
-		teamId,
-		memberId,
-		options,
-	);
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getOrganizationTeamMember>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetOrganizationTeamMemberQueryOptions(
+    organizationId,
+    teamId,
+    memberId,
+    options,
+  );
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getDeleteOrganizationTeamMemberUrl = (
-	organizationId: string,
-	teamId: string,
-	memberId: string,
+  organizationId: string,
+  teamId: string,
+  memberId: string,
 ) => {
-	return `/organizations/${organizationId}/teams/${teamId}/members/${memberId}`;
+  return `/organizations/${organizationId}/teams/${teamId}/members/${memberId}`;
 };
 
 /**
@@ -624,65 +512,58 @@ export const getDeleteOrganizationTeamMemberUrl = (
  * @summary Delete team member
  */
 export const deleteOrganizationTeamMember = async (
-	organizationId: string,
-	teamId: string,
-	memberId: string,
-	options?: Parameters<typeof customFetch>[1],
+  organizationId: string,
+  teamId: string,
+  memberId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<DeleteOrganizationTeamMemberResponse> => {
-	return customFetch<DeleteOrganizationTeamMemberResponse>(
-		getDeleteOrganizationTeamMemberUrl(organizationId, teamId, memberId),
-		{
-			...options,
-			method: "DELETE",
-		},
-	);
+  return customFetch<DeleteOrganizationTeamMemberResponse>(
+    getDeleteOrganizationTeamMemberUrl(organizationId, teamId, memberId),
+    {
+      ...options,
+      method: "DELETE",
+    },
+  );
 };
 
 export const getDeleteOrganizationTeamMemberMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
-		TError,
-		{ organizationId: string; teamId: string; memberId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
+    TError,
+    { organizationId: string; teamId: string; memberId: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
-	TError,
-	{ organizationId: string; teamId: string; memberId: string },
-	TContext
+  Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
+  TError,
+  { organizationId: string; teamId: string; memberId: string },
+  TContext
 > => {
-	const mutationKey = ["deleteOrganizationTeamMember"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["deleteOrganizationTeamMember"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
-		{ organizationId: string; teamId: string; memberId: string }
-	> = (props) => {
-		const { organizationId, teamId, memberId } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
+    { organizationId: string; teamId: string; memberId: string }
+  > = (props) => {
+    const { organizationId, teamId, memberId } = props ?? {};
 
-		return deleteOrganizationTeamMember(
-			organizationId,
-			teamId,
-			memberId,
-			requestOptions,
-		);
-	};
+    return deleteOrganizationTeamMember(organizationId, teamId, memberId, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type DeleteOrganizationTeamMemberMutationResult = NonNullable<
-	Awaited<ReturnType<typeof deleteOrganizationTeamMember>>
+  Awaited<ReturnType<typeof deleteOrganizationTeamMember>>
 >;
 
 export type DeleteOrganizationTeamMemberMutationError = unknown;
@@ -690,28 +571,22 @@ export type DeleteOrganizationTeamMemberMutationError = unknown;
 /**
  * @summary Delete team member
  */
-export const useDeleteOrganizationTeamMember = <
-	TError = unknown,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
-			TError,
-			{ organizationId: string; teamId: string; memberId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+export const useDeleteOrganizationTeamMember = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
+      TError,
+      { organizationId: string; teamId: string; memberId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
-	TError,
-	{ organizationId: string; teamId: string; memberId: string },
-	TContext
+  Awaited<ReturnType<typeof deleteOrganizationTeamMember>>,
+  TError,
+  { organizationId: string; teamId: string; memberId: string },
+  TContext
 > => {
-	return useMutation(
-		getDeleteOrganizationTeamMemberMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getDeleteOrganizationTeamMemberMutationOptions(options), queryClient);
 };

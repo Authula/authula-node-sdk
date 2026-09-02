@@ -8,11 +8,11 @@
 import * as zod from "zod";
 
 import {
-	GetImpersonationByIDResponse,
-	Impersonation,
-	StartImpersonationRequest,
-	StartImpersonationResponse,
-	StopImpersonationResponse,
+  GetImpersonationByIDResponse,
+  Impersonation,
+  StartImpersonationRequest,
+  StartImpersonationResponse,
+  StopImpersonationResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -20,9 +20,7 @@ import {
  * @summary List impersonations
  */
 export const ListImpersonationsResponseItem = Impersonation;
-export const ListImpersonationsResponse = zod.array(
-	ListImpersonationsResponseItem,
-);
+export const ListImpersonationsResponse = zod.array(ListImpersonationsResponseItem);
 
 /**
  * Starts an impersonation session as a target user.
@@ -37,7 +35,7 @@ export const StartImpersonationResponseSchema = StartImpersonationResponse;
  * @summary Get impersonation by ID
  */
 export const GetImpersonationParams = zod.object({
-	impersonation_id: zod.string(),
+  impersonation_id: zod.string(),
 });
 
 export const GetImpersonationResponse = GetImpersonationByIDResponse;
@@ -47,7 +45,7 @@ export const GetImpersonationResponse = GetImpersonationByIDResponse;
  * @summary Stop impersonation
  */
 export const StopImpersonationParams = zod.object({
-	impersonation_id: zod.string(),
+  impersonation_id: zod.string(),
 });
 
 export const StopImpersonationResponseSchema = StopImpersonationResponse;

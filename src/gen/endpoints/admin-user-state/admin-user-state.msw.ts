@@ -5,242 +5,241 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	AdminUserSession,
-	AdminUserState,
-	BanUserResponse,
-	DeleteUserStateResponse,
-	GetUserStateResponse,
-	UnbanUserResponse,
-	UpsertUserStateResponse,
+  AdminUserSession,
+  AdminUserState,
+  BanUserResponse,
+  DeleteUserStateResponse,
+  GetUserStateResponse,
+  UnbanUserResponse,
+  UpsertUserStateResponse,
 } from "../../models";
 
 import {
-	getBanUserResponseMock,
-	getCreateUserStateResponseMock,
-	getDeleteUserStateResponseMock,
-	getGetUserStateResponseMock,
-	getListBannedUserStatesResponseMock,
-	getListUserSessionsResponseMock,
-	getUnbanUserResponseMock,
-	getUpdateUserStateResponseMock,
+  getBanUserResponseMock,
+  getCreateUserStateResponseMock,
+  getDeleteUserStateResponseMock,
+  getGetUserStateResponseMock,
+  getListBannedUserStatesResponseMock,
+  getListUserSessionsResponseMock,
+  getUnbanUserResponseMock,
+  getUpdateUserStateResponseMock,
 } from "./admin-user-state.faker";
 
 export {
-	getBanUserResponseMock,
-	getCreateUserStateResponseMock,
-	getDeleteUserStateResponseMock,
-	getGetUserStateResponseMock,
-	getListBannedUserStatesResponseMock,
-	getListUserSessionsResponseMock,
-	getUnbanUserResponseMock,
-	getUpdateUserStateResponseMock,
+  getListBannedUserStatesResponseMock,
+  getBanUserResponseMock,
+  getListUserSessionsResponseMock,
+  getGetUserStateResponseMock,
+  getCreateUserStateResponseMock,
+  getDeleteUserStateResponseMock,
+  getUpdateUserStateResponseMock,
+  getUnbanUserResponseMock,
 } from "./admin-user-state.faker";
 
 export const getListBannedUserStatesMockHandler = (
-	overrideResponse?:
-		| AdminUserState[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<AdminUserState[] | null> | AdminUserState[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AdminUserState[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<AdminUserState[] | null> | AdminUserState[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/users/states/banned",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListBannedUserStatesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/users/states/banned",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListBannedUserStatesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getBanUserMockHandler = (
-	overrideResponse?:
-		| BanUserResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<BanUserResponse> | BanUserResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | BanUserResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<BanUserResponse> | BanUserResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/users/:userId/ban",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getBanUserResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/users/:userId/ban",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBanUserResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getListUserSessionsMockHandler = (
-	overrideResponse?:
-		| AdminUserSession[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<AdminUserSession[] | null> | AdminUserSession[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AdminUserSession[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<AdminUserSession[] | null> | AdminUserSession[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/users/:userId/sessions",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListUserSessionsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/users/:userId/sessions",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListUserSessionsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetUserStateMockHandler = (
-	overrideResponse?:
-		| GetUserStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetUserStateResponse> | GetUserStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetUserStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetUserStateResponse> | GetUserStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/users/:userId/state",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetUserStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/users/:userId/state",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetUserStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateUserStateMockHandler = (
-	overrideResponse?:
-		| UpsertUserStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<UpsertUserStateResponse> | UpsertUserStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpsertUserStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<UpsertUserStateResponse> | UpsertUserStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/users/:userId/state",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateUserStateResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/users/:userId/state",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateUserStateResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteUserStateMockHandler = (
-	overrideResponse?:
-		| DeleteUserStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteUserStateResponse> | DeleteUserStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteUserStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteUserStateResponse> | DeleteUserStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/admin/users/:userId/state",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteUserStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/admin/users/:userId/state",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteUserStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateUserStateMockHandler = (
-	overrideResponse?:
-		| UpsertUserStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpsertUserStateResponse> | UpsertUserStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpsertUserStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpsertUserStateResponse> | UpsertUserStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/admin/users/:userId/state",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateUserStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/admin/users/:userId/state",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateUserStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUnbanUserMockHandler = (
-	overrideResponse?:
-		| UnbanUserResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<UnbanUserResponse> | UnbanUserResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UnbanUserResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<UnbanUserResponse> | UnbanUserResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/users/:userId/unban",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUnbanUserResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/users/:userId/unban",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUnbanUserResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getAdminUserStateMock = () => [
-	getListBannedUserStatesMockHandler(),
-	getBanUserMockHandler(),
-	getListUserSessionsMockHandler(),
-	getGetUserStateMockHandler(),
-	getCreateUserStateMockHandler(),
-	getDeleteUserStateMockHandler(),
-	getUpdateUserStateMockHandler(),
-	getUnbanUserMockHandler(),
+  getListBannedUserStatesMockHandler(),
+  getBanUserMockHandler(),
+  getListUserSessionsMockHandler(),
+  getGetUserStateMockHandler(),
+  getCreateUserStateMockHandler(),
+  getDeleteUserStateMockHandler(),
+  getUpdateUserStateMockHandler(),
+  getUnbanUserMockHandler(),
 ];

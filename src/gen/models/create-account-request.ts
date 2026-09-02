@@ -7,20 +7,20 @@
  */
 
 export type CreateAccountRequest = {
-	/** @nullable */
-	accessToken?: string | null;
-	/** @nullable */
-	accessTokenExpiresAt?: string | null;
-	accountId: string;
-	/** @nullable */
-	idToken?: string | null;
-	/** @nullable */
-	password?: string | null;
-	providerId: string;
-	/** @nullable */
-	refreshToken?: string | null;
-	/** @nullable */
-	refreshTokenExpiresAt?: string | null;
-	/** @nullable */
-	scope?: string | null;
+  /** @nullable */
+  accessToken?: string | null;
+  /** @nullable */
+  accessTokenExpiresAt?: string | null;
+  accountId: string;
+  /** @nullable */
+  idToken?: string | null;
+  /** @nullable */
+  password?: string | null;
+  providerId: string;
+  /** @nullable */
+  refreshToken?: string | null;
+  /** @nullable */
+  refreshTokenExpiresAt?: string | null;
+  /** @nullable */
+  scope?: string | null;
 };

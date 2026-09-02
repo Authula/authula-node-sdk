@@ -7,5 +7,5 @@
  */
 
 export type GetTOTPURIResponse = {
-	totpUri: string;
+  totpUri: string;
 };

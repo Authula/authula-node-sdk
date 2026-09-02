@@ -8,142 +8,123 @@
 import { faker } from "@faker-js/faker";
 
 import type {
-	DeleteOrganizationTeamResponse,
-	ListOrganizationTeamsResponse,
-	OrganizationTeam,
+  DeleteOrganizationTeamResponse,
+  ListOrganizationTeamsResponse,
+  OrganizationTeam,
 } from "../../models";
 
 export const getListOrganizationTeamsResponseMock = (
-	overrideResponse: Partial<
-		Extract<ListOrganizationTeamsResponse, object>
-	> = {},
+  overrideResponse: Partial<Extract<ListOrganizationTeamsResponse, object>> = {},
 ): ListOrganizationTeamsResponse => ({
-	data: Array.from(
-		{ length: faker.number.int({ min: 1, max: 10 }) },
-		(_, i) => i + 1,
-	).map(() => ({
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		description: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	})),
-	pagination: {
-		hasMore: faker.datatype.boolean(),
-		limit: faker.number.int(),
-		page: faker.number.int(),
-		total: faker.number.int(),
-		totalPages: faker.number.int(),
-	},
-	...overrideResponse,
+  data: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    description: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  })),
+  pagination: {
+    hasMore: faker.datatype.boolean(),
+    limit: faker.number.int(),
+    page: faker.number.int(),
+    total: faker.number.int(),
+    totalPages: faker.number.int(),
+  },
+  ...overrideResponse,
 });
 
 export const getCreateOrganizationTeamResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
 ): OrganizationTeam => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	metadata: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			{
-				[faker.string.alphanumeric(5)]: {},
-			},
-			null,
-		]),
-		undefined,
-	]),
-	name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  metadata: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
+    ]),
+    undefined,
+  ]),
+  name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  ...overrideResponse,
 });
 
 export const getGetOrganizationTeamResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
 ): OrganizationTeam => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	metadata: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			{
-				[faker.string.alphanumeric(5)]: {},
-			},
-			null,
-		]),
-		undefined,
-	]),
-	name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  metadata: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
+    ]),
+    undefined,
+  ]),
+  name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  ...overrideResponse,
 });
 
 export const getDeleteOrganizationTeamResponseMock = (
-	overrideResponse: Partial<
-		Extract<DeleteOrganizationTeamResponse, object>
-	> = {},
+  overrideResponse: Partial<Extract<DeleteOrganizationTeamResponse, object>> = {},
 ): DeleteOrganizationTeamResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getUpdateOrganizationTeamResponseMock = (
-	overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
+  overrideResponse: Partial<Extract<OrganizationTeam, object>> = {},
 ): OrganizationTeam => ({
-	createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	description: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			faker.string.alpha({ length: { min: 10, max: 20 } }),
-			null,
-		]),
-		undefined,
-	]),
-	id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	metadata: faker.helpers.arrayElement([
-		faker.helpers.arrayElement([
-			{
-				[faker.string.alphanumeric(5)]: {},
-			},
-			null,
-		]),
-		undefined,
-	]),
-	name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	...overrideResponse,
+  createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  description: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+    undefined,
+  ]),
+  id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  metadata: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
+    ]),
+    undefined,
+  ]),
+  name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  organizationId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  slug: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  ...overrideResponse,
 });

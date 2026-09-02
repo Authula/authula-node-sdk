@@ -7,5 +7,5 @@
  */
 
 export type ReplaceRolePermissionsRequest = {
-	permissionIds: string[];
+  permissionIds: string[];
 };

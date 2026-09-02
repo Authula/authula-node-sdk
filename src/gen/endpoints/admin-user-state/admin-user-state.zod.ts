@@ -8,16 +8,16 @@
 import * as zod from "zod";
 
 import {
-	AdminUserSession,
-	AdminUserState,
-	BanUserRequest,
-	BanUserResponse,
-	CreateUserStateRequest,
-	DeleteUserStateResponse,
-	GetUserStateResponse,
-	UnbanUserResponse,
-	UpsertUserStateRequest,
-	UpsertUserStateResponse,
+  AdminUserSession,
+  AdminUserState,
+  BanUserRequest,
+  BanUserResponse,
+  CreateUserStateRequest,
+  DeleteUserStateResponse,
+  GetUserStateResponse,
+  UnbanUserResponse,
+  UpsertUserStateRequest,
+  UpsertUserStateResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -25,16 +25,14 @@ import {
  * @summary List banned user states
  */
 export const ListBannedUserStatesResponseItem = AdminUserState;
-export const ListBannedUserStatesResponse = zod.array(
-	ListBannedUserStatesResponseItem,
-);
+export const ListBannedUserStatesResponse = zod.array(ListBannedUserStatesResponseItem);
 
 /**
  * Bans a user.
  * @summary Ban user
  */
 export const BanUserParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const BanUserBody = BanUserRequest;
@@ -46,7 +44,7 @@ export const BanUserResponseSchema = BanUserResponse;
  * @summary List user sessions
  */
 export const ListUserSessionsParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const ListUserSessionsResponseItem = AdminUserSession;
@@ -57,7 +55,7 @@ export const ListUserSessionsResponse = zod.array(ListUserSessionsResponseItem);
  * @summary Get user state
  */
 export const GetUserStateParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const GetUserStateResponseSchema = GetUserStateResponse;
@@ -67,7 +65,7 @@ export const GetUserStateResponseSchema = GetUserStateResponse;
  * @summary Create user state
  */
 export const CreateUserStateParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const CreateUserStateBody = CreateUserStateRequest;
@@ -79,7 +77,7 @@ export const CreateUserStateResponse = UpsertUserStateResponse;
  * @summary Delete user state
  */
 export const DeleteUserStateParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const DeleteUserStateResponseSchema = DeleteUserStateResponse;
@@ -89,7 +87,7 @@ export const DeleteUserStateResponseSchema = DeleteUserStateResponse;
  * @summary Update user state
  */
 export const UpdateUserStateParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const UpdateUserStateBody = UpsertUserStateRequest;
@@ -101,7 +99,7 @@ export const UpdateUserStateResponse = UpsertUserStateResponse;
  * @summary Unban user
  */
 export const UnbanUserParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const UnbanUserResponseSchema = UnbanUserResponse;

@@ -5,157 +5,156 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	CreateAccountResponse,
-	DeleteAccountResponse,
-	GetAccountByIDResponse,
-	UpdateAccountResponse,
-	UserAccountsResponse,
+  CreateAccountResponse,
+  DeleteAccountResponse,
+  GetAccountByIDResponse,
+  UpdateAccountResponse,
+  UserAccountsResponse,
 } from "../../models";
 
 import {
-	getCreateAccountResponseMock,
-	getDeleteAccountResponseMock,
-	getGetAccountResponseMock,
-	getListUserAccountsResponseMock,
-	getUpdateAccountResponseMock,
+  getCreateAccountResponseMock,
+  getDeleteAccountResponseMock,
+  getGetAccountResponseMock,
+  getListUserAccountsResponseMock,
+  getUpdateAccountResponseMock,
 } from "./admin-accounts.faker";
 
 export {
-	getCreateAccountResponseMock,
-	getDeleteAccountResponseMock,
-	getGetAccountResponseMock,
-	getListUserAccountsResponseMock,
-	getUpdateAccountResponseMock,
+  getGetAccountResponseMock,
+  getDeleteAccountResponseMock,
+  getUpdateAccountResponseMock,
+  getListUserAccountsResponseMock,
+  getCreateAccountResponseMock,
 } from "./admin-accounts.faker";
 
 export const getGetAccountMockHandler = (
-	overrideResponse?:
-		| GetAccountByIDResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetAccountByIDResponse> | GetAccountByIDResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetAccountByIDResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetAccountByIDResponse> | GetAccountByIDResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/accounts/:id",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetAccountResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/accounts/:id",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetAccountResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteAccountMockHandler = (
-	overrideResponse?:
-		| DeleteAccountResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteAccountResponse> | DeleteAccountResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteAccountResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteAccountResponse> | DeleteAccountResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/admin/accounts/:id",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteAccountResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/admin/accounts/:id",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteAccountResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateAccountMockHandler = (
-	overrideResponse?:
-		| UpdateAccountResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpdateAccountResponse> | UpdateAccountResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpdateAccountResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpdateAccountResponse> | UpdateAccountResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/admin/accounts/:id",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateAccountResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/admin/accounts/:id",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateAccountResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getListUserAccountsMockHandler = (
-	overrideResponse?:
-		| UserAccountsResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<UserAccountsResponse> | UserAccountsResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UserAccountsResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<UserAccountsResponse> | UserAccountsResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/users/:userId/accounts",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListUserAccountsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/users/:userId/accounts",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListUserAccountsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateAccountMockHandler = (
-	overrideResponse?:
-		| CreateAccountResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<CreateAccountResponse> | CreateAccountResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CreateAccountResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<CreateAccountResponse> | CreateAccountResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/users/:userId/accounts",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateAccountResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/users/:userId/accounts",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateAccountResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 export const getAdminAccountsMock = () => [
-	getGetAccountMockHandler(),
-	getDeleteAccountMockHandler(),
-	getUpdateAccountMockHandler(),
-	getListUserAccountsMockHandler(),
-	getCreateAccountMockHandler(),
+  getGetAccountMockHandler(),
+  getDeleteAccountMockHandler(),
+  getUpdateAccountMockHandler(),
+  getListUserAccountsMockHandler(),
+  getCreateAccountMockHandler(),
 ];

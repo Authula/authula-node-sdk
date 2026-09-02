@@ -7,7 +7,7 @@
  */
 
 export type AssignUserRoleRequest = {
-	/** @nullable */
-	expiresAt?: string | null;
-	roleId: string;
+  /** @nullable */
+  expiresAt?: string | null;
+  roleId: string;
 };

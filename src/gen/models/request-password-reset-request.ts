@@ -7,7 +7,7 @@
  */
 
 export type RequestPasswordResetRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
-	email: string;
+  /** @nullable */
+  callbackUrl?: string | null;
+  email: string;
 };

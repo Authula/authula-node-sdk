@@ -5,51 +5,49 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	RefreshTokenRequest,
-	RefreshTokenResponse,
-	WellKnownJWKSResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  WellKnownJWKSResponse,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getGetJWKSUrl = () => {
-	return `/.well-known/jwks.json`;
+  return `/.well-known/jwks.json`;
 };
 
 /**
@@ -57,135 +55,101 @@ export const getGetJWKSUrl = () => {
  * @summary Get JWKS
  */
 export const getJWKS = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<WellKnownJWKSResponse> => {
-	return customFetch<WellKnownJWKSResponse>(getGetJWKSUrl(), {
-		...options,
-		method: "GET",
-	});
+  return customFetch<WellKnownJWKSResponse>(getGetJWKSUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getGetJWKSQueryKey = () => {
-	return [`/.well-known/jwks.json`] as const;
+  return [`/.well-known/jwks.json`] as const;
 };
 
 export const getGetJWKSQueryOptions = <
-	TData = Awaited<ReturnType<typeof getJWKS>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getJWKS>>,
+  TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>>;
+  request?: SecondParameter<typeof customFetch>;
 }) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getGetJWKSQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetJWKSQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getJWKS>>> = ({
-		signal,
-	}) => getJWKS({ signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getJWKS>>> = ({ signal }) =>
+    getJWKS({ signal, ...requestOptions });
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof getJWKS>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getJWKS>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetJWKSQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getJWKS>>
->;
+export type GetJWKSQueryResult = NonNullable<Awaited<ReturnType<typeof getJWKS>>>;
 export type GetJWKSQueryError = unknown;
 
-export function useGetJWKS<
-	TData = Awaited<ReturnType<typeof getJWKS>>,
-	TError = unknown,
->(
-	options: {
-		query: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getJWKS>>,
-					TError,
-					Awaited<ReturnType<typeof getJWKS>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetJWKS<
-	TData = Awaited<ReturnType<typeof getJWKS>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getJWKS>>,
-					TError,
-					Awaited<ReturnType<typeof getJWKS>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetJWKS<
-	TData = Awaited<ReturnType<typeof getJWKS>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+export function useGetJWKS<TData = Awaited<ReturnType<typeof getJWKS>>, TError = unknown>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getJWKS>>,
+          TError,
+          Awaited<ReturnType<typeof getJWKS>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetJWKS<TData = Awaited<ReturnType<typeof getJWKS>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getJWKS>>,
+          TError,
+          Awaited<ReturnType<typeof getJWKS>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetJWKS<TData = Awaited<ReturnType<typeof getJWKS>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get JWKS
  */
 
-export function useGetJWKS<
-	TData = Awaited<ReturnType<typeof getJWKS>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetJWKSQueryOptions(options);
+export function useGetJWKS<TData = Awaited<ReturnType<typeof getJWKS>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getJWKS>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetJWKSQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getRefreshTokenUrl = () => {
-	return `/token/refresh`;
+  return `/token/refresh`;
 };
 
 /**
@@ -193,58 +157,51 @@ export const getRefreshTokenUrl = () => {
  * @summary Refresh JWT token
  */
 export const refreshToken = async (
-	refreshTokenRequest?: RefreshTokenRequest,
-	options?: Parameters<typeof customFetch>[1],
+  refreshTokenRequest?: RefreshTokenRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<RefreshTokenResponse> => {
-	return customFetch<RefreshTokenResponse>(getRefreshTokenUrl(), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(refreshTokenRequest),
-	});
+  return customFetch<RefreshTokenResponse>(getRefreshTokenUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(refreshTokenRequest),
+  });
 };
 
-export const getRefreshTokenMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof refreshToken>>,
-		TError,
-		{ data?: RefreshTokenRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+export const getRefreshTokenMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof refreshToken>>,
+    TError,
+    { data?: RefreshTokenRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof refreshToken>>,
-	TError,
-	{ data?: RefreshTokenRequest },
-	TContext
+  Awaited<ReturnType<typeof refreshToken>>,
+  TError,
+  { data?: RefreshTokenRequest },
+  TContext
 > => {
-	const mutationKey = ["refreshToken"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["refreshToken"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof refreshToken>>,
-		{ data?: RefreshTokenRequest }
-	> = (props) => {
-		const { data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof refreshToken>>,
+    { data?: RefreshTokenRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-		return refreshToken(data, requestOptions);
-	};
+    return refreshToken(data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
-export type RefreshTokenMutationResult = NonNullable<
-	Awaited<ReturnType<typeof refreshToken>>
->;
+export type RefreshTokenMutationResult = NonNullable<Awaited<ReturnType<typeof refreshToken>>>;
 export type RefreshTokenMutationBody = RefreshTokenRequest | undefined;
 export type RefreshTokenMutationError = unknown;
 
@@ -252,21 +209,21 @@ export type RefreshTokenMutationError = unknown;
  * @summary Refresh JWT token
  */
 export const useRefreshToken = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof refreshToken>>,
-			TError,
-			{ data?: RefreshTokenRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof refreshToken>>,
+      TError,
+      { data?: RefreshTokenRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof refreshToken>>,
-	TError,
-	{ data?: RefreshTokenRequest },
-	TContext
+  Awaited<ReturnType<typeof refreshToken>>,
+  TError,
+  { data?: RefreshTokenRequest },
+  TContext
 > => {
-	return useMutation(getRefreshTokenMutationOptions(options), queryClient);
+  return useMutation(getRefreshTokenMutationOptions(options), queryClient);
 };

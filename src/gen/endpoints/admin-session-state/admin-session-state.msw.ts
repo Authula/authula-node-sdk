@@ -5,185 +5,184 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	AdminSessionState,
-	DeleteSessionStateResponse,
-	GetSessionStateResponse,
-	RevokeSessionResponse,
-	UpsertSessionStateResponse,
+  AdminSessionState,
+  DeleteSessionStateResponse,
+  GetSessionStateResponse,
+  RevokeSessionResponse,
+  UpsertSessionStateResponse,
 } from "../../models";
 
 import {
-	getCreateSessionStateResponseMock,
-	getDeleteSessionStateResponseMock,
-	getGetSessionStateResponseMock,
-	getListRevokedSessionStatesResponseMock,
-	getRevokeSessionResponseMock,
-	getUpdateSessionStateResponseMock,
+  getCreateSessionStateResponseMock,
+  getDeleteSessionStateResponseMock,
+  getGetSessionStateResponseMock,
+  getListRevokedSessionStatesResponseMock,
+  getRevokeSessionResponseMock,
+  getUpdateSessionStateResponseMock,
 } from "./admin-session-state.faker";
 
 export {
-	getCreateSessionStateResponseMock,
-	getDeleteSessionStateResponseMock,
-	getGetSessionStateResponseMock,
-	getListRevokedSessionStatesResponseMock,
-	getRevokeSessionResponseMock,
-	getUpdateSessionStateResponseMock,
+  getListRevokedSessionStatesResponseMock,
+  getRevokeSessionResponseMock,
+  getGetSessionStateResponseMock,
+  getCreateSessionStateResponseMock,
+  getDeleteSessionStateResponseMock,
+  getUpdateSessionStateResponseMock,
 } from "./admin-session-state.faker";
 
 export const getListRevokedSessionStatesMockHandler = (
-	overrideResponse?:
-		| AdminSessionState[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<AdminSessionState[] | null> | AdminSessionState[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | AdminSessionState[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<AdminSessionState[] | null> | AdminSessionState[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/sessions/states/revoked",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListRevokedSessionStatesResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/sessions/states/revoked",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListRevokedSessionStatesResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRevokeSessionMockHandler = (
-	overrideResponse?:
-		| RevokeSessionResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<RevokeSessionResponse> | RevokeSessionResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | RevokeSessionResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<RevokeSessionResponse> | RevokeSessionResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/sessions/:sessionId/revoke",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRevokeSessionResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/sessions/:sessionId/revoke",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRevokeSessionResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetSessionStateMockHandler = (
-	overrideResponse?:
-		| GetSessionStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetSessionStateResponse> | GetSessionStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetSessionStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetSessionStateResponse> | GetSessionStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/sessions/:sessionId/state",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetSessionStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/sessions/:sessionId/state",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetSessionStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateSessionStateMockHandler = (
-	overrideResponse?:
-		| UpsertSessionStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<UpsertSessionStateResponse> | UpsertSessionStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpsertSessionStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<UpsertSessionStateResponse> | UpsertSessionStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/sessions/:sessionId/state",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateSessionStateResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/sessions/:sessionId/state",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateSessionStateResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteSessionStateMockHandler = (
-	overrideResponse?:
-		| DeleteSessionStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteSessionStateResponse> | DeleteSessionStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteSessionStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteSessionStateResponse> | DeleteSessionStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/admin/sessions/:sessionId/state",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteSessionStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/admin/sessions/:sessionId/state",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteSessionStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateSessionStateMockHandler = (
-	overrideResponse?:
-		| UpsertSessionStateResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpsertSessionStateResponse> | UpsertSessionStateResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpsertSessionStateResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpsertSessionStateResponse> | UpsertSessionStateResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/admin/sessions/:sessionId/state",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateSessionStateResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/admin/sessions/:sessionId/state",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateSessionStateResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getAdminSessionStateMock = () => [
-	getListRevokedSessionStatesMockHandler(),
-	getRevokeSessionMockHandler(),
-	getGetSessionStateMockHandler(),
-	getCreateSessionStateMockHandler(),
-	getDeleteSessionStateMockHandler(),
-	getUpdateSessionStateMockHandler(),
+  getListRevokedSessionStatesMockHandler(),
+  getRevokeSessionMockHandler(),
+  getGetSessionStateMockHandler(),
+  getCreateSessionStateMockHandler(),
+  getDeleteSessionStateMockHandler(),
+  getUpdateSessionStateMockHandler(),
 ];

@@ -8,13 +8,13 @@
 import * as zod from "zod";
 
 import {
-	CreateAccountRequest,
-	CreateAccountResponse,
-	DeleteAccountResponse,
-	GetAccountByIDResponse,
-	UpdateAccountRequest,
-	UpdateAccountResponse,
-	UserAccountsResponse,
+  CreateAccountRequest,
+  CreateAccountResponse,
+  DeleteAccountResponse,
+  GetAccountByIDResponse,
+  UpdateAccountRequest,
+  UpdateAccountResponse,
+  UserAccountsResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -22,7 +22,7 @@ import {
  * @summary Get account by ID
  */
 export const GetAccountParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const GetAccountResponse = GetAccountByIDResponse;
@@ -32,7 +32,7 @@ export const GetAccountResponse = GetAccountByIDResponse;
  * @summary Delete account
  */
 export const DeleteAccountParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const DeleteAccountResponseSchema = DeleteAccountResponse;
@@ -42,7 +42,7 @@ export const DeleteAccountResponseSchema = DeleteAccountResponse;
  * @summary Update account
  */
 export const UpdateAccountParams = zod.object({
-	id: zod.string(),
+  id: zod.string(),
 });
 
 export const UpdateAccountBody = UpdateAccountRequest;
@@ -54,7 +54,7 @@ export const UpdateAccountResponseSchema = UpdateAccountResponse;
  * @summary List user accounts
  */
 export const ListUserAccountsParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const ListUserAccountsResponse = UserAccountsResponse;
@@ -64,7 +64,7 @@ export const ListUserAccountsResponse = UserAccountsResponse;
  * @summary Create account
  */
 export const CreateAccountParams = zod.object({
-	user_id: zod.string(),
+  user_id: zod.string(),
 });
 
 export const CreateAccountBody = CreateAccountRequest;

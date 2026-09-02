@@ -7,6 +7,6 @@
  */
 
 export type AddOrganizationMemberRequest = {
-	role: string;
-	userId: string;
+  role: string;
+  userId: string;
 };

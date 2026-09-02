@@ -7,5 +7,5 @@
  */
 
 export type GenerateBackupCodesResponse = {
-	backupCodes: string[];
+  backupCodes: string[];
 };

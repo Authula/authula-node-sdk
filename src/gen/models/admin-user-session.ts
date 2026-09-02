@@ -9,6 +9,6 @@ import type { AdminSessionState } from "./admin-session-state";
 import type { Session } from "./session";
 
 export type AdminUserSession = {
-	session: Session;
-	state?: null | AdminSessionState;
+  session: Session;
+  state?: null | AdminSessionState;
 };

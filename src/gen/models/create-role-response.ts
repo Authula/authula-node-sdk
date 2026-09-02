@@ -8,5 +8,5 @@
 import type { Role } from "./role";
 
 export type CreateRoleResponse = {
-	role: Role;
+  role: Role;
 };

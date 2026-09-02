@@ -8,5 +8,5 @@
 import type { ApiKey } from "./api-key";
 
 export type UpdateApiKeyResponse = {
-	apiKey: ApiKey;
+  apiKey: ApiKey;
 };

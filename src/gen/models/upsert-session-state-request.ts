@@ -7,13 +7,13 @@
  */
 
 export type UpsertSessionStateRequest = {
-	/** @nullable */
-	impersonationExpiresAt?: string | null;
-	/** @nullable */
-	impersonationReason?: string | null;
-	/** @nullable */
-	impersonatorUserId?: string | null;
-	revoke: boolean;
-	/** @nullable */
-	revokedReason?: string | null;
+  /** @nullable */
+  impersonationExpiresAt?: string | null;
+  /** @nullable */
+  impersonationReason?: string | null;
+  /** @nullable */
+  impersonatorUserId?: string | null;
+  revoke: boolean;
+  /** @nullable */
+  revokedReason?: string | null;
 };

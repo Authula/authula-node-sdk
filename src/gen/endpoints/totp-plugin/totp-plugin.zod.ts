@@ -6,14 +6,14 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
-	DisableResponse,
-	EnableResponse,
-	GenerateBackupCodesResponse,
-	GetTOTPURIResponse,
-	VerifyBackupCodeRequest,
-	VerifyBackupCodeResponse,
-	VerifyTOTPRequest,
-	VerifyTOTPResponse,
+  DisableResponse,
+  EnableResponse,
+  GenerateBackupCodesResponse,
+  GetTOTPURIResponse,
+  VerifyBackupCodeRequest,
+  VerifyBackupCodeResponse,
+  VerifyTOTPRequest,
+  VerifyTOTPResponse,
 } from "../authula-api.schemas.zod";
 
 /**

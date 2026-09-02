@@ -7,5 +7,5 @@
  */
 
 export type MagicLinkSignInResponse = {
-	message: string;
+  message: string;
 };

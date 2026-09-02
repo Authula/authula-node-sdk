@@ -7,8 +7,8 @@
  */
 
 export type CreatePermissionRequest = {
-	/** @nullable */
-	description?: string | null;
-	isSystem?: boolean;
-	key: string;
+  /** @nullable */
+  description?: string | null;
+  isSystem?: boolean;
+  key: string;
 };

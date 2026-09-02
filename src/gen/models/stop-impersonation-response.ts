@@ -7,5 +7,5 @@
  */
 
 export type StopImpersonationResponse = {
-	message: string;
+  message: string;
 };

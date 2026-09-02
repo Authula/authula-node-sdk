@@ -8,11 +8,11 @@
 import * as zod from "zod";
 
 import {
-	MagicLinkExchangeRequest,
-	MagicLinkExchangeResponse,
-	MagicLinkSignInRequest,
-	MagicLinkSignInResponse,
-	MagicLinkVerifyResponse,
+  MagicLinkExchangeRequest,
+  MagicLinkExchangeResponse,
+  MagicLinkSignInRequest,
+  MagicLinkSignInResponse,
+  MagicLinkVerifyResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -36,8 +36,8 @@ export const SignInWithMagicLinkResponse = MagicLinkSignInResponse;
  * @summary Verify magic link token
  */
 export const VerifyMagicLinkQueryParams = zod.object({
-	token: zod.string(),
-	callbackUrl: zod.string().optional(),
+  token: zod.string(),
+  callbackUrl: zod.string().optional(),
 });
 
 export const VerifyMagicLinkResponse = MagicLinkVerifyResponse;

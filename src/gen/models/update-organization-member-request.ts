@@ -7,5 +7,5 @@
  */
 
 export type UpdateOrganizationMemberRequest = {
-	role: string;
+  role: string;
 };

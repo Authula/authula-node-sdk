@@ -7,21 +7,18 @@
  */
 import * as zod from "zod";
 
-import {
-	AuthorizeResponse,
-	CallbackResponse,
-} from "../authula-api.schemas.zod";
+import { AuthorizeResponse, CallbackResponse } from "../authula-api.schemas.zod";
 
 /**
  * Initiates the OAuth2 authorization flow with the specified provider. Returns the provider's authorization URL to redirect the user to.
  * @summary Authorize with OAuth2 provider
  */
 export const OauthAuthorizeParams = zod.object({
-	provider: zod.string(),
+  provider: zod.string(),
 });
 
 export const OauthAuthorizeQueryParams = zod.object({
-	redirectTo: zod.string().optional(),
+  redirectTo: zod.string().optional(),
 });
 
 export const OauthAuthorizeResponse = AuthorizeResponse;
@@ -31,13 +28,13 @@ export const OauthAuthorizeResponse = AuthorizeResponse;
  * @summary OAuth2 callback
  */
 export const OauthCallbackParams = zod.object({
-	provider: zod.string(),
+  provider: zod.string(),
 });
 
 export const OauthCallbackQueryParams = zod.object({
-	code: zod.string(),
-	state: zod.string(),
-	error: zod.string().optional(),
+  code: zod.string(),
+  state: zod.string(),
+  error: zod.string().optional(),
 });
 
 export const OauthCallbackResponse = CallbackResponse;

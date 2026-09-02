@@ -1,27 +1,26 @@
 {
   "name": "authula",
-  "type": "module",
   "version": "0.7.13",
   "description": "Official SDK for Authula.",
-  "license": "Apache-2.0",
   "homepage": "https://github.com/Authula/authula-node-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/Authula/authula-node-sdk/issues"
+  },
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Authula/authula-node-sdk.git"
   },
-  "bugs": {
-    "url": "https://github.com/Authula/authula-node-sdk/issues"
-  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
     "./plugins": "./dist/plugins/index.js",
     "./package.json": "./package.json"
   },
-  "types": "./dist/index.d.cts",
-  "files": [
-    "dist"
-  ],
-  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "build": "pnpm run orval:build && pnpm run tsdown:build",
     "orval:build": "rm -rf ./src/gen && orval -c orval.config.ts",
@@ -29,7 +28,10 @@
     "watch:orval": "orval",
     "watch:tsdown": "tsdown --watch",
     "typecheck": "tsc --noEmit",
-    "format": "biome format --write",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
     "test": "vitest run",
     "test:watch": "vitest --watch",
     "prepublishOnly": "pnpm run orval:build && pnpm run tsdown:build"
@@ -41,15 +43,17 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.7",
     "@faker-js/faker": "^10.6.0",
     "@types/node": "^26.4.0",
     "@vitest/coverage-v8": "^4.1.11",
     "@vitest/ui": "^4.1.11",
     "bumpp": "^12.2.2",
     "orval": "^8.23.0",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.80.0",
     "tsdown": "^0.22.14",
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
-  }
+  },
+  "packageManager": "pnpm@11.24.0"
 }

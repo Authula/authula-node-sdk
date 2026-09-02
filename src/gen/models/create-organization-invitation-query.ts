@@ -7,6 +7,6 @@
  */
 
 export type CreateOrganizationInvitationQuery = {
-	/** @nullable */
-	redirectUrl?: string | null;
+  /** @nullable */
+  redirectUrl?: string | null;
 };

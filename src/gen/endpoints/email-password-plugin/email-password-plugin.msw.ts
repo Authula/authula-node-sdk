@@ -5,210 +5,209 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	ChangeEmailResponse,
-	ChangePasswordResponse,
-	SignInResponse,
-	SignUpResponse,
+  ChangeEmailResponse,
+  ChangePasswordResponse,
+  SignInResponse,
+  SignUpResponse,
 } from "../../models";
 
 import {
-	getChangePasswordResponseMock,
-	getRequestEmailChangeResponseMock,
-	getRequestPasswordResetResponseMock,
-	getSendEmailVerificationResponseMock,
-	getSignInResponseMock,
-	getSignUpResponseMock,
-	getVerifyEmailResponseMock,
+  getChangePasswordResponseMock,
+  getRequestEmailChangeResponseMock,
+  getRequestPasswordResetResponseMock,
+  getSendEmailVerificationResponseMock,
+  getSignInResponseMock,
+  getSignUpResponseMock,
+  getVerifyEmailResponseMock,
 } from "./email-password-plugin.faker";
 
 export {
-	getChangePasswordResponseMock,
-	getRequestEmailChangeResponseMock,
-	getRequestPasswordResetResponseMock,
-	getSendEmailVerificationResponseMock,
-	getSignInResponseMock,
-	getSignUpResponseMock,
-	getVerifyEmailResponseMock,
+  getChangePasswordResponseMock,
+  getRequestEmailChangeResponseMock,
+  getRequestPasswordResetResponseMock,
+  getSendEmailVerificationResponseMock,
+  getSignInResponseMock,
+  getSignUpResponseMock,
+  getVerifyEmailResponseMock,
 } from "./email-password-plugin.faker";
 
 export const getChangePasswordMockHandler = (
-	overrideResponse?:
-		| ChangePasswordResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ChangePasswordResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/change-password",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getChangePasswordResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/change-password",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getChangePasswordResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRequestEmailChangeMockHandler = (
-	overrideResponse?:
-		| ChangeEmailResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<ChangeEmailResponse> | ChangeEmailResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ChangeEmailResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ChangeEmailResponse> | ChangeEmailResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/request-email-change",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRequestEmailChangeResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/request-email-change",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRequestEmailChangeResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getRequestPasswordResetMockHandler = (
-	overrideResponse?:
-		| ChangePasswordResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ChangePasswordResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/request-password-reset",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getRequestPasswordResetResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/request-password-reset",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRequestPasswordResetResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getSendEmailVerificationMockHandler = (
-	overrideResponse?:
-		| ChangePasswordResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ChangePasswordResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/send-email-verification",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getSendEmailVerificationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/send-email-verification",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSendEmailVerificationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getSignInMockHandler = (
-	overrideResponse?:
-		| SignInResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<SignInResponse> | SignInResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | SignInResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<SignInResponse> | SignInResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/sign-in",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getSignInResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/sign-in",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSignInResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getSignUpMockHandler = (
-	overrideResponse?:
-		| SignUpResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<SignUpResponse> | SignUpResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | SignUpResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<SignUpResponse> | SignUpResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/email-password/sign-up",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getSignUpResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/email-password/sign-up",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSignUpResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getVerifyEmailMockHandler = (
-	overrideResponse?:
-		| ChangePasswordResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | ChangePasswordResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ChangePasswordResponse> | ChangePasswordResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/email-password/verify-email",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyEmailResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/email-password/verify-email",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVerifyEmailResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getEmailPasswordPluginMock = () => [
-	getChangePasswordMockHandler(),
-	getRequestEmailChangeMockHandler(),
-	getRequestPasswordResetMockHandler(),
-	getSendEmailVerificationMockHandler(),
-	getSignInMockHandler(),
-	getSignUpMockHandler(),
-	getVerifyEmailMockHandler(),
+  getChangePasswordMockHandler(),
+  getRequestEmailChangeMockHandler(),
+  getRequestPasswordResetMockHandler(),
+  getSendEmailVerificationMockHandler(),
+  getSignInMockHandler(),
+  getSignUpMockHandler(),
+  getVerifyEmailMockHandler(),
 ];

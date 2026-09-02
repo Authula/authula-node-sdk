@@ -7,9 +7,9 @@
  */
 
 export type MagicLinkSignInRequest = {
-	/** @nullable */
-	callbackUrl?: string | null;
-	email: string;
-	/** @nullable */
-	name?: string | null;
+  /** @nullable */
+  callbackUrl?: string | null;
+  email: string;
+  /** @nullable */
+  name?: string | null;
 };

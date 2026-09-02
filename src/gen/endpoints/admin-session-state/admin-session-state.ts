@@ -5,56 +5,54 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	MutationFunction,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseMutationOptions,
-	UseMutationResult,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customFetch } from "../../../mutators/custom-fetch";
-import type {
-	AdminSessionState,
-	CreateSessionStateRequest,
-	DeleteSessionStateResponse,
-	GetSessionStateResponse,
-	RevokeSessionRequest,
-	RevokeSessionResponse,
-	UpsertSessionStateRequest,
-	UpsertSessionStateResponse,
+  AdminSessionState,
+  CreateSessionStateRequest,
+  DeleteSessionStateResponse,
+  GetSessionStateResponse,
+  RevokeSessionRequest,
+  RevokeSessionResponse,
+  UpsertSessionStateRequest,
+  UpsertSessionStateResponse,
 } from "../../models";
+
+import { customFetch } from "../../../mutators/custom-fetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-const withQueryKey = <T extends object, K>(
-	query: T,
-	queryKey: K,
-): T & { queryKey: K } => {
-	const result = { queryKey } as T & { queryKey: K };
-	for (const key of Object.keys(query)) {
-		// The explicit queryKey always wins, matching the previous
-		// `{ ...query, queryKey }` spread where it was set last.
-		if (key === "queryKey") continue;
-		Object.defineProperty(result, key, {
-			enumerable: true,
-			configurable: true,
-			get: () => (query as Record<string, unknown>)[key],
-		});
-	}
-	return result;
+const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+  const result = { queryKey } as T & { queryKey: K };
+  for (const key of Object.keys(query)) {
+    // The explicit queryKey always wins, matching the previous
+    // `{ ...query, queryKey }` spread where it was set last.
+    if (key === "queryKey") continue;
+    Object.defineProperty(result, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => (query as Record<string, unknown>)[key],
+    });
+  }
+  return result;
 };
 
 export const getListRevokedSessionStatesUrl = () => {
-	return `/admin/sessions/states/revoked`;
+  return `/admin/sessions/states/revoked`;
 };
 
 /**
@@ -62,159 +60,126 @@ export const getListRevokedSessionStatesUrl = () => {
  * @summary List revoked session states
  */
 export const listRevokedSessionStates = async (
-	options?: Parameters<typeof customFetch>[1],
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<AdminSessionState[] | null> => {
-	return customFetch<AdminSessionState[] | null>(
-		getListRevokedSessionStatesUrl(),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<AdminSessionState[] | null>(getListRevokedSessionStatesUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getListRevokedSessionStatesQueryKey = () => {
-	return [`/admin/sessions/states/revoked`] as const;
+  return [`/admin/sessions/states/revoked`] as const;
 };
 
 export const getListRevokedSessionStatesQueryOptions = <
-	TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
+  TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<
-			Awaited<ReturnType<typeof listRevokedSessionStates>>,
-			TError,
-			TData
-		>
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof listRevokedSessionStates>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getListRevokedSessionStatesQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getListRevokedSessionStatesQueryKey();
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof listRevokedSessionStates>>
-	> = ({ signal }) => listRevokedSessionStates({ signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listRevokedSessionStates>>> = ({
+    signal,
+  }) => listRevokedSessionStates({ signal, ...requestOptions });
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof listRevokedSessionStates>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listRevokedSessionStates>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
 export type ListRevokedSessionStatesQueryResult = NonNullable<
-	Awaited<ReturnType<typeof listRevokedSessionStates>>
+  Awaited<ReturnType<typeof listRevokedSessionStates>>
 >;
 export type ListRevokedSessionStatesQueryError = unknown;
 
 export function useListRevokedSessionStates<
-	TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
+  TError = unknown,
 >(
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listRevokedSessionStates>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listRevokedSessionStates>>,
-					TError,
-					Awaited<ReturnType<typeof listRevokedSessionStates>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listRevokedSessionStates>>, TError, TData>
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listRevokedSessionStates>>,
+          TError,
+          Awaited<ReturnType<typeof listRevokedSessionStates>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListRevokedSessionStates<
-	TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listRevokedSessionStates>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof listRevokedSessionStates>>,
-					TError,
-					Awaited<ReturnType<typeof listRevokedSessionStates>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listRevokedSessionStates>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listRevokedSessionStates>>,
+          TError,
+          Awaited<ReturnType<typeof listRevokedSessionStates>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useListRevokedSessionStates<
-	TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listRevokedSessionStates>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listRevokedSessionStates>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary List revoked session states
  */
 
 export function useListRevokedSessionStates<
-	TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof listRevokedSessionStates>>,
+  TError = unknown,
 >(
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof listRevokedSessionStates>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getListRevokedSessionStatesQueryOptions(options);
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof listRevokedSessionStates>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getListRevokedSessionStatesQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getRevokeSessionUrl = (sessionId: string) => {
-	return `/admin/sessions/${sessionId}/revoke`;
+  return `/admin/sessions/${sessionId}/revoke`;
 };
 
 /**
@@ -222,59 +187,52 @@ export const getRevokeSessionUrl = (sessionId: string) => {
  * @summary Revoke session
  */
 export const revokeSession = async (
-	sessionId: string,
-	revokeSessionRequest?: RevokeSessionRequest,
-	options?: Parameters<typeof customFetch>[1],
+  sessionId: string,
+  revokeSessionRequest?: RevokeSessionRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<RevokeSessionResponse> => {
-	return customFetch<RevokeSessionResponse>(getRevokeSessionUrl(sessionId), {
-		...options,
-		method: "POST",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(revokeSessionRequest),
-	});
+  return customFetch<RevokeSessionResponse>(getRevokeSessionUrl(sessionId), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(revokeSessionRequest),
+  });
 };
 
-export const getRevokeSessionMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
->(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof revokeSession>>,
-		TError,
-		{ sessionId: string; data?: RevokeSessionRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+export const getRevokeSessionMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof revokeSession>>,
+    TError,
+    { sessionId: string; data?: RevokeSessionRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof revokeSession>>,
-	TError,
-	{ sessionId: string; data?: RevokeSessionRequest },
-	TContext
+  Awaited<ReturnType<typeof revokeSession>>,
+  TError,
+  { sessionId: string; data?: RevokeSessionRequest },
+  TContext
 > => {
-	const mutationKey = ["revokeSession"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["revokeSession"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof revokeSession>>,
-		{ sessionId: string; data?: RevokeSessionRequest }
-	> = (props) => {
-		const { sessionId, data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof revokeSession>>,
+    { sessionId: string; data?: RevokeSessionRequest }
+  > = (props) => {
+    const { sessionId, data } = props ?? {};
 
-		return revokeSession(sessionId, data, requestOptions);
-	};
+    return revokeSession(sessionId, data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
-export type RevokeSessionMutationResult = NonNullable<
-	Awaited<ReturnType<typeof revokeSession>>
->;
+export type RevokeSessionMutationResult = NonNullable<Awaited<ReturnType<typeof revokeSession>>>;
 export type RevokeSessionMutationBody = RevokeSessionRequest | undefined;
 export type RevokeSessionMutationError = unknown;
 
@@ -282,26 +240,26 @@ export type RevokeSessionMutationError = unknown;
  * @summary Revoke session
  */
 export const useRevokeSession = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof revokeSession>>,
-			TError,
-			{ sessionId: string; data?: RevokeSessionRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof revokeSession>>,
+      TError,
+      { sessionId: string; data?: RevokeSessionRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof revokeSession>>,
-	TError,
-	{ sessionId: string; data?: RevokeSessionRequest },
-	TContext
+  Awaited<ReturnType<typeof revokeSession>>,
+  TError,
+  { sessionId: string; data?: RevokeSessionRequest },
+  TContext
 > => {
-	return useMutation(getRevokeSessionMutationOptions(options), queryClient);
+  return useMutation(getRevokeSessionMutationOptions(options), queryClient);
 };
 export const getGetSessionStateUrl = (sessionId: string) => {
-	return `/admin/sessions/${sessionId}/state`;
+  return `/admin/sessions/${sessionId}/state`;
 };
 
 /**
@@ -309,172 +267,124 @@ export const getGetSessionStateUrl = (sessionId: string) => {
  * @summary Get session state
  */
 export const getSessionState = async (
-	sessionId: string,
-	options?: Parameters<typeof customFetch>[1],
+  sessionId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<GetSessionStateResponse> => {
-	return customFetch<GetSessionStateResponse>(
-		getGetSessionStateUrl(sessionId),
-		{
-			...options,
-			method: "GET",
-		},
-	);
+  return customFetch<GetSessionStateResponse>(getGetSessionStateUrl(sessionId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 export const getGetSessionStateQueryKey = (sessionId: string) => {
-	return [`/admin/sessions/${sessionId}/state`] as const;
+  return [`/admin/sessions/${sessionId}/state`] as const;
 };
 
 export const getGetSessionStateQueryOptions = <
-	TData = Awaited<ReturnType<typeof getSessionState>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getSessionState>>,
+  TError = unknown,
 >(
-	sessionId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getSessionState>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
+  sessionId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
 ) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetSessionStateQueryKey(sessionId);
+  const queryKey = queryOptions?.queryKey ?? getGetSessionStateQueryKey(sessionId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getSessionState>>> = ({
-		signal,
-	}) => getSessionState(sessionId, { signal, ...requestOptions });
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getSessionState>>> = ({ signal }) =>
+    getSessionState(sessionId, { signal, ...requestOptions });
 
-	return {
-		queryKey,
-		queryFn,
-		enabled: sessionId !== null && sessionId !== undefined,
-		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getSessionState>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  return {
+    queryKey,
+    queryFn,
+    enabled: sessionId !== null && sessionId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 };
 
-export type GetSessionStateQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getSessionState>>
->;
+export type GetSessionStateQueryResult = NonNullable<Awaited<ReturnType<typeof getSessionState>>>;
 export type GetSessionStateQueryError = unknown;
 
 export function useGetSessionState<
-	TData = Awaited<ReturnType<typeof getSessionState>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getSessionState>>,
+  TError = unknown,
 >(
-	sessionId: string,
-	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getSessionState>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getSessionState>>,
-					TError,
-					Awaited<ReturnType<typeof getSessionState>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  sessionId: string,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getSessionState>>,
+          TError,
+          Awaited<ReturnType<typeof getSessionState>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetSessionState<
-	TData = Awaited<ReturnType<typeof getSessionState>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getSessionState>>,
+  TError = unknown,
 >(
-	sessionId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getSessionState>>,
-				TError,
-				TData
-			>
-		> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getSessionState>>,
-					TError,
-					Awaited<ReturnType<typeof getSessionState>>
-				>,
-				"initialData"
-			>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  sessionId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData>> &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getSessionState>>,
+          TError,
+          Awaited<ReturnType<typeof getSessionState>>
+        >,
+        "initialData"
+      >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 export function useGetSessionState<
-	TData = Awaited<ReturnType<typeof getSessionState>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getSessionState>>,
+  TError = unknown,
 >(
-	sessionId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getSessionState>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  sessionId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 /**
  * @summary Get session state
  */
 
 export function useGetSessionState<
-	TData = Awaited<ReturnType<typeof getSessionState>>,
-	TError = unknown,
+  TData = Awaited<ReturnType<typeof getSessionState>>,
+  TError = unknown,
 >(
-	sessionId: string,
-	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getSessionState>>,
-				TError,
-				TData
-			>
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetSessionStateQueryOptions(sessionId, options);
+  sessionId: string,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getSessionState>>, TError, TData>>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetSessionStateQueryOptions(sessionId, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-	return withQueryKey(query, queryOptions.queryKey);
+  return withQueryKey(query, queryOptions.queryKey);
 }
 
 export const getCreateSessionStateUrl = (sessionId: string) => {
-	return `/admin/sessions/${sessionId}/state`;
+  return `/admin/sessions/${sessionId}/state`;
 };
 
 /**
@@ -482,94 +392,84 @@ export const getCreateSessionStateUrl = (sessionId: string) => {
  * @summary Create session state
  */
 export const createSessionState = async (
-	sessionId: string,
-	createSessionStateRequest?: CreateSessionStateRequest,
-	options?: Parameters<typeof customFetch>[1],
+  sessionId: string,
+  createSessionStateRequest?: CreateSessionStateRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<UpsertSessionStateResponse> => {
-	return customFetch<UpsertSessionStateResponse>(
-		getCreateSessionStateUrl(sessionId),
-		{
-			...options,
-			method: "POST",
-			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(createSessionStateRequest),
-		},
-	);
+  return customFetch<UpsertSessionStateResponse>(getCreateSessionStateUrl(sessionId), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(createSessionStateRequest),
+  });
 };
 
 export const getCreateSessionStateMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof createSessionState>>,
-		TError,
-		{ sessionId: string; data?: CreateSessionStateRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createSessionState>>,
+    TError,
+    { sessionId: string; data?: CreateSessionStateRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof createSessionState>>,
-	TError,
-	{ sessionId: string; data?: CreateSessionStateRequest },
-	TContext
+  Awaited<ReturnType<typeof createSessionState>>,
+  TError,
+  { sessionId: string; data?: CreateSessionStateRequest },
+  TContext
 > => {
-	const mutationKey = ["createSessionState"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["createSessionState"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof createSessionState>>,
-		{ sessionId: string; data?: CreateSessionStateRequest }
-	> = (props) => {
-		const { sessionId, data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createSessionState>>,
+    { sessionId: string; data?: CreateSessionStateRequest }
+  > = (props) => {
+    const { sessionId, data } = props ?? {};
 
-		return createSessionState(sessionId, data, requestOptions);
-	};
+    return createSessionState(sessionId, data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type CreateSessionStateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof createSessionState>>
+  Awaited<ReturnType<typeof createSessionState>>
 >;
-export type CreateSessionStateMutationBody =
-	| CreateSessionStateRequest
-	| undefined;
+export type CreateSessionStateMutationBody = CreateSessionStateRequest | undefined;
 export type CreateSessionStateMutationError = unknown;
 
 /**
  * @summary Create session state
  */
 export const useCreateSessionState = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof createSessionState>>,
-			TError,
-			{ sessionId: string; data?: CreateSessionStateRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createSessionState>>,
+      TError,
+      { sessionId: string; data?: CreateSessionStateRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof createSessionState>>,
-	TError,
-	{ sessionId: string; data?: CreateSessionStateRequest },
-	TContext
+  Awaited<ReturnType<typeof createSessionState>>,
+  TError,
+  { sessionId: string; data?: CreateSessionStateRequest },
+  TContext
 > => {
-	return useMutation(
-		getCreateSessionStateMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getCreateSessionStateMutationOptions(options), queryClient);
 };
 export const getDeleteSessionStateUrl = (sessionId: string) => {
-	return `/admin/sessions/${sessionId}/state`;
+  return `/admin/sessions/${sessionId}/state`;
 };
 
 /**
@@ -577,58 +477,53 @@ export const getDeleteSessionStateUrl = (sessionId: string) => {
  * @summary Delete session state
  */
 export const deleteSessionState = async (
-	sessionId: string,
-	options?: Parameters<typeof customFetch>[1],
+  sessionId: string,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<DeleteSessionStateResponse> => {
-	return customFetch<DeleteSessionStateResponse>(
-		getDeleteSessionStateUrl(sessionId),
-		{
-			...options,
-			method: "DELETE",
-		},
-	);
+  return customFetch<DeleteSessionStateResponse>(getDeleteSessionStateUrl(sessionId), {
+    ...options,
+    method: "DELETE",
+  });
 };
 
 export const getDeleteSessionStateMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof deleteSessionState>>,
-		TError,
-		{ sessionId: string },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteSessionState>>,
+    TError,
+    { sessionId: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof deleteSessionState>>,
-	TError,
-	{ sessionId: string },
-	TContext
+  Awaited<ReturnType<typeof deleteSessionState>>,
+  TError,
+  { sessionId: string },
+  TContext
 > => {
-	const mutationKey = ["deleteSessionState"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["deleteSessionState"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof deleteSessionState>>,
-		{ sessionId: string }
-	> = (props) => {
-		const { sessionId } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteSessionState>>,
+    { sessionId: string }
+  > = (props) => {
+    const { sessionId } = props ?? {};
 
-		return deleteSessionState(sessionId, requestOptions);
-	};
+    return deleteSessionState(sessionId, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type DeleteSessionStateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof deleteSessionState>>
+  Awaited<ReturnType<typeof deleteSessionState>>
 >;
 
 export type DeleteSessionStateMutationError = unknown;
@@ -637,29 +532,26 @@ export type DeleteSessionStateMutationError = unknown;
  * @summary Delete session state
  */
 export const useDeleteSessionState = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof deleteSessionState>>,
-			TError,
-			{ sessionId: string },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteSessionState>>,
+      TError,
+      { sessionId: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof deleteSessionState>>,
-	TError,
-	{ sessionId: string },
-	TContext
+  Awaited<ReturnType<typeof deleteSessionState>>,
+  TError,
+  { sessionId: string },
+  TContext
 > => {
-	return useMutation(
-		getDeleteSessionStateMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getDeleteSessionStateMutationOptions(options), queryClient);
 };
 export const getUpdateSessionStateUrl = (sessionId: string) => {
-	return `/admin/sessions/${sessionId}/state`;
+  return `/admin/sessions/${sessionId}/state`;
 };
 
 /**
@@ -667,89 +559,79 @@ export const getUpdateSessionStateUrl = (sessionId: string) => {
  * @summary Update session state
  */
 export const updateSessionState = async (
-	sessionId: string,
-	upsertSessionStateRequest?: UpsertSessionStateRequest,
-	options?: Parameters<typeof customFetch>[1],
+  sessionId: string,
+  upsertSessionStateRequest?: UpsertSessionStateRequest,
+  options?: Parameters<typeof customFetch>[1],
 ): Promise<UpsertSessionStateResponse> => {
-	return customFetch<UpsertSessionStateResponse>(
-		getUpdateSessionStateUrl(sessionId),
-		{
-			...options,
-			method: "PATCH",
-			headers: { "Content-Type": "application/json", ...options?.headers },
-			body: JSON.stringify(upsertSessionStateRequest),
-		},
-	);
+  return customFetch<UpsertSessionStateResponse>(getUpdateSessionStateUrl(sessionId), {
+    ...options,
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(upsertSessionStateRequest),
+  });
 };
 
 export const getUpdateSessionStateMutationOptions = <
-	TError = unknown,
-	TContext = unknown,
+  TError = unknown,
+  TContext = unknown,
 >(options?: {
-	mutation?: UseMutationOptions<
-		Awaited<ReturnType<typeof updateSessionState>>,
-		TError,
-		{ sessionId: string; data?: UpsertSessionStateRequest },
-		TContext
-	>;
-	request?: SecondParameter<typeof customFetch>;
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof updateSessionState>>,
+    TError,
+    { sessionId: string; data?: UpsertSessionStateRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
 }): UseMutationOptions<
-	Awaited<ReturnType<typeof updateSessionState>>,
-	TError,
-	{ sessionId: string; data?: UpsertSessionStateRequest },
-	TContext
+  Awaited<ReturnType<typeof updateSessionState>>,
+  TError,
+  { sessionId: string; data?: UpsertSessionStateRequest },
+  TContext
 > => {
-	const mutationKey = ["updateSessionState"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
+  const mutationKey = ["updateSessionState"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof updateSessionState>>,
-		{ sessionId: string; data?: UpsertSessionStateRequest }
-	> = (props) => {
-		const { sessionId, data } = props ?? {};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof updateSessionState>>,
+    { sessionId: string; data?: UpsertSessionStateRequest }
+  > = (props) => {
+    const { sessionId, data } = props ?? {};
 
-		return updateSessionState(sessionId, data, requestOptions);
-	};
+    return updateSessionState(sessionId, data, requestOptions);
+  };
 
-	return { mutationFn, ...mutationOptions };
+  return { mutationFn, ...mutationOptions };
 };
 
 export type UpdateSessionStateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof updateSessionState>>
+  Awaited<ReturnType<typeof updateSessionState>>
 >;
-export type UpdateSessionStateMutationBody =
-	| UpsertSessionStateRequest
-	| undefined;
+export type UpdateSessionStateMutationBody = UpsertSessionStateRequest | undefined;
 export type UpdateSessionStateMutationError = unknown;
 
 /**
  * @summary Update session state
  */
 export const useUpdateSessionState = <TError = unknown, TContext = unknown>(
-	options?: {
-		mutation?: UseMutationOptions<
-			Awaited<ReturnType<typeof updateSessionState>>,
-			TError,
-			{ sessionId: string; data?: UpsertSessionStateRequest },
-			TContext
-		>;
-		request?: SecondParameter<typeof customFetch>;
-	},
-	queryClient?: QueryClient,
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof updateSessionState>>,
+      TError,
+      { sessionId: string; data?: UpsertSessionStateRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+  queryClient?: QueryClient,
 ): UseMutationResult<
-	Awaited<ReturnType<typeof updateSessionState>>,
-	TError,
-	{ sessionId: string; data?: UpsertSessionStateRequest },
-	TContext
+  Awaited<ReturnType<typeof updateSessionState>>,
+  TError,
+  { sessionId: string; data?: UpsertSessionStateRequest },
+  TContext
 > => {
-	return useMutation(
-		getUpdateSessionStateMutationOptions(options),
-		queryClient,
-	);
+  return useMutation(getUpdateSessionStateMutationOptions(options), queryClient);
 };

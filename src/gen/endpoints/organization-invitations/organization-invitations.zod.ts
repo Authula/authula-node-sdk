@@ -8,11 +8,11 @@
 import * as zod from "zod";
 
 import {
-	AcceptOrganizationInvitationQuery,
-	CreateOrganizationInvitationRequest,
-	GetOrganizationInvitationResponse,
-	ListOrganizationInvitationsResponse,
-	OrganizationInvitation,
+  AcceptOrganizationInvitationQuery,
+  CreateOrganizationInvitationRequest,
+  GetOrganizationInvitationResponse,
+  ListOrganizationInvitationsResponse,
+  OrganizationInvitation,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -20,34 +20,32 @@ import {
  * @summary List invitations
  */
 export const ListOrganizationInvitationsParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const listOrganizationInvitationsQueryPageDefault = 1;
 export const listOrganizationInvitationsQueryLimitDefault = 10;
 
 export const ListOrganizationInvitationsQueryParams = zod.object({
-	page: zod.int().default(listOrganizationInvitationsQueryPageDefault),
-	limit: zod.int().default(listOrganizationInvitationsQueryLimitDefault),
+  page: zod.int().default(listOrganizationInvitationsQueryPageDefault),
+  limit: zod.int().default(listOrganizationInvitationsQueryLimitDefault),
 });
 
-export const ListOrganizationInvitationsResponseSchema =
-	ListOrganizationInvitationsResponse;
+export const ListOrganizationInvitationsResponseSchema = ListOrganizationInvitationsResponse;
 
 /**
  * Creates an invitation for a user to join an organization.
  * @summary Create invitation
  */
 export const CreateOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
+  organization_id: zod.string(),
 });
 
 export const CreateOrganizationInvitationQueryParams = zod.object({
-	redirectUrl: zod.string().optional(),
+  redirectUrl: zod.string().optional(),
 });
 
-export const CreateOrganizationInvitationBody =
-	CreateOrganizationInvitationRequest;
+export const CreateOrganizationInvitationBody = CreateOrganizationInvitationRequest;
 
 export const CreateOrganizationInvitationResponse = OrganizationInvitation;
 
@@ -56,28 +54,26 @@ export const CreateOrganizationInvitationResponse = OrganizationInvitation;
  * @summary Get invitation
  */
 export const GetOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
-	invitation_id: zod.string(),
+  organization_id: zod.string(),
+  invitation_id: zod.string(),
 });
 
-export const GetOrganizationInvitationResponseSchema =
-	GetOrganizationInvitationResponse;
+export const GetOrganizationInvitationResponseSchema = GetOrganizationInvitationResponse;
 
 /**
  * Accepts an invitation to join an organization.
  * @summary Accept invitation
  */
 export const AcceptOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
-	invitation_id: zod.string(),
+  organization_id: zod.string(),
+  invitation_id: zod.string(),
 });
 
 export const AcceptOrganizationInvitationQueryParams = zod.object({
-	redirectUrl: zod.string().optional(),
+  redirectUrl: zod.string().optional(),
 });
 
-export const AcceptOrganizationInvitationBody =
-	AcceptOrganizationInvitationQuery;
+export const AcceptOrganizationInvitationBody = AcceptOrganizationInvitationQuery;
 
 export const AcceptOrganizationInvitationResponse = OrganizationInvitation;
 
@@ -86,8 +82,8 @@ export const AcceptOrganizationInvitationResponse = OrganizationInvitation;
  * @summary Reject invitation
  */
 export const RejectOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
-	invitation_id: zod.string(),
+  organization_id: zod.string(),
+  invitation_id: zod.string(),
 });
 
 export const RejectOrganizationInvitationResponse = OrganizationInvitation;
@@ -97,8 +93,8 @@ export const RejectOrganizationInvitationResponse = OrganizationInvitation;
  * @summary Revoke invitation
  */
 export const RevokeOrganizationInvitationParams = zod.object({
-	organization_id: zod.string(),
-	invitation_id: zod.string(),
+  organization_id: zod.string(),
+  invitation_id: zod.string(),
 });
 
 export const RevokeOrganizationInvitationResponse = OrganizationInvitation;

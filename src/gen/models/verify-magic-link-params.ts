@@ -7,6 +7,6 @@
  */
 
 export type VerifyMagicLinkParams = {
-	token: string;
-	callbackUrl?: string;
+  token: string;
+  callbackUrl?: string;
 };

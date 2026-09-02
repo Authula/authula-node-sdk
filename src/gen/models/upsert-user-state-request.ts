@@ -7,9 +7,9 @@
  */
 
 export type UpsertUserStateRequest = {
-	banned: boolean;
-	/** @nullable */
-	bannedReason?: string | null;
-	/** @nullable */
-	bannedUntil?: string | null;
+  banned: boolean;
+  /** @nullable */
+  bannedReason?: string | null;
+  /** @nullable */
+  bannedUntil?: string | null;
 };

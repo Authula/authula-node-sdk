@@ -5,132 +5,129 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	GetImpersonationByIDResponse,
-	Impersonation,
-	StartImpersonationResponse,
-	StopImpersonationResponse,
+  GetImpersonationByIDResponse,
+  Impersonation,
+  StartImpersonationResponse,
+  StopImpersonationResponse,
 } from "../../models";
 
 import {
-	getGetImpersonationResponseMock,
-	getListImpersonationsResponseMock,
-	getStartImpersonationResponseMock,
-	getStopImpersonationResponseMock,
+  getGetImpersonationResponseMock,
+  getListImpersonationsResponseMock,
+  getStartImpersonationResponseMock,
+  getStopImpersonationResponseMock,
 } from "./admin-impersonation.faker";
 
 export {
-	getGetImpersonationResponseMock,
-	getListImpersonationsResponseMock,
-	getStartImpersonationResponseMock,
-	getStopImpersonationResponseMock,
+  getListImpersonationsResponseMock,
+  getStartImpersonationResponseMock,
+  getGetImpersonationResponseMock,
+  getStopImpersonationResponseMock,
 } from "./admin-impersonation.faker";
 
 export const getListImpersonationsMockHandler = (
-	overrideResponse?:
-		| Impersonation[]
-		| null
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<Impersonation[] | null> | Impersonation[] | null),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | Impersonation[]
+    | null
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<Impersonation[] | null> | Impersonation[] | null),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/impersonations",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListImpersonationsResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/impersonations",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListImpersonationsResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getStartImpersonationMockHandler = (
-	overrideResponse?:
-		| StartImpersonationResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<StartImpersonationResponse> | StartImpersonationResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | StartImpersonationResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<StartImpersonationResponse> | StartImpersonationResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/impersonations",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getStartImpersonationResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/impersonations",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getStartImpersonationResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetImpersonationMockHandler = (
-	overrideResponse?:
-		| GetImpersonationByIDResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) =>
-				| Promise<GetImpersonationByIDResponse>
-				| GetImpersonationByIDResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetImpersonationByIDResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetImpersonationByIDResponse> | GetImpersonationByIDResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/admin/impersonations/:impersonationId",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetImpersonationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/admin/impersonations/:impersonationId",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetImpersonationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getStopImpersonationMockHandler = (
-	overrideResponse?:
-		| StopImpersonationResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<StopImpersonationResponse> | StopImpersonationResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | StopImpersonationResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<StopImpersonationResponse> | StopImpersonationResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/admin/impersonations/:impersonationId/stop",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getStopImpersonationResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/admin/impersonations/:impersonationId/stop",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getStopImpersonationResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getAdminImpersonationMock = () => [
-	getListImpersonationsMockHandler(),
-	getStartImpersonationMockHandler(),
-	getGetImpersonationMockHandler(),
-	getStopImpersonationMockHandler(),
+  getListImpersonationsMockHandler(),
+  getStartImpersonationMockHandler(),
+  getGetImpersonationMockHandler(),
+  getStopImpersonationMockHandler(),
 ];

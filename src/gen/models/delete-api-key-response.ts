@@ -7,5 +7,5 @@
  */
 
 export type DeleteApiKeyResponse = {
-	message: string;
+  message: string;
 };

@@ -7,5 +7,5 @@
  */
 
 export type OauthAuthorizeParams = {
-	redirectTo?: string;
+  redirectTo?: string;
 };

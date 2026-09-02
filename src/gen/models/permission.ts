@@ -7,11 +7,11 @@
  */
 
 export type Permission = {
-	createdAt: string;
-	/** @nullable */
-	description?: string | null;
-	id: string;
-	isSystem: boolean;
-	key: string;
-	updatedAt: string;
+  createdAt: string;
+  /** @nullable */
+  description?: string | null;
+  id: string;
+  isSystem: boolean;
+  key: string;
+  updatedAt: string;
 };

@@ -7,5 +7,5 @@
  */
 
 export type DisableResponse = {
-	message: string;
+  message: string;
 };

@@ -8,23 +8,23 @@
 import type { CreateApiKeyRequestMetadata } from "./create-api-key-request-metadata";
 
 export type CreateApiKeyRequest = {
-	/** @nullable */
-	enabled?: boolean | null;
-	/** @nullable */
-	expiresAt?: string | null;
-	/** @nullable */
-	metadata?: CreateApiKeyRequestMetadata;
-	name: string;
-	ownerId: string;
-	ownerType: string;
-	/** @nullable */
-	permissions?: string[] | null;
-	/** @nullable */
-	prefix?: string | null;
-	/** @nullable */
-	rateLimitEnabled?: boolean | null;
-	/** @nullable */
-	rateLimitMaxRequests?: number | null;
-	/** @nullable */
-	rateLimitTimeWindow?: number | null;
+  /** @nullable */
+  enabled?: boolean | null;
+  /** @nullable */
+  expiresAt?: string | null;
+  /** @nullable */
+  metadata?: CreateApiKeyRequestMetadata;
+  name: string;
+  ownerId: string;
+  ownerType: string;
+  /** @nullable */
+  permissions?: string[] | null;
+  /** @nullable */
+  prefix?: string | null;
+  /** @nullable */
+  rateLimitEnabled?: boolean | null;
+  /** @nullable */
+  rateLimitMaxRequests?: number | null;
+  /** @nullable */
+  rateLimitTimeWindow?: number | null;
 };

@@ -9,6 +9,6 @@ import type { Session } from "./session";
 import type { User } from "./user";
 
 export type SignUpResponse = {
-	session: Session;
-	user: User;
+  session: Session;
+  user: User;
 };

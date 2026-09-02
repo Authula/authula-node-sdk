@@ -7,5 +7,5 @@
  */
 
 export type DeleteSessionStateResponse = {
-	message: string;
+  message: string;
 };

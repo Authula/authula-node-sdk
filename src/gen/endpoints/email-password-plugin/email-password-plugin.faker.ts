@@ -8,147 +8,129 @@
 import { faker } from "@faker-js/faker";
 
 import type {
-	ChangeEmailResponse,
-	ChangePasswordResponse,
-	SignInResponse,
-	SignUpResponse,
+  ChangeEmailResponse,
+  ChangePasswordResponse,
+  SignInResponse,
+  SignUpResponse,
 } from "../../models";
 
 export const getChangePasswordResponseMock = (
-	overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
+  overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
 ): ChangePasswordResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getRequestEmailChangeResponseMock = (
-	overrideResponse: Partial<Extract<ChangeEmailResponse, object>> = {},
+  overrideResponse: Partial<Extract<ChangeEmailResponse, object>> = {},
 ): ChangeEmailResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getRequestPasswordResetResponseMock = (
-	overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
+  overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
 ): ChangePasswordResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getSendEmailVerificationResponseMock = (
-	overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
+  overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
 ): ChangePasswordResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });
 
 export const getSignInResponseMock = (
-	overrideResponse: Partial<Extract<SignInResponse, object>> = {},
+  overrideResponse: Partial<Extract<SignInResponse, object>> = {},
 ): SignInResponse => ({
-	session: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		ipAddress: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		token: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		userAgent: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	},
-	user: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  session: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    ipAddress: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    token: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    userAgent: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  },
+  user: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getSignUpResponseMock = (
-	overrideResponse: Partial<Extract<SignUpResponse, object>> = {},
+  overrideResponse: Partial<Extract<SignUpResponse, object>> = {},
 ): SignUpResponse => ({
-	session: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		ipAddress: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		token: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		userAgent: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	},
-	user: {
-		createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-		email: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		emailVerified: faker.datatype.boolean(),
-		id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		image: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				faker.string.alpha({ length: { min: 10, max: 20 } }),
-				null,
-			]),
-			undefined,
-		]),
-		metadata: faker.helpers.arrayElement([
-			faker.helpers.arrayElement([
-				{
-					[faker.string.alphanumeric(5)]: {},
-				},
-				null,
-			]),
-			undefined,
-		]),
-		name: faker.string.alpha({ length: { min: 10, max: 20 } }),
-		updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-	},
-	...overrideResponse,
+  session: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    ipAddress: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    token: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    userAgent: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  },
+  user: {
+    createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+    email: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    emailVerified: faker.datatype.boolean(),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    image: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
+      undefined,
+    ]),
+    metadata: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
+      ]),
+      undefined,
+    ]),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  },
+  ...overrideResponse,
 });
 
 export const getVerifyEmailResponseMock = (
-	overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
+  overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},
 ): ChangePasswordResponse => ({
-	message: faker.string.alpha({ length: { min: 10, max: 20 } }),
-	...overrideResponse,
+  message: faker.string.alpha({ length: { min: 10, max: 20 } }),
+  ...overrideResponse,
 });

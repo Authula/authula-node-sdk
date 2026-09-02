@@ -6,9 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
-	RefreshTokenRequest,
-	RefreshTokenResponse,
-	WellKnownJWKSResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  WellKnownJWKSResponse,
 } from "../authula-api.schemas.zod";
 
 /**

@@ -8,12 +8,12 @@
 import type { UpdateOrganizationRequestMetadata } from "./update-organization-request-metadata";
 
 export type UpdateOrganizationRequest = {
-	/** @nullable */
-	logo?: string | null;
-	/** @nullable */
-	metadata?: UpdateOrganizationRequestMetadata;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	slug?: string | null;
+  /** @nullable */
+  logo?: string | null;
+  /** @nullable */
+  metadata?: UpdateOrganizationRequestMetadata;
+  /** @nullable */
+  name?: string | null;
+  /** @nullable */
+  slug?: string | null;
 };

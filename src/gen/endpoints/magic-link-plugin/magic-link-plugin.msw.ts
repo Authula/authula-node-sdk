@@ -5,101 +5,100 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	MagicLinkExchangeResponse,
-	MagicLinkSignInResponse,
-	MagicLinkVerifyResponse,
+  MagicLinkExchangeResponse,
+  MagicLinkSignInResponse,
+  MagicLinkVerifyResponse,
 } from "../../models";
 
 import {
-	getExchangeMagicLinkResponseMock,
-	getSignInWithMagicLinkResponseMock,
-	getVerifyMagicLinkResponseMock,
+  getExchangeMagicLinkResponseMock,
+  getSignInWithMagicLinkResponseMock,
+  getVerifyMagicLinkResponseMock,
 } from "./magic-link-plugin.faker";
 
 export {
-	getExchangeMagicLinkResponseMock,
-	getSignInWithMagicLinkResponseMock,
-	getVerifyMagicLinkResponseMock,
+  getExchangeMagicLinkResponseMock,
+  getSignInWithMagicLinkResponseMock,
+  getVerifyMagicLinkResponseMock,
 } from "./magic-link-plugin.faker";
 
 export const getExchangeMagicLinkMockHandler = (
-	overrideResponse?:
-		| MagicLinkExchangeResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<MagicLinkExchangeResponse> | MagicLinkExchangeResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | MagicLinkExchangeResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<MagicLinkExchangeResponse> | MagicLinkExchangeResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/magic-link/exchange",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getExchangeMagicLinkResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/magic-link/exchange",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getExchangeMagicLinkResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getSignInWithMagicLinkMockHandler = (
-	overrideResponse?:
-		| MagicLinkSignInResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<MagicLinkSignInResponse> | MagicLinkSignInResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | MagicLinkSignInResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<MagicLinkSignInResponse> | MagicLinkSignInResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/magic-link/sign-in",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getSignInWithMagicLinkResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/magic-link/sign-in",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSignInWithMagicLinkResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getVerifyMagicLinkMockHandler = (
-	overrideResponse?:
-		| MagicLinkVerifyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<MagicLinkVerifyResponse> | MagicLinkVerifyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | MagicLinkVerifyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MagicLinkVerifyResponse> | MagicLinkVerifyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/magic-link/verify",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyMagicLinkResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/magic-link/verify",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVerifyMagicLinkResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getMagicLinkPluginMock = () => [
-	getExchangeMagicLinkMockHandler(),
-	getSignInWithMagicLinkMockHandler(),
-	getVerifyMagicLinkMockHandler(),
+  getExchangeMagicLinkMockHandler(),
+  getSignInWithMagicLinkMockHandler(),
+  getVerifyMagicLinkMockHandler(),
 ];

@@ -8,11 +8,11 @@
 import * as zod from "zod";
 
 import {
-	AddOrganizationTeamMemberRequest,
-	DeleteOrganizationTeamMemberResponse,
-	ListOrganizationTeamMembersResponse,
-	OrganizationTeamMember,
-	OrganizationTeamMemberResponse,
+  AddOrganizationTeamMemberRequest,
+  DeleteOrganizationTeamMemberResponse,
+  ListOrganizationTeamMembersResponse,
+  OrganizationTeamMember,
+  OrganizationTeamMemberResponse,
 } from "../authula-api.schemas.zod";
 
 /**
@@ -20,28 +20,27 @@ import {
  * @summary List team members
  */
 export const ListOrganizationTeamMembersParams = zod.object({
-	organization_id: zod.string(),
-	team_id: zod.string(),
+  organization_id: zod.string(),
+  team_id: zod.string(),
 });
 
 export const listOrganizationTeamMembersQueryPageDefault = 1;
 export const listOrganizationTeamMembersQueryLimitDefault = 10;
 
 export const ListOrganizationTeamMembersQueryParams = zod.object({
-	page: zod.int().default(listOrganizationTeamMembersQueryPageDefault),
-	limit: zod.int().default(listOrganizationTeamMembersQueryLimitDefault),
+  page: zod.int().default(listOrganizationTeamMembersQueryPageDefault),
+  limit: zod.int().default(listOrganizationTeamMembersQueryLimitDefault),
 });
 
-export const ListOrganizationTeamMembersResponseSchema =
-	ListOrganizationTeamMembersResponse;
+export const ListOrganizationTeamMembersResponseSchema = ListOrganizationTeamMembersResponse;
 
 /**
  * Adds a member to a team.
  * @summary Add team member
  */
 export const AddOrganizationTeamMemberParams = zod.object({
-	organization_id: zod.string(),
-	team_id: zod.string(),
+  organization_id: zod.string(),
+  team_id: zod.string(),
 });
 
 export const AddOrganizationTeamMemberBody = AddOrganizationTeamMemberRequest;
@@ -53,9 +52,9 @@ export const AddOrganizationTeamMemberResponse = OrganizationTeamMember;
  * @summary Get team member
  */
 export const GetOrganizationTeamMemberParams = zod.object({
-	organization_id: zod.string(),
-	team_id: zod.string(),
-	member_id: zod.string(),
+  organization_id: zod.string(),
+  team_id: zod.string(),
+  member_id: zod.string(),
 });
 
 export const GetOrganizationTeamMemberResponse = OrganizationTeamMemberResponse;
@@ -65,10 +64,9 @@ export const GetOrganizationTeamMemberResponse = OrganizationTeamMemberResponse;
  * @summary Delete team member
  */
 export const DeleteOrganizationTeamMemberParams = zod.object({
-	organization_id: zod.string(),
-	team_id: zod.string(),
-	member_id: zod.string(),
+  organization_id: zod.string(),
+  team_id: zod.string(),
+  member_id: zod.string(),
 });
 
-export const DeleteOrganizationTeamMemberResponseSchema =
-	DeleteOrganizationTeamMemberResponse;
+export const DeleteOrganizationTeamMemberResponseSchema = DeleteOrganizationTeamMemberResponse;

@@ -7,6 +7,6 @@
  */
 
 export type RevokeSessionRequest = {
-	/** @nullable */
-	reason?: string | null;
+  /** @nullable */
+  reason?: string | null;
 };

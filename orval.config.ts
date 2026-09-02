@@ -21,7 +21,7 @@ export default defineConfig({
       headers: false,
       mock: true,
       urlEncodeParameters: false,
-      formatter: "biome",
+      formatter: "oxfmt",
       tsconfig: "./tsconfig.json",
       override: {
         enumGenerationType: "const",
@@ -39,7 +39,7 @@ export default defineConfig({
       },
     },
     hooks: {
-      afterAllFilesWrite: "pnpm run format",
+      afterAllFilesWrite: "pnpm run fmt",
     },
   },
   // Zod schema generation
@@ -70,7 +70,7 @@ export default defineConfig({
       },
     },
     hooks: {
-      afterAllFilesWrite: "pnpm run format",
+      afterAllFilesWrite: "pnpm run fmt",
     },
   },
 });

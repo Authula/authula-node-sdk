@@ -7,5 +7,5 @@
  */
 
 export type CheckUserPermissionsRequest = {
-	permissionKeys: string[];
+  permissionKeys: string[];
 };

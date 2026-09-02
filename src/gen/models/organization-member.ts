@@ -7,10 +7,10 @@
  */
 
 export type OrganizationMember = {
-	createdAt: string;
-	id: string;
-	organizationId: string;
-	role: string;
-	updatedAt: string;
-	userId: string;
+  createdAt: string;
+  id: string;
+  organizationId: string;
+  role: string;
+  updatedAt: string;
+  userId: string;
 };

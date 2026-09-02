@@ -7,6 +7,6 @@
  */
 
 export type EnableResponse = {
-	backupCodes: string[];
-	totpUri: string;
+  backupCodes: string[];
+  totpUri: string;
 };

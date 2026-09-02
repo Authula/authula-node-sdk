@@ -7,15 +7,15 @@
  */
 
 export type UserRoleInfo = {
-	/** @nullable */
-	assignedAt?: string | null;
-	/** @nullable */
-	assignedByUserId?: string | null;
-	/** @nullable */
-	expiresAt?: string | null;
-	/** @nullable */
-	roleDescription?: string | null;
-	roleId: string;
-	roleName: string;
-	roleWeight: number;
+  /** @nullable */
+  assignedAt?: string | null;
+  /** @nullable */
+  assignedByUserId?: string | null;
+  /** @nullable */
+  expiresAt?: string | null;
+  /** @nullable */
+  roleDescription?: string | null;
+  roleId: string;
+  roleName: string;
+  roleWeight: number;
 };

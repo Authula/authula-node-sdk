@@ -5,185 +5,184 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-
-import type { RequestHandlerOptions } from "msw";
 import { HttpResponse, http } from "msw";
+import type { RequestHandlerOptions } from "msw";
 
 import type {
-	CreateApiKeyResponse,
-	DeleteApiKeyResponse,
-	GetAllApiKeysResponse,
-	GetApiKeyResponse,
-	UpdateApiKeyResponse,
-	VerifyApiKeyResponse,
+  CreateApiKeyResponse,
+  DeleteApiKeyResponse,
+  GetAllApiKeysResponse,
+  GetApiKeyResponse,
+  UpdateApiKeyResponse,
+  VerifyApiKeyResponse,
 } from "../../models";
 
 import {
-	getCreateApiKeyResponseMock,
-	getDeleteApiKeyResponseMock,
-	getGetApiKeyResponseMock,
-	getListApiKeysResponseMock,
-	getUpdateApiKeyResponseMock,
-	getVerifyApiKeyResponseMock,
+  getCreateApiKeyResponseMock,
+  getDeleteApiKeyResponseMock,
+  getGetApiKeyResponseMock,
+  getListApiKeysResponseMock,
+  getUpdateApiKeyResponseMock,
+  getVerifyApiKeyResponseMock,
 } from "./api-keys.faker";
 
 export {
-	getCreateApiKeyResponseMock,
-	getDeleteApiKeyResponseMock,
-	getGetApiKeyResponseMock,
-	getListApiKeysResponseMock,
-	getUpdateApiKeyResponseMock,
-	getVerifyApiKeyResponseMock,
+  getListApiKeysResponseMock,
+  getCreateApiKeyResponseMock,
+  getVerifyApiKeyResponseMock,
+  getGetApiKeyResponseMock,
+  getDeleteApiKeyResponseMock,
+  getUpdateApiKeyResponseMock,
 } from "./api-keys.faker";
 
 export const getListApiKeysMockHandler = (
-	overrideResponse?:
-		| GetAllApiKeysResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetAllApiKeysResponse> | GetAllApiKeysResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetAllApiKeysResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetAllApiKeysResponse> | GetAllApiKeysResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/api-keys",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getListApiKeysResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/api-keys",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getListApiKeysResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getCreateApiKeyMockHandler = (
-	overrideResponse?:
-		| CreateApiKeyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<CreateApiKeyResponse> | CreateApiKeyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | CreateApiKeyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<CreateApiKeyResponse> | CreateApiKeyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/api-keys",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getCreateApiKeyResponseMock(),
-				{ status: 201 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/api-keys",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCreateApiKeyResponseMock(),
+        { status: 201 },
+      );
+    },
+    options,
+  );
 };
 
 export const getVerifyApiKeyMockHandler = (
-	overrideResponse?:
-		| VerifyApiKeyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.post>[1]>[0],
-		  ) => Promise<VerifyApiKeyResponse> | VerifyApiKeyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | VerifyApiKeyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.post>[1]>[0],
+      ) => Promise<VerifyApiKeyResponse> | VerifyApiKeyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.post(
-		"*/api-keys/verify",
-		async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getVerifyApiKeyResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.post(
+    "*/api-keys/verify",
+    async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVerifyApiKeyResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getGetApiKeyMockHandler = (
-	overrideResponse?:
-		| GetApiKeyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.get>[1]>[0],
-		  ) => Promise<GetApiKeyResponse> | GetApiKeyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | GetApiKeyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GetApiKeyResponse> | GetApiKeyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.get(
-		"*/api-keys/:id",
-		async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getGetApiKeyResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.get(
+    "*/api-keys/:id",
+    async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGetApiKeyResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getDeleteApiKeyMockHandler = (
-	overrideResponse?:
-		| DeleteApiKeyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.delete>[1]>[0],
-		  ) => Promise<DeleteApiKeyResponse> | DeleteApiKeyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | DeleteApiKeyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.delete>[1]>[0],
+      ) => Promise<DeleteApiKeyResponse> | DeleteApiKeyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.delete(
-		"*/api-keys/:id",
-		async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getDeleteApiKeyResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.delete(
+    "*/api-keys/:id",
+    async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getDeleteApiKeyResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 
 export const getUpdateApiKeyMockHandler = (
-	overrideResponse?:
-		| UpdateApiKeyResponse
-		| ((
-				info: Parameters<Parameters<typeof http.patch>[1]>[0],
-		  ) => Promise<UpdateApiKeyResponse> | UpdateApiKeyResponse),
-	options?: RequestHandlerOptions,
+  overrideResponse?:
+    | UpdateApiKeyResponse
+    | ((
+        info: Parameters<Parameters<typeof http.patch>[1]>[0],
+      ) => Promise<UpdateApiKeyResponse> | UpdateApiKeyResponse),
+  options?: RequestHandlerOptions,
 ) => {
-	return http.patch(
-		"*/api-keys/:id",
-		async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
-			return HttpResponse.json(
-				overrideResponse !== undefined
-					? typeof overrideResponse === "function"
-						? await overrideResponse(info)
-						: overrideResponse
-					: getUpdateApiKeyResponseMock(),
-				{ status: 200 },
-			);
-		},
-		options,
-	);
+  return http.patch(
+    "*/api-keys/:id",
+    async (info: Parameters<Parameters<typeof http.patch>[1]>[0]) => {
+      return HttpResponse.json(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getUpdateApiKeyResponseMock(),
+        { status: 200 },
+      );
+    },
+    options,
+  );
 };
 export const getApiKeysMock = () => [
-	getListApiKeysMockHandler(),
-	getCreateApiKeyMockHandler(),
-	getVerifyApiKeyMockHandler(),
-	getGetApiKeyMockHandler(),
-	getDeleteApiKeyMockHandler(),
-	getUpdateApiKeyMockHandler(),
+  getListApiKeysMockHandler(),
+  getCreateApiKeyMockHandler(),
+  getVerifyApiKeyMockHandler(),
+  getGetApiKeyMockHandler(),
+  getDeleteApiKeyMockHandler(),
+  getUpdateApiKeyMockHandler(),
 ];

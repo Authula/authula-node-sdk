@@ -8,5 +8,5 @@
 import type { Jwk } from "./jwk";
 
 export type WellKnownJWKSResponse = {
-	keys: Jwk[];
+  keys: Jwk[];
 };

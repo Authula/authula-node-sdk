@@ -7,5 +7,5 @@
  */
 
 export type DeleteAccountResponse = {
-	message: string;
+  message: string;
 };

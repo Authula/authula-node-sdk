@@ -7,9 +7,9 @@
  */
 
 export type CreateUserStateRequest = {
-	banned: boolean;
-	/** @nullable */
-	bannedReason?: string | null;
-	/** @nullable */
-	bannedUntil?: string | null;
+  banned: boolean;
+  /** @nullable */
+  bannedReason?: string | null;
+  /** @nullable */
+  bannedUntil?: string | null;
 };

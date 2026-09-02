@@ -7,12 +7,12 @@
  */
 
 export type Jwk = {
-	alg?: string;
-	crv?: string;
-	e?: string;
-	kid?: string;
-	kty: string;
-	n?: string;
-	use?: string;
-	x?: string;
+  alg?: string;
+  crv?: string;
+  e?: string;
+  kid?: string;
+  kty: string;
+  n?: string;
+  use?: string;
+  x?: string;
 };
