@@ -1,6 +1,6 @@
 {
   "name": "authula",
-  "version": "0.7.13",
+  "version": "0.7.14",
   "description": "Official SDK for Authula.",
   "homepage": "https://github.com/Authula/authula-node-sdk#readme",
   "bugs": {
