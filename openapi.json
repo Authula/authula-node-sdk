@@ -8,9 +8,7 @@
   "paths": {
     "/.well-known/jwks.json": {
       "get": {
-        "tags": [
-          "JWT Plugin"
-        ],
+        "tags": ["JWT Plugin"],
         "summary": "Get JWKS",
         "description": "Returns the JSON Web Key Set (JWKS) containing the public keys used to verify JWT signatures.",
         "operationId": "getJWKS",
@@ -30,9 +28,7 @@
     },
     "/access-control/permissions": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "List permissions",
         "description": "Lists all permissions.",
         "operationId": "listPermissions",
@@ -45,10 +41,7 @@
                   "items": {
                     "$ref": "#/components/schemas/Permission"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -56,9 +49,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Create permission",
         "description": "Creates a new permission.",
         "operationId": "createPermission",
@@ -87,9 +78,7 @@
     },
     "/access-control/permissions/by-key/{permission_key}": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Get permission by key",
         "description": "Retrieves a permission by its key.",
         "operationId": "getPermissionByKey",
@@ -119,9 +108,7 @@
     },
     "/access-control/permissions/{permission_id}": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Get permission by ID",
         "description": "Retrieves a permission by its ID.",
         "operationId": "getPermission",
@@ -149,9 +136,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Delete permission",
         "description": "Deletes a permission.",
         "operationId": "deletePermission",
@@ -179,9 +164,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Update permission",
         "description": "Updates a permission's description.",
         "operationId": "updatePermission",
@@ -220,9 +203,7 @@
     },
     "/access-control/roles": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "List roles",
         "description": "Lists all roles.",
         "operationId": "listRoles",
@@ -235,10 +216,7 @@
                   "items": {
                     "$ref": "#/components/schemas/Role"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -246,9 +224,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Create role",
         "description": "Creates a new role.",
         "operationId": "createRole",
@@ -277,9 +253,7 @@
     },
     "/access-control/roles/by-name/{role_name}": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Get role by name",
         "description": "Retrieves a role by its name.",
         "operationId": "getRoleByName",
@@ -309,9 +283,7 @@
     },
     "/access-control/roles/{role_id}": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Get role by ID",
         "description": "Retrieves a role by its ID, including its permissions.",
         "operationId": "getRole",
@@ -339,9 +311,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Delete role",
         "description": "Deletes a role.",
         "operationId": "deleteRole",
@@ -369,9 +339,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Update role",
         "description": "Updates a role's attributes.",
         "operationId": "updateRole",
@@ -410,9 +378,7 @@
     },
     "/access-control/roles/{role_id}/permissions": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "List role permissions",
         "description": "Lists all permissions assigned to a role.",
         "operationId": "listRolePermissions",
@@ -435,10 +401,7 @@
                   "items": {
                     "$ref": "#/components/schemas/UserPermissionInfo"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -446,9 +409,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Replace role permissions",
         "description": "Replaces all permissions assigned to a role with a new set.",
         "operationId": "replaceRolePermissions",
@@ -485,9 +446,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Assign permission to role",
         "description": "Assigns a permission to a role.",
         "operationId": "addRolePermission",
@@ -526,9 +485,7 @@
     },
     "/access-control/roles/{role_id}/permissions/{permission_id}": {
       "delete": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Remove role permission",
         "description": "Removes a permission from a role.",
         "operationId": "removeRolePermission",
@@ -566,9 +523,7 @@
     },
     "/access-control/users/{user_id}/permissions": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Get user permissions",
         "description": "Retrieves all permissions granted to a user through their roles.",
         "operationId": "getUserPermissions",
@@ -598,9 +553,7 @@
     },
     "/access-control/users/{user_id}/permissions/check": {
       "post": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Check user permissions",
         "description": "Checks whether a user has all the specified permissions.",
         "operationId": "checkUserPermissions",
@@ -639,9 +592,7 @@
     },
     "/access-control/users/{user_id}/roles": {
       "get": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "List user roles",
         "description": "Lists all roles assigned to a user.",
         "operationId": "listUserRoles",
@@ -664,10 +615,7 @@
                   "items": {
                     "$ref": "#/components/schemas/UserRoleInfo"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -675,9 +623,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Replace user roles",
         "description": "Replaces all roles assigned to a user with a new set.",
         "operationId": "replaceUserRoles",
@@ -714,9 +660,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Assign role to user",
         "description": "Assigns a role to a user.",
         "operationId": "assignUserRole",
@@ -755,9 +699,7 @@
     },
     "/access-control/users/{user_id}/roles/{role_id}": {
       "delete": {
-        "tags": [
-          "Access Control"
-        ],
+        "tags": ["Access Control"],
         "summary": "Remove user role",
         "description": "Removes a role from a user.",
         "operationId": "removeUserRole",
@@ -795,9 +737,7 @@
     },
     "/admin/accounts/{id}": {
       "get": {
-        "tags": [
-          "Admin Accounts"
-        ],
+        "tags": ["Admin Accounts"],
         "summary": "Get account by ID",
         "description": "Retrieves an account by its ID.",
         "operationId": "getAccount",
@@ -825,9 +765,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Admin Accounts"
-        ],
+        "tags": ["Admin Accounts"],
         "summary": "Delete account",
         "description": "Deletes an account.",
         "operationId": "deleteAccount",
@@ -855,9 +793,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Admin Accounts"
-        ],
+        "tags": ["Admin Accounts"],
         "summary": "Update account",
         "description": "Updates an account's attributes.",
         "operationId": "updateAccount",
@@ -896,9 +832,7 @@
     },
     "/admin/impersonations": {
       "get": {
-        "tags": [
-          "Admin Impersonation"
-        ],
+        "tags": ["Admin Impersonation"],
         "summary": "List impersonations",
         "description": "Lists all impersonations.",
         "operationId": "listImpersonations",
@@ -911,10 +845,7 @@
                   "items": {
                     "$ref": "#/components/schemas/Impersonation"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -922,9 +853,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Admin Impersonation"
-        ],
+        "tags": ["Admin Impersonation"],
         "summary": "Start impersonation",
         "description": "Starts an impersonation session as a target user.",
         "operationId": "startImpersonation",
@@ -953,9 +882,7 @@
     },
     "/admin/impersonations/{impersonation_id}": {
       "get": {
-        "tags": [
-          "Admin Impersonation"
-        ],
+        "tags": ["Admin Impersonation"],
         "summary": "Get impersonation by ID",
         "description": "Retrieves an impersonation by its ID.",
         "operationId": "getImpersonation",
@@ -985,9 +912,7 @@
     },
     "/admin/impersonations/{impersonation_id}/stop": {
       "post": {
-        "tags": [
-          "Admin Impersonation"
-        ],
+        "tags": ["Admin Impersonation"],
         "summary": "Stop impersonation",
         "description": "Stops an impersonation session and restores the original session.",
         "operationId": "stopImpersonation",
@@ -1017,9 +942,7 @@
     },
     "/admin/sessions/states/revoked": {
       "get": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "List revoked session states",
         "description": "Lists all revoked session states.",
         "operationId": "listRevokedSessionStates",
@@ -1032,10 +955,7 @@
                   "items": {
                     "$ref": "#/components/schemas/AdminSessionState"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -1045,9 +965,7 @@
     },
     "/admin/sessions/{session_id}/revoke": {
       "post": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "Revoke session",
         "description": "Revokes a session.",
         "operationId": "revokeSession",
@@ -1086,9 +1004,7 @@
     },
     "/admin/sessions/{session_id}/state": {
       "get": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "Get session state",
         "description": "Retrieves the state of a session.",
         "operationId": "getSessionState",
@@ -1116,9 +1032,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "Create session state",
         "description": "Creates the state for a session.",
         "operationId": "createSessionState",
@@ -1155,9 +1069,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "Delete session state",
         "description": "Deletes the state of a session.",
         "operationId": "deleteSessionState",
@@ -1185,9 +1097,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Admin Session State"
-        ],
+        "tags": ["Admin Session State"],
         "summary": "Update session state",
         "description": "Updates the state of a session.",
         "operationId": "updateSessionState",
@@ -1226,9 +1136,7 @@
     },
     "/admin/users": {
       "get": {
-        "tags": [
-          "Admin Users"
-        ],
+        "tags": ["Admin Users"],
         "summary": "List users",
         "description": "Lists users with cursor-based pagination.",
         "operationId": "listUsers",
@@ -1237,20 +1145,14 @@
             "name": "cursor",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "string"
-              ]
+              "type": ["null", "string"]
             }
           },
           {
             "name": "limit",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "integer"
-              ]
+              "type": ["null", "integer"]
             }
           }
         ],
@@ -1268,9 +1170,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Admin Users"
-        ],
+        "tags": ["Admin Users"],
         "summary": "Create user",
         "description": "Creates a new user with the specified attributes.",
         "operationId": "createUser",
@@ -1299,9 +1199,7 @@
     },
     "/admin/users/states/banned": {
       "get": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "List banned user states",
         "description": "Lists all banned user states.",
         "operationId": "listBannedUserStates",
@@ -1314,10 +1212,7 @@
                   "items": {
                     "$ref": "#/components/schemas/AdminUserState"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -1327,9 +1222,7 @@
     },
     "/admin/users/{user_id}": {
       "get": {
-        "tags": [
-          "Admin Users"
-        ],
+        "tags": ["Admin Users"],
         "summary": "Get user by ID",
         "description": "Retrieves a user by their ID.",
         "operationId": "getUser",
@@ -1357,9 +1250,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Admin Users"
-        ],
+        "tags": ["Admin Users"],
         "summary": "Delete user",
         "description": "Deletes a user.",
         "operationId": "deleteUser",
@@ -1387,9 +1278,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Admin Users"
-        ],
+        "tags": ["Admin Users"],
         "summary": "Update user",
         "description": "Updates a user's attributes.",
         "operationId": "updateUser",
@@ -1428,9 +1317,7 @@
     },
     "/admin/users/{user_id}/accounts": {
       "get": {
-        "tags": [
-          "Admin Accounts"
-        ],
+        "tags": ["Admin Accounts"],
         "summary": "List user accounts",
         "description": "Lists all accounts for a user.",
         "operationId": "listUserAccounts",
@@ -1458,9 +1345,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Admin Accounts"
-        ],
+        "tags": ["Admin Accounts"],
         "summary": "Create account",
         "description": "Creates a new account for a user.",
         "operationId": "createAccount",
@@ -1499,9 +1384,7 @@
     },
     "/admin/users/{user_id}/ban": {
       "post": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Ban user",
         "description": "Bans a user.",
         "operationId": "banUser",
@@ -1540,9 +1423,7 @@
     },
     "/admin/users/{user_id}/sessions": {
       "get": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "List user sessions",
         "description": "Lists all sessions for a user.",
         "operationId": "listUserSessions",
@@ -1565,10 +1446,7 @@
                   "items": {
                     "$ref": "#/components/schemas/AdminUserSession"
                   },
-                  "type": [
-                    "null",
-                    "array"
-                  ]
+                  "type": ["null", "array"]
                 }
               }
             }
@@ -1578,9 +1456,7 @@
     },
     "/admin/users/{user_id}/state": {
       "get": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Get user state",
         "description": "Retrieves the state of a user.",
         "operationId": "getUserState",
@@ -1608,9 +1484,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Create user state",
         "description": "Creates the state for a user.",
         "operationId": "createUserState",
@@ -1647,9 +1521,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Delete user state",
         "description": "Deletes the state of a user.",
         "operationId": "deleteUserState",
@@ -1677,9 +1549,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Update user state",
         "description": "Updates the state of a user.",
         "operationId": "updateUserState",
@@ -1718,9 +1588,7 @@
     },
     "/admin/users/{user_id}/unban": {
       "post": {
-        "tags": [
-          "Admin User State"
-        ],
+        "tags": ["Admin User State"],
         "summary": "Unban user",
         "description": "Unbans a user.",
         "operationId": "unbanUser",
@@ -1750,9 +1618,7 @@
     },
     "/api-keys": {
       "get": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "List API keys",
         "description": "Lists API keys with pagination, optionally filtered by owner.",
         "operationId": "listApiKeys",
@@ -1761,40 +1627,28 @@
             "name": "owner_type",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "string"
-              ]
+              "type": ["null", "string"]
             }
           },
           {
             "name": "owner_id",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "string"
-              ]
+              "type": ["null", "string"]
             }
           },
           {
             "name": "page",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "integer"
-              ]
+              "type": ["null", "integer"]
             }
           },
           {
             "name": "limit",
             "in": "query",
             "schema": {
-              "type": [
-                "null",
-                "integer"
-              ]
+              "type": ["null", "integer"]
             }
           }
         ],
@@ -1812,9 +1666,7 @@
         }
       },
       "post": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "Create API key",
         "description": "Creates a new API key for the specified owner.",
         "operationId": "createApiKey",
@@ -1843,9 +1695,7 @@
     },
     "/api-keys/verify": {
       "post": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "Verify API key",
         "description": "Verifies an API key by its raw value and returns the associated key details.",
         "operationId": "verifyApiKey",
@@ -1874,9 +1724,7 @@
     },
     "/api-keys/{id}": {
       "get": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "Get API key by ID",
         "description": "Retrieves an API key by its ID.",
         "operationId": "getApiKey",
@@ -1904,9 +1752,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "Delete API key",
         "description": "Deletes an API key.",
         "operationId": "deleteApiKey",
@@ -1934,9 +1780,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "API Keys"
-        ],
+        "tags": ["API Keys"],
         "summary": "Update API key",
         "description": "Updates an API key's attributes.",
         "operationId": "updateApiKey",
@@ -1975,9 +1819,7 @@
     },
     "/email-password/change-password": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Change password",
         "description": "Changes the user's password using a reset token",
         "operationId": "changePassword",
@@ -2006,9 +1848,7 @@
     },
     "/email-password/request-email-change": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Request email change",
         "description": "Requests to change the authenticated user's email address",
         "operationId": "requestEmailChange",
@@ -2037,9 +1877,7 @@
     },
     "/email-password/request-password-reset": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Request password reset",
         "description": "Requests a password reset link to be sent to the user's email",
         "operationId": "requestPasswordReset",
@@ -2068,9 +1906,7 @@
     },
     "/email-password/send-email-verification": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Send email verification",
         "description": "Sends a verification email to the authenticated user",
         "operationId": "sendEmailVerification",
@@ -2099,9 +1935,7 @@
     },
     "/email-password/sign-in": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Sign in",
         "description": "Authenticates a user with email and password",
         "operationId": "signIn",
@@ -2130,9 +1964,7 @@
     },
     "/email-password/sign-up": {
       "post": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Register new user",
         "description": "Registers a new user with email and password",
         "operationId": "signUp",
@@ -2161,9 +1993,7 @@
     },
     "/email-password/verify-email": {
       "get": {
-        "tags": [
-          "Email Password Plugin"
-        ],
+        "tags": ["Email Password Plugin"],
         "summary": "Verify email",
         "description": "Verifies an email address or processes a password reset token using a verification token",
         "operationId": "verifyEmail",
@@ -2183,9 +2013,7 @@
     },
     "/magic-link/exchange": {
       "post": {
-        "tags": [
-          "Magic Link Plugin"
-        ],
+        "tags": ["Magic Link Plugin"],
         "summary": "Exchange magic link token for session",
         "description": "Exchanges a verified magic link token for an authenticated user session.",
         "operationId": "exchangeMagicLink",
@@ -2214,9 +2042,7 @@
     },
     "/magic-link/sign-in": {
       "post": {
-        "tags": [
-          "Magic Link Plugin"
-        ],
+        "tags": ["Magic Link Plugin"],
         "summary": "Sign in with magic link",
         "description": "Sends a magic link to the given email address if an account exists. Optionally creates a new account if sign-up is enabled.",
         "operationId": "signInWithMagicLink",
@@ -2245,9 +2071,7 @@
     },
     "/magic-link/verify": {
       "get": {
-        "tags": [
-          "Magic Link Plugin"
-        ],
+        "tags": ["Magic Link Plugin"],
         "summary": "Verify magic link token",
         "description": "Verifies a magic link token. If a callback_url is provided and trusted, redirects the user with an exchange token appended. Otherwise returns the exchange token in the JSON response.",
         "operationId": "verifyMagicLink",
@@ -2284,9 +2108,7 @@
     },
     "/me": {
       "get": {
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "summary": "Get current user",
         "description": "Retrieves the authenticated user's profile and current session.",
         "operationId": "getMe",
@@ -2306,9 +2128,7 @@
     },
     "/oauth2/authorize/{provider}": {
       "get": {
-        "tags": [
-          "OAuth2 Plugin"
-        ],
+        "tags": ["OAuth2 Plugin"],
         "summary": "Authorize with OAuth2 provider",
         "description": "Initiates the OAuth2 authorization flow with the specified provider. Returns the provider's authorization URL to redirect the user to.",
         "operationId": "oauthAuthorize",
@@ -2345,9 +2165,7 @@
     },
     "/oauth2/callback/{provider}": {
       "get": {
-        "tags": [
-          "OAuth2 Plugin"
-        ],
+        "tags": ["OAuth2 Plugin"],
         "summary": "OAuth2 callback",
         "description": "Handles the OAuth2 callback from the provider. Exchanges the authorization code for tokens, creates or links a user account, and returns the authenticated user and session.",
         "operationId": "oauthCallback",
@@ -2400,9 +2218,7 @@
     },
     "/organizations": {
       "get": {
-        "tags": [
-          "Organizations"
-        ],
+        "tags": ["Organizations"],
         "summary": "List organizations",
         "description": "Lists every organization the authenticated user can access, both the ones they own and the ones they are a member of, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.",
         "operationId": "listOrganizations",
@@ -2438,9 +2254,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Organizations"
-        ],
+        "tags": ["Organizations"],
         "summary": "Create organization",
         "description": "Creates a new organization with the authenticated user as the owner.",
         "operationId": "createOrganization",
@@ -2469,9 +2283,7 @@
     },
     "/organizations/{organization_id}": {
       "get": {
-        "tags": [
-          "Organizations"
-        ],
+        "tags": ["Organizations"],
         "summary": "Get organization",
         "description": "Retrieves an organization by its ID.",
         "operationId": "getOrganization",
@@ -2499,9 +2311,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Organizations"
-        ],
+        "tags": ["Organizations"],
         "summary": "Delete organization",
         "description": "Deletes an organization.",
         "operationId": "deleteOrganization",
@@ -2529,9 +2339,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Organizations"
-        ],
+        "tags": ["Organizations"],
         "summary": "Update organization",
         "description": "Updates an existing organization.",
         "operationId": "updateOrganization",
@@ -2570,9 +2378,7 @@
     },
     "/organizations/{organization_id}/invitations": {
       "get": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "List invitations",
         "description": "Lists the invitations for an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.",
         "operationId": "listOrganizationInvitations",
@@ -2616,9 +2422,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "Create invitation",
         "description": "Creates an invitation for a user to join an organization.",
         "operationId": "createOrganizationInvitation",
@@ -2664,9 +2468,7 @@
     },
     "/organizations/{organization_id}/invitations/{invitation_id}": {
       "get": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "Get invitation",
         "description": "Retrieves a single invitation.",
         "operationId": "getOrganizationInvitation",
@@ -2704,9 +2506,7 @@
     },
     "/organizations/{organization_id}/invitations/{invitation_id}/accept": {
       "patch": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "Accept invitation",
         "description": "Accepts an invitation to join an organization.",
         "operationId": "acceptOrganizationInvitation",
@@ -2760,9 +2560,7 @@
     },
     "/organizations/{organization_id}/invitations/{invitation_id}/reject": {
       "patch": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "Reject invitation",
         "description": "Rejects an invitation to join an organization.",
         "operationId": "rejectOrganizationInvitation",
@@ -2800,9 +2598,7 @@
     },
     "/organizations/{organization_id}/invitations/{invitation_id}/revoke": {
       "patch": {
-        "tags": [
-          "Organization Invitations"
-        ],
+        "tags": ["Organization Invitations"],
         "summary": "Revoke invitation",
         "description": "Revokes a pending invitation.",
         "operationId": "revokeOrganizationInvitation",
@@ -2840,9 +2636,7 @@
     },
     "/organizations/{organization_id}/members": {
       "get": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "List members",
         "description": "Lists the members of an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.",
         "operationId": "listOrganizationMembers",
@@ -2886,9 +2680,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "Add member",
         "description": "Adds a user as a member of an organization with the specified role.",
         "operationId": "addOrganizationMember",
@@ -2927,9 +2719,7 @@
     },
     "/organizations/{organization_id}/members/by-user/{user_id}": {
       "get": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "Get member by user ID",
         "description": "Retrieves an organization member by the user's ID with nested user data.",
         "operationId": "getOrganizationMemberByUserID",
@@ -2967,9 +2757,7 @@
     },
     "/organizations/{organization_id}/members/{member_id}": {
       "get": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "Get member",
         "description": "Retrieves a single organization member by ID with nested user data.",
         "operationId": "getOrganizationMember",
@@ -3005,9 +2793,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "Delete member",
         "description": "Removes a member from an organization.",
         "operationId": "deleteOrganizationMember",
@@ -3043,9 +2829,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Organization Members"
-        ],
+        "tags": ["Organization Members"],
         "summary": "Update member",
         "description": "Updates the role of an organization member.",
         "operationId": "updateOrganizationMember",
@@ -3092,9 +2876,7 @@
     },
     "/organizations/{organization_id}/teams": {
       "get": {
-        "tags": [
-          "Organization Teams"
-        ],
+        "tags": ["Organization Teams"],
         "summary": "List teams",
         "description": "Lists the teams within an organization, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.",
         "operationId": "listOrganizationTeams",
@@ -3138,9 +2920,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Organization Teams"
-        ],
+        "tags": ["Organization Teams"],
         "summary": "Create team",
         "description": "Creates a new team within an organization.",
         "operationId": "createOrganizationTeam",
@@ -3179,9 +2959,7 @@
     },
     "/organizations/{organization_id}/teams/{team_id}": {
       "get": {
-        "tags": [
-          "Organization Teams"
-        ],
+        "tags": ["Organization Teams"],
         "summary": "Get team",
         "description": "Retrieves a single team by its ID.",
         "operationId": "getOrganizationTeam",
@@ -3217,9 +2995,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Organization Teams"
-        ],
+        "tags": ["Organization Teams"],
         "summary": "Delete team",
         "description": "Deletes a team.",
         "operationId": "deleteOrganizationTeam",
@@ -3255,9 +3031,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Organization Teams"
-        ],
+        "tags": ["Organization Teams"],
         "summary": "Update team",
         "description": "Updates an existing team.",
         "operationId": "updateOrganizationTeam",
@@ -3304,9 +3078,7 @@
     },
     "/organizations/{organization_id}/teams/{team_id}/members": {
       "get": {
-        "tags": [
-          "Organization Team Members"
-        ],
+        "tags": ["Organization Team Members"],
         "summary": "List team members",
         "description": "Lists the members of a team, newest first. Results are paginated: `page` defaults to 1 and `limit` defaults to 10. `limit` is capped by the server's configured maximum page size, which defaults to 100; a larger value is silently reduced to the cap rather than rejected, and values below the minimum fall back to the defaults. The `pagination` object in the response always reports the values actually applied.",
         "operationId": "listOrganizationTeamMembers",
@@ -3358,9 +3130,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Organization Team Members"
-        ],
+        "tags": ["Organization Team Members"],
         "summary": "Add team member",
         "description": "Adds a member to a team.",
         "operationId": "addOrganizationTeamMember",
@@ -3407,9 +3177,7 @@
     },
     "/organizations/{organization_id}/teams/{team_id}/members/{member_id}": {
       "get": {
-        "tags": [
-          "Organization Team Members"
-        ],
+        "tags": ["Organization Team Members"],
         "summary": "Get team member",
         "description": "Retrieves a single team member by ID with nested member and user data.",
         "operationId": "getOrganizationTeamMember",
@@ -3453,9 +3221,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Organization Team Members"
-        ],
+        "tags": ["Organization Team Members"],
         "summary": "Delete team member",
         "description": "Removes a member from a team.",
         "operationId": "deleteOrganizationTeamMember",
@@ -3501,9 +3267,7 @@
     },
     "/sign-out": {
       "post": {
-        "tags": [
-          "Core"
-        ],
+        "tags": ["Core"],
         "summary": "Sign out",
         "description": "Signs out the authenticated user. Optionally sign out a specific session or all sessions.",
         "operationId": "signOut",
@@ -3532,9 +3296,7 @@
     },
     "/token/refresh": {
       "post": {
-        "tags": [
-          "JWT Plugin"
-        ],
+        "tags": ["JWT Plugin"],
         "summary": "Refresh JWT token",
         "description": "Exchanges a valid refresh token for a new access token and refresh token pair.",
         "operationId": "refreshToken",
@@ -3563,9 +3325,7 @@
     },
     "/totp/disable": {
       "post": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Disable TOTP",
         "description": "Disables TOTP two-factor authentication for the authenticated user.",
         "operationId": "disableTotp",
@@ -3585,9 +3345,7 @@
     },
     "/totp/enable": {
       "post": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Enable TOTP",
         "description": "Enables TOTP two-factor authentication for the authenticated user. Returns the TOTP URI and backup codes.",
         "operationId": "enableTotp",
@@ -3607,9 +3365,7 @@
     },
     "/totp/generate-backup-codes": {
       "post": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Generate backup codes",
         "description": "Generates a new set of backup codes for the authenticated user. Previous backup codes are invalidated.",
         "operationId": "generateTotpBackupCodes",
@@ -3629,9 +3385,7 @@
     },
     "/totp/get-uri": {
       "get": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Get TOTP URI",
         "description": "Returns the current TOTP URI for the authenticated user's authenticator app configuration.",
         "operationId": "getTotpURI",
@@ -3651,9 +3405,7 @@
     },
     "/totp/verify": {
       "post": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Verify TOTP code",
         "description": "Verifies a TOTP code from the authenticator app and completes authentication. Requires a pending TOTP cookie set during sign-in.",
         "operationId": "verifyTotp",
@@ -3682,9 +3434,7 @@
     },
     "/totp/verify-backup-code": {
       "post": {
-        "tags": [
-          "TOTP Plugin"
-        ],
+        "tags": ["TOTP Plugin"],
         "summary": "Verify backup code",
         "description": "Verifies a backup code as an alternative to TOTP verification. Completes authentication if the code is valid.",
         "operationId": "verifyTotpBackupCode",
@@ -3717,10 +3467,7 @@
       "AcceptOrganizationInvitationQuery": {
         "properties": {
           "redirect_url": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
         "type": "object"
@@ -3728,17 +3475,11 @@
       "Account": {
         "properties": {
           "access_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "access_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "account_id": {
             "type": "string"
@@ -3751,38 +3492,23 @@
             "type": "string"
           },
           "id_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "password": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "provider_id": {
             "type": "string"
           },
           "refresh_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "refresh_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "scope": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "updated_at": {
             "format": "date-time",
@@ -3792,14 +3518,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "user_id",
-          "account_id",
-          "provider_id",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "user_id", "account_id", "provider_id", "created_at", "updated_at"],
         "type": "object"
       },
       "AddOrganizationMemberRequest": {
@@ -3811,10 +3530,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "user_id",
-          "role"
-        ],
+        "required": ["user_id", "role"],
         "type": "object"
       },
       "AddOrganizationTeamMemberRequest": {
@@ -3823,9 +3539,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "member_id"
-        ],
+        "required": ["member_id"],
         "type": "object"
       },
       "AddRolePermissionRequest": {
@@ -3834,9 +3548,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "permission_id"
-        ],
+        "required": ["permission_id"],
         "type": "object"
       },
       "AddRolePermissionResponse": {
@@ -3845,9 +3557,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "AdminSessionState": {
@@ -3858,47 +3568,26 @@
           },
           "impersonation_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonation_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonator_session_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonator_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "revoked_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "revoked_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "revoked_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "session_id": {
             "type": "string"
@@ -3908,11 +3597,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "session_id",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["session_id", "created_at", "updated_at"],
         "type": "object"
       },
       "AdminUserSession": {
@@ -3931,9 +3616,7 @@
             ]
           }
         },
-        "required": [
-          "session"
-        ],
+        "required": ["session"],
         "type": "object"
       },
       "AdminUserState": {
@@ -3943,29 +3626,17 @@
           },
           "banned_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "banned_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "banned_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "banned_until": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "created_at": {
             "format": "date-time",
@@ -3979,12 +3650,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "user_id",
-          "banned",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["user_id", "banned", "created_at", "updated_at"],
         "type": "object"
       },
       "ApiKey": {
@@ -3998,10 +3664,7 @@
           },
           "expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "id": {
             "type": "string"
@@ -4014,17 +3677,11 @@
           },
           "last_requested_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -4039,16 +3696,10 @@
             "items": {
               "type": "string"
             },
-            "type": [
-              "array",
-              "null"
-            ]
+            "type": ["array", "null"]
           },
           "prefix": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "rate_limit_enabled": {
             "type": "boolean"
@@ -4080,18 +3731,13 @@
         "properties": {
           "expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "role_id": {
             "type": "string"
           }
         },
-        "required": [
-          "role_id"
-        ],
+        "required": ["role_id"],
         "type": "object"
       },
       "AssignUserRoleResponse": {
@@ -4100,9 +3746,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "AuthorizeResponse": {
@@ -4111,25 +3755,17 @@
             "type": "string"
           }
         },
-        "required": [
-          "auth_url"
-        ],
+        "required": ["auth_url"],
         "type": "object"
       },
       "BanUserRequest": {
         "properties": {
           "banned_until": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -4140,9 +3776,7 @@
             "$ref": "#/components/schemas/AdminUserState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "CallbackResponse": {
@@ -4154,10 +3788,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "ChangeEmailResponse": {
@@ -4166,9 +3797,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "ChangePasswordRequest": {
@@ -4180,10 +3809,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "token",
-          "password"
-        ],
+        "required": ["token", "password"],
         "type": "object"
       },
       "ChangePasswordResponse": {
@@ -4192,9 +3818,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "CheckUserPermissionsRequest": {
@@ -4206,9 +3830,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "permission_keys"
-        ],
+        "required": ["permission_keys"],
         "type": "object"
       },
       "CheckUserPermissionsResponse": {
@@ -4217,68 +3839,42 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "has_permissions"
-        ],
+        "required": ["has_permissions"],
         "type": "object"
       },
       "CreateAccountRequest": {
         "properties": {
           "access_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "access_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "account_id": {
             "type": "string"
           },
           "id_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "password": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "provider_id": {
             "type": "string"
           },
           "refresh_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "refresh_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "scope": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "provider_id",
-          "account_id"
-        ],
+        "required": ["provider_id", "account_id"],
         "type": "object"
       },
       "CreateAccountResponse": {
@@ -4287,32 +3883,21 @@
             "$ref": "#/components/schemas/Account"
           }
         },
-        "required": [
-          "account"
-        ],
+        "required": ["account"],
         "type": "object"
       },
       "CreateApiKeyRequest": {
         "properties": {
           "enabled": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -4327,41 +3912,22 @@
             "items": {
               "type": "string"
             },
-            "type": [
-              "array",
-              "null"
-            ]
+            "type": ["array", "null"]
           },
           "prefix": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "rate_limit_enabled": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "rate_limit_max_requests": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           },
           "rate_limit_time_window": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           }
         },
-        "required": [
-          "name",
-          "owner_type",
-          "owner_id"
-        ],
+        "required": ["name", "owner_type", "owner_id"],
         "type": "object"
       },
       "CreateApiKeyResponse": {
@@ -4373,19 +3939,13 @@
             "type": "string"
           }
         },
-        "required": [
-          "raw_api_key",
-          "api_key"
-        ],
+        "required": ["raw_api_key", "api_key"],
         "type": "object"
       },
       "CreateOrganizationInvitationQuery": {
         "properties": {
           "redirect_url": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": ["string", "null"]
           }
         },
         "type": "object"
@@ -4399,26 +3959,17 @@
             "type": "string"
           }
         },
-        "required": [
-          "email",
-          "role"
-        ],
+        "required": ["email", "role"],
         "type": "object"
       },
       "CreateOrganizationRequest": {
         "properties": {
           "logo": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -4427,55 +3978,35 @@
             "type": "string"
           },
           "slug": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "name",
-          "role"
-        ],
+        "required": ["name", "role"],
         "type": "object"
       },
       "CreateOrganizationTeamRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
           },
           "slug": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "type": "object"
       },
       "CreatePermissionRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "is_system": {
             "type": "boolean"
@@ -4484,9 +4015,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "type": "object"
       },
       "CreatePermissionResponse": {
@@ -4495,18 +4024,13 @@
             "$ref": "#/components/schemas/Permission"
           }
         },
-        "required": [
-          "permission"
-        ],
+        "required": ["permission"],
         "type": "object"
       },
       "CreateRoleRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "is_system": {
             "type": "boolean"
@@ -4515,16 +4039,10 @@
             "type": "string"
           },
           "weight": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           }
         },
-        "required": [
-          "name",
-          "is_system"
-        ],
+        "required": ["name", "is_system"],
         "type": "object"
       },
       "CreateRoleResponse": {
@@ -4533,45 +4051,29 @@
             "$ref": "#/components/schemas/Role"
           }
         },
-        "required": [
-          "role"
-        ],
+        "required": ["role"],
         "type": "object"
       },
       "CreateSessionStateRequest": {
         "properties": {
           "impersonation_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonation_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonator_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "revoke": {
             "type": "boolean"
           },
           "revoked_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "revoke"
-        ],
+        "required": ["revoke"],
         "type": "object"
       },
       "CreateUserRequest": {
@@ -4580,32 +4082,20 @@
             "type": "string"
           },
           "email_verified": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "image": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "email"
-        ],
+        "required": ["name", "email"],
         "type": "object"
       },
       "CreateUserResponse": {
@@ -4614,9 +4104,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user"
-        ],
+        "required": ["user"],
         "type": "object"
       },
       "CreateUserStateRequest": {
@@ -4625,22 +4113,14 @@
             "type": "boolean"
           },
           "banned_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "banned_until": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "banned"
-        ],
+        "required": ["banned"],
         "type": "object"
       },
       "DeleteAccountResponse": {
@@ -4649,9 +4129,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteApiKeyResponse": {
@@ -4660,9 +4138,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteOrganizationMemberResponse": {
@@ -4671,9 +4147,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteOrganizationResponse": {
@@ -4682,9 +4156,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteOrganizationTeamMemberResponse": {
@@ -4693,9 +4165,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteOrganizationTeamResponse": {
@@ -4704,9 +4174,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeletePermissionResponse": {
@@ -4715,9 +4183,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteRoleResponse": {
@@ -4726,9 +4192,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteSessionStateResponse": {
@@ -4737,9 +4201,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteUserResponse": {
@@ -4748,9 +4210,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DeleteUserStateResponse": {
@@ -4759,9 +4219,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "DisableResponse": {
@@ -4770,9 +4228,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "EnableResponse": {
@@ -4787,10 +4243,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "totp_uri",
-          "backup_codes"
-        ],
+        "required": ["totp_uri", "backup_codes"],
         "type": "object"
       },
       "GenerateBackupCodesResponse": {
@@ -4802,9 +4255,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "backup_codes"
-        ],
+        "required": ["backup_codes"],
         "type": "object"
       },
       "GetAccountByIDResponse": {
@@ -4813,9 +4264,7 @@
             "$ref": "#/components/schemas/Account"
           }
         },
-        "required": [
-          "account"
-        ],
+        "required": ["account"],
         "type": "object"
       },
       "GetAllApiKeysResponse": {
@@ -4836,12 +4285,7 @@
             "type": "integer"
           }
         },
-        "required": [
-          "items",
-          "total",
-          "page",
-          "limit"
-        ],
+        "required": ["items", "total", "page", "limit"],
         "type": "object"
       },
       "GetApiKeyResponse": {
@@ -4850,9 +4294,7 @@
             "$ref": "#/components/schemas/ApiKey"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "type": "object"
       },
       "GetImpersonationByIDResponse": {
@@ -4861,9 +4303,7 @@
             "$ref": "#/components/schemas/Impersonation"
           }
         },
-        "required": [
-          "impersonation"
-        ],
+        "required": ["impersonation"],
         "type": "object"
       },
       "GetMeResponse": {
@@ -4875,10 +4315,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "GetOrganizationInvitationResponse": {
@@ -4890,10 +4327,7 @@
             "$ref": "#/components/schemas/OrganizationSummary"
           }
         },
-        "required": [
-          "invitation",
-          "organization"
-        ],
+        "required": ["invitation", "organization"],
         "type": "object"
       },
       "GetSessionStateResponse": {
@@ -4902,9 +4336,7 @@
             "$ref": "#/components/schemas/AdminSessionState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "GetTOTPURIResponse": {
@@ -4913,9 +4345,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "totp_uri"
-        ],
+        "required": ["totp_uri"],
         "type": "object"
       },
       "GetUserByIDResponse": {
@@ -4924,9 +4354,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user"
-        ],
+        "required": ["user"],
         "type": "object"
       },
       "GetUserPermissionsResponse": {
@@ -4938,9 +4366,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "permissions"
-        ],
+        "required": ["permissions"],
         "type": "object"
       },
       "GetUserStateResponse": {
@@ -4949,18 +4375,13 @@
             "$ref": "#/components/schemas/AdminUserState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "Impersonation": {
         "properties": {
           "actor_session_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "actor_user_id": {
             "type": "string"
@@ -4971,16 +4392,10 @@
           },
           "ended_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "ended_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "expires_at": {
             "format": "date-time",
@@ -4990,10 +4405,7 @@
             "type": "string"
           },
           "impersonation_session_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "reason": {
             "type": "string"
@@ -5049,9 +4461,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "kty"
-        ],
+        "required": ["kty"],
         "type": "object"
       },
       "ListOrganizationInvitationsResponse": {
@@ -5066,10 +4476,7 @@
             "$ref": "#/components/schemas/Pagination"
           }
         },
-        "required": [
-          "data",
-          "pagination"
-        ],
+        "required": ["data", "pagination"],
         "type": "object"
       },
       "ListOrganizationMembersResponse": {
@@ -5084,10 +4491,7 @@
             "$ref": "#/components/schemas/Pagination"
           }
         },
-        "required": [
-          "data",
-          "pagination"
-        ],
+        "required": ["data", "pagination"],
         "type": "object"
       },
       "ListOrganizationTeamMembersResponse": {
@@ -5102,10 +4506,7 @@
             "$ref": "#/components/schemas/Pagination"
           }
         },
-        "required": [
-          "data",
-          "pagination"
-        ],
+        "required": ["data", "pagination"],
         "type": "object"
       },
       "ListOrganizationTeamsResponse": {
@@ -5120,10 +4521,7 @@
             "$ref": "#/components/schemas/Pagination"
           }
         },
-        "required": [
-          "data",
-          "pagination"
-        ],
+        "required": ["data", "pagination"],
         "type": "object"
       },
       "ListOrganizationsResponse": {
@@ -5138,10 +4536,7 @@
             "$ref": "#/components/schemas/Pagination"
           }
         },
-        "required": [
-          "data",
-          "pagination"
-        ],
+        "required": ["data", "pagination"],
         "type": "object"
       },
       "MagicLinkExchangeRequest": {
@@ -5150,9 +4545,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "type": "object"
       },
       "MagicLinkExchangeResponse": {
@@ -5164,33 +4557,22 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "MagicLinkSignInRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "email": {
             "type": "string"
           },
           "name": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object"
       },
       "MagicLinkSignInResponse": {
@@ -5199,9 +4581,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "MagicLinkVerifyResponse": {
@@ -5213,9 +4593,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "Organization": {
@@ -5228,17 +4606,11 @@
             "type": "string"
           },
           "logo": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -5254,14 +4626,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "owner_id",
-          "name",
-          "slug",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "owner_id", "name", "slug", "created_at", "updated_at"],
         "type": "object"
       },
       "OrganizationInvitation": {
@@ -5307,13 +4672,7 @@
       },
       "OrganizationInvitationStatus": {
         "description": "The type of the invitation status",
-        "enum": [
-          "pending",
-          "accepted",
-          "rejected",
-          "revoked",
-          "expired"
-        ],
+        "enum": ["pending", "accepted", "rejected", "revoked", "expired"],
         "type": "string"
       },
       "OrganizationMember": {
@@ -5339,14 +4698,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "organization_id",
-          "user_id",
-          "role",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "organization_id", "user_id", "role", "created_at", "updated_at"],
         "type": "object"
       },
       "OrganizationMemberResponse": {
@@ -5372,14 +4724,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "id",
-          "organization_id",
-          "role",
-          "created_at",
-          "updated_at",
-          "user"
-        ],
+        "required": ["id", "organization_id", "role", "created_at", "updated_at", "user"],
         "type": "object"
       },
       "OrganizationSummary": {
@@ -5388,17 +4733,11 @@
             "type": "string"
           },
           "logo": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -5410,12 +4749,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "owner_id",
-          "name",
-          "slug"
-        ],
+        "required": ["id", "owner_id", "name", "slug"],
         "type": "object"
       },
       "OrganizationTeam": {
@@ -5425,20 +4759,14 @@
             "type": "string"
           },
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "id": {
             "type": "string"
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -5454,14 +4782,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "organization_id",
-          "name",
-          "slug",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "organization_id", "name", "slug", "created_at", "updated_at"],
         "type": "object"
       },
       "OrganizationTeamMember": {
@@ -5480,12 +4801,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "team_id",
-          "member_id",
-          "created_at"
-        ],
+        "required": ["id", "team_id", "member_id", "created_at"],
         "type": "object"
       },
       "OrganizationTeamMemberResponse": {
@@ -5504,12 +4820,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "team_id",
-          "created_at",
-          "member"
-        ],
+        "required": ["id", "team_id", "created_at", "member"],
         "type": "object"
       },
       "Pagination": {
@@ -5530,13 +4841,7 @@
             "type": "integer"
           }
         },
-        "required": [
-          "page",
-          "limit",
-          "total",
-          "total_pages",
-          "has_more"
-        ],
+        "required": ["page", "limit", "total", "total_pages", "has_more"],
         "type": "object"
       },
       "Permission": {
@@ -5546,10 +4851,7 @@
             "type": "string"
           },
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "id": {
             "type": "string"
@@ -5565,29 +4867,17 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "key",
-          "is_system",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "key", "is_system", "created_at", "updated_at"],
         "type": "object"
       },
       "PermissionGrantSource": {
         "properties": {
           "granted_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "granted_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "role_id": {
             "type": "string"
@@ -5596,10 +4886,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "role_id",
-          "role_name"
-        ],
+        "required": ["role_id", "role_name"],
         "type": "object"
       },
       "RefreshTokenRequest": {
@@ -5608,9 +4895,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "refresh_token"
-        ],
+        "required": ["refresh_token"],
         "type": "object"
       },
       "RefreshTokenResponse": {
@@ -5622,10 +4907,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "access_token",
-          "refresh_token"
-        ],
+        "required": ["access_token", "refresh_token"],
         "type": "object"
       },
       "RemoveRolePermissionResponse": {
@@ -5634,9 +4916,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "RemoveUserRoleResponse": {
@@ -5645,9 +4925,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "ReplaceRolePermissionResponse": {
@@ -5656,9 +4934,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "ReplaceRolePermissionsRequest": {
@@ -5670,9 +4946,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "permission_ids"
-        ],
+        "required": ["permission_ids"],
         "type": "object"
       },
       "ReplaceUserRolesRequest": {
@@ -5684,9 +4958,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "role_ids"
-        ],
+        "required": ["role_ids"],
         "type": "object"
       },
       "ReplaceUserRolesResponse": {
@@ -5695,52 +4967,37 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "RequestEmailChangeRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "new_email": {
             "type": "string"
           }
         },
-        "required": [
-          "new_email"
-        ],
+        "required": ["new_email"],
         "type": "object"
       },
       "RequestPasswordResetRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "email": {
             "type": "string"
           }
         },
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object"
       },
       "RevokeSessionRequest": {
         "properties": {
           "reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -5751,9 +5008,7 @@
             "$ref": "#/components/schemas/AdminSessionState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "Role": {
@@ -5763,10 +5018,7 @@
             "type": "string"
           },
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "id": {
             "type": "string"
@@ -5785,14 +5037,7 @@
             "type": "integer"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "weight",
-          "is_system",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "name", "weight", "is_system", "created_at", "updated_at"],
         "type": "object"
       },
       "RoleDetails": {
@@ -5807,19 +5052,13 @@
             "$ref": "#/components/schemas/Role"
           }
         },
-        "required": [
-          "role",
-          "permissions"
-        ],
+        "required": ["role", "permissions"],
         "type": "object"
       },
       "SendEmailVerificationRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -5838,10 +5077,7 @@
             "type": "string"
           },
           "ip_address": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "token": {
             "type": "string"
@@ -5851,32 +5087,19 @@
             "type": "string"
           },
           "user_agent": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "user_id": {
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "user_id",
-          "token",
-          "expires_at",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "user_id", "token", "expires_at", "created_at", "updated_at"],
         "type": "object"
       },
       "SignInRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "email": {
             "type": "string"
@@ -5885,10 +5108,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "type": "object"
       },
       "SignInResponse": {
@@ -5900,25 +5120,16 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "SignOutRequest": {
         "properties": {
           "session_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "sign_out_all": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           }
         },
         "type": "object"
@@ -5929,34 +5140,23 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "SignUpRequest": {
         "properties": {
           "callback_url": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "email": {
             "type": "string"
           },
           "image": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -5965,11 +5165,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "type": "object"
       },
       "SignUpResponse": {
@@ -5981,19 +5177,13 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "StartImpersonationRequest": {
         "properties": {
           "expires_in_seconds": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           },
           "reason": {
             "type": "string"
@@ -6002,10 +5192,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "target_user_id",
-          "reason"
-        ],
+        "required": ["target_user_id", "reason"],
         "type": "object"
       },
       "StartImpersonationResponse": {
@@ -6014,9 +5201,7 @@
             "$ref": "#/components/schemas/Impersonation"
           }
         },
-        "required": [
-          "impersonation"
-        ],
+        "required": ["impersonation"],
         "type": "object"
       },
       "StopImpersonationResponse": {
@@ -6025,9 +5210,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "type": "object"
       },
       "UnbanUserResponse": {
@@ -6036,68 +5219,39 @@
             "$ref": "#/components/schemas/AdminUserState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "UpdateAccountRequest": {
         "properties": {
           "access_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "access_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "account_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "id_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "password": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "provider_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "refresh_token": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "refresh_token_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "scope": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -6108,65 +5262,39 @@
             "$ref": "#/components/schemas/Account"
           }
         },
-        "required": [
-          "account"
-        ],
+        "required": ["account"],
         "type": "object"
       },
       "UpdateApiKeyRequest": {
         "properties": {
           "enabled": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "permissions": {
             "items": {
               "type": "string"
             },
-            "type": [
-              "array",
-              "null"
-            ]
+            "type": ["array", "null"]
           },
           "rate_limit_enabled": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "rate_limit_max_requests": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           },
           "rate_limit_time_window": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           }
         },
         "type": "object"
@@ -6177,9 +5305,7 @@
             "$ref": "#/components/schemas/ApiKey"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "type": "object"
       },
       "UpdateOrganizationMemberRequest": {
@@ -6188,37 +5314,23 @@
             "type": "string"
           }
         },
-        "required": [
-          "role"
-        ],
+        "required": ["role"],
         "type": "object"
       },
       "UpdateOrganizationRequest": {
         "properties": {
           "logo": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "slug": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -6226,40 +5338,26 @@
       "UpdateOrganizationTeamRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
           },
           "slug": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "type": "object"
       },
       "UpdatePermissionRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -6270,30 +5368,19 @@
             "$ref": "#/components/schemas/Permission"
           }
         },
-        "required": [
-          "permission"
-        ],
+        "required": ["permission"],
         "type": "object"
       },
       "UpdateRoleRequest": {
         "properties": {
           "description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "name": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "weight": {
-            "type": [
-              "null",
-              "integer"
-            ]
+            "type": ["null", "integer"]
           }
         },
         "type": "object"
@@ -6304,43 +5391,26 @@
             "$ref": "#/components/schemas/Role"
           }
         },
-        "required": [
-          "role"
-        ],
+        "required": ["role"],
         "type": "object"
       },
       "UpdateUserRequest": {
         "properties": {
           "email": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "email_verified": {
-            "type": [
-              "null",
-              "boolean"
-            ]
+            "type": ["null", "boolean"]
           },
           "image": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
         "type": "object"
@@ -6351,45 +5421,29 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user"
-        ],
+        "required": ["user"],
         "type": "object"
       },
       "UpsertSessionStateRequest": {
         "properties": {
           "impersonation_expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonation_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "impersonator_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "revoke": {
             "type": "boolean"
           },
           "revoked_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "revoke"
-        ],
+        "required": ["revoke"],
         "type": "object"
       },
       "UpsertSessionStateResponse": {
@@ -6398,9 +5452,7 @@
             "$ref": "#/components/schemas/AdminSessionState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "UpsertUserStateRequest": {
@@ -6409,22 +5461,14 @@
             "type": "boolean"
           },
           "banned_reason": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "banned_until": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           }
         },
-        "required": [
-          "banned"
-        ],
+        "required": ["banned"],
         "type": "object"
       },
       "UpsertUserStateResponse": {
@@ -6433,9 +5477,7 @@
             "$ref": "#/components/schemas/AdminUserState"
           }
         },
-        "required": [
-          "state"
-        ],
+        "required": ["state"],
         "type": "object"
       },
       "User": {
@@ -6454,17 +5496,11 @@
             "type": "string"
           },
           "image": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "metadata": {
             "additionalProperties": {},
-            "type": [
-              "object",
-              "null"
-            ]
+            "type": ["object", "null"]
           },
           "name": {
             "type": "string"
@@ -6474,14 +5510,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "email",
-          "email_verified",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "name", "email", "email_verified", "created_at", "updated_at"],
         "type": "object"
       },
       "UserAccountsResponse": {
@@ -6493,31 +5522,20 @@
             "type": "array"
           }
         },
-        "required": [
-          "accounts"
-        ],
+        "required": ["accounts"],
         "type": "object"
       },
       "UserPermissionInfo": {
         "properties": {
           "granted_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "granted_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "permission_description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "permission_id": {
             "type": "string"
@@ -6529,45 +5547,27 @@
             "items": {
               "$ref": "#/components/schemas/PermissionGrantSource"
             },
-            "type": [
-              "array",
-              "null"
-            ]
+            "type": ["array", "null"]
           }
         },
-        "required": [
-          "permission_id",
-          "permission_key"
-        ],
+        "required": ["permission_id", "permission_key"],
         "type": "object"
       },
       "UserRoleInfo": {
         "properties": {
           "assigned_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "assigned_by_user_id": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "expires_at": {
             "format": "date-time",
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "role_description": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "role_id": {
             "type": "string"
@@ -6579,20 +5579,13 @@
             "type": "integer"
           }
         },
-        "required": [
-          "role_id",
-          "role_name",
-          "role_weight"
-        ],
+        "required": ["role_id", "role_name", "role_weight"],
         "type": "object"
       },
       "UsersPage": {
         "properties": {
           "next_cursor": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": ["null", "string"]
           },
           "users": {
             "items": {
@@ -6601,9 +5594,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "users"
-        ],
+        "required": ["users"],
         "type": "object"
       },
       "VerifyApiKeyRequest": {
@@ -6612,9 +5603,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "type": "object"
       },
       "VerifyApiKeyResponse": {
@@ -6623,9 +5612,7 @@
             "$ref": "#/components/schemas/ApiKey"
           }
         },
-        "required": [
-          "api_key"
-        ],
+        "required": ["api_key"],
         "type": "object"
       },
       "VerifyBackupCodeRequest": {
@@ -6637,9 +5624,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "code"
-        ],
+        "required": ["code"],
         "type": "object"
       },
       "VerifyBackupCodeResponse": {
@@ -6651,10 +5636,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "VerifyTOTPRequest": {
@@ -6666,9 +5648,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "code"
-        ],
+        "required": ["code"],
         "type": "object"
       },
       "VerifyTOTPResponse": {
@@ -6680,10 +5660,7 @@
             "$ref": "#/components/schemas/User"
           }
         },
-        "required": [
-          "user",
-          "session"
-        ],
+        "required": ["user", "session"],
         "type": "object"
       },
       "WellKnownJWKSResponse": {
@@ -6695,9 +5672,7 @@
             "type": "array"
           }
         },
-        "required": [
-          "keys"
-        ],
+        "required": ["keys"],
         "type": "object"
       }
     }
