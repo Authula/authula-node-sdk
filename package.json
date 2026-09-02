@@ -35,21 +35,21 @@
     "prepublishOnly": "pnpm run orval:build && pnpm run tsdown:build"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.101.4",
+    "@tanstack/react-query": "^5.102.8",
     "cookie": "^2.0.1",
-    "es-toolkit": "^1.50.0",
+    "es-toolkit": "^1.52.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.7",
-    "@faker-js/faker": "^10.5.0",
-    "@types/node": "^26.1.1",
-    "@vitest/coverage-v8": "^4.1.10",
-    "@vitest/ui": "^4.1.10",
-    "bumpp": "^12.0.0",
+    "@faker-js/faker": "^10.6.0",
+    "@types/node": "^26.4.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/ui": "^4.1.11",
+    "bumpp": "^12.2.2",
     "orval": "^8.23.0",
     "tsdown": "^0.22.14",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }
