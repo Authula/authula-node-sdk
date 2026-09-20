@@ -12,6 +12,12 @@ This Node.js SDK provides seamless integration with an Authula server for both c
   </a>
 </div>
 
+<div align="center">
+
+### [Become a Sponsor!](https://dub.sh/PrJb7W9)
+
+</div>
+
 ---
 
 ## Features
@@ -56,8 +62,7 @@ const authulaBrowserClient = createClient({
 const response = await authulaBrowserClient.core.getMe();
 
 // Tanstack Query
-const { data, error, isLoading, isError } =
-  await authulaBrowserClient.core.useGetMe();
+const { data, error, isLoading, isError } = await authulaBrowserClient.core.useGetMe();
 ```
 
 `Server instance`:
