@@ -149,7 +149,7 @@ export const getSignOutUrl = () => {
 };
 
 /**
- * Signs out the authenticated user. Optionally sign out a specific session or all sessions.
+ * Signs out the authenticated user. With no body, revokes the session that authenticated the request (400 if the request carries no session id). Pass session_id to revoke one of your own sessions (404 if it does not exist, 403 if it belongs to another user), or sign_out_all to revoke every session.
  * @summary Sign out
  */
 export const signOut = async (
