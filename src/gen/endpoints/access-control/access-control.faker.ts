@@ -33,8 +33,8 @@ export const getListPermissionsResponseMock = (): Permission[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -48,8 +48,8 @@ export const getCreatePermissionResponseMock = (
   permission: {
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -64,8 +64,8 @@ export const getGetPermissionByKeyResponseMock = (
 ): Permission => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
   description: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   isSystem: faker.datatype.boolean(),
@@ -79,8 +79,8 @@ export const getGetPermissionResponseMock = (
 ): Permission => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
   description: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   isSystem: faker.datatype.boolean(),
@@ -102,8 +102,8 @@ export const getUpdatePermissionResponseMock = (
   permission: {
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -117,8 +117,8 @@ export const getListRolesResponseMock = (): Role[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -133,8 +133,8 @@ export const getCreateRoleResponseMock = (
   role: {
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -150,8 +150,8 @@ export const getGetRoleByNameResponseMock = (
 ): Role => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
   description: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
   isSystem: faker.datatype.boolean(),
@@ -167,44 +167,41 @@ export const getGetRoleResponseMock = (
   permissions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => ({
       grantedAt: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-        undefined,
+        faker.date.past().toISOString().slice(0, 19) + "Z",
+        null,
       ]),
       grantedByUserId: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       permissionDescription: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
       permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
       sources: faker.helpers.arrayElement([
         Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
           grantedAt: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-            undefined,
+            faker.date.past().toISOString().slice(0, 19) + "Z",
+            null,
           ]),
           grantedByUserId: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
+            faker.string.alpha({ length: { min: 10, max: 20 } }),
+            null,
           ]),
           roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
           roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
         })),
-        undefined,
+        null,
       ]),
     }),
   ),
   role: {
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -228,8 +225,8 @@ export const getUpdateRoleResponseMock = (
   role: {
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     description: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     isSystem: faker.datatype.boolean(),
@@ -243,33 +240,33 @@ export const getUpdateRoleResponseMock = (
 export const getListRolePermissionsResponseMock = (): UserPermissionInfo[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     grantedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     grantedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     permissionDescription: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
     sources: faker.helpers.arrayElement([
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
         grantedAt: faker.helpers.arrayElement([
-          faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-          undefined,
+          faker.date.past().toISOString().slice(0, 19) + "Z",
+          null,
         ]),
         grantedByUserId: faker.helpers.arrayElement([
-          faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-          undefined,
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
         ]),
         roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
         roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
       })),
-      undefined,
+      null,
     ]),
   }));
 
@@ -300,36 +297,33 @@ export const getGetUserPermissionsResponseMock = (
   permissions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => ({
       grantedAt: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-        undefined,
+        faker.date.past().toISOString().slice(0, 19) + "Z",
+        null,
       ]),
       grantedByUserId: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       permissionDescription: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       permissionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
       permissionKey: faker.string.alpha({ length: { min: 10, max: 20 } }),
       sources: faker.helpers.arrayElement([
         Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
           grantedAt: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-            undefined,
+            faker.date.past().toISOString().slice(0, 19) + "Z",
+            null,
           ]),
           grantedByUserId: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
+            faker.string.alpha({ length: { min: 10, max: 20 } }),
+            null,
           ]),
           roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
           roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),
         })),
-        undefined,
+        null,
       ]),
     }),
   ),
@@ -346,20 +340,20 @@ export const getCheckUserPermissionsResponseMock = (
 export const getListUserRolesResponseMock = (): UserRoleInfo[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     assignedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     assignedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     roleDescription: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     roleId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     roleName: faker.string.alpha({ length: { min: 10, max: 20 } }),

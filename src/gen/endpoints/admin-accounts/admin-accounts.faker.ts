@@ -20,37 +20,34 @@ export const getGetAccountResponseMock = (
 ): GetAccountByIDResponse => ({
   account: {
     accessToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     accessTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     accountId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     idToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     password: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     providerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     refreshToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     refreshTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
-    scope: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    scope: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
@@ -69,37 +66,34 @@ export const getUpdateAccountResponseMock = (
 ): UpdateAccountResponse => ({
   account: {
     accessToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     accessTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     accountId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     idToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     password: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     providerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     refreshToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     refreshTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
-    scope: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    scope: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
@@ -112,36 +106,36 @@ export const getListUserAccountsResponseMock = (
   accounts: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(
     () => ({
       accessToken: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       accessTokenExpiresAt: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-        undefined,
+        faker.date.past().toISOString().slice(0, 19) + "Z",
+        null,
       ]),
       accountId: faker.string.alpha({ length: { min: 10, max: 20 } }),
       createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       idToken: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       password: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       providerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
       refreshToken: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       refreshTokenExpiresAt: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-        undefined,
+        faker.date.past().toISOString().slice(0, 19) + "Z",
+        null,
       ]),
       scope: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
       userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -155,37 +149,34 @@ export const getCreateAccountResponseMock = (
 ): CreateAccountResponse => ({
   account: {
     accessToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     accessTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     accountId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     idToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     password: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     providerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     refreshToken: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     refreshTokenExpiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
-    scope: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    scope: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },

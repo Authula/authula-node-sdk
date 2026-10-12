@@ -19,26 +19,20 @@ export const getListUsersResponseMock = (
   overrideResponse: Partial<Extract<UsersPage, object>> = {},
 ): UsersPage => ({
   nextCursor: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
+    faker.string.alpha({ length: { min: 10, max: 20 } }),
+    null,
   ]),
   users: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -54,18 +48,12 @@ export const getCreateUserResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -81,18 +69,12 @@ export const getGetUserResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -115,18 +97,12 @@ export const getUpdateUserResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",

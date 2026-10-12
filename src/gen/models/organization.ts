@@ -9,6 +9,8 @@ import type { OrganizationMetadata } from "./organization-metadata";
 
 export type Organization = {
   createdAt: string;
+  /** @nullable */
+  deletedAt?: string | null;
   id: string;
   /** @nullable */
   logo?: string | null;

@@ -57,14 +57,14 @@ export const getVerifyTotpResponseMock = (
     expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ipAddress: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     token: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     userAgent: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
@@ -73,18 +73,12 @@ export const getVerifyTotpResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -100,14 +94,14 @@ export const getVerifyTotpBackupCodeResponseMock = (
     expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ipAddress: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     token: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     userAgent: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
   },
@@ -116,18 +110,12 @@ export const getVerifyTotpBackupCodeResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",

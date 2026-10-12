@@ -17,24 +17,21 @@ import type {
 export const getListImpersonationsResponseMock = (): Impersonation[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     actorSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     actorUserId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-    endedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
-    ]),
+    endedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
     endedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     impersonationSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     reason: faker.string.alpha({ length: { min: 10, max: 20 } }),
     startedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -47,24 +44,21 @@ export const getStartImpersonationResponseMock = (
 ): StartImpersonationResponse => ({
   impersonation: {
     actorSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     actorUserId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-    endedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
-    ]),
+    endedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
     endedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     impersonationSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     reason: faker.string.alpha({ length: { min: 10, max: 20 } }),
     startedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -79,24 +73,21 @@ export const getGetImpersonationResponseMock = (
 ): GetImpersonationByIDResponse => ({
   impersonation: {
     actorSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     actorUserId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-    endedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
-    ]),
+    endedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
     endedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     impersonationSessionId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     reason: faker.string.alpha({ length: { min: 10, max: 20 } }),
     startedAt: faker.date.past().toISOString().slice(0, 19) + "Z",

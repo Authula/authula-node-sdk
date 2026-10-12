@@ -29,17 +29,14 @@ export const getListOrganizationMembersResponseMock = (
       emailVerified: faker.datatype.boolean(),
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       image: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       metadata: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([
-          {
-            [faker.string.alphanumeric(5)]: {},
-          },
-          null,
-        ]),
-        undefined,
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
       ]),
       name: faker.string.alpha({ length: { min: 10, max: 20 } }),
       updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -80,18 +77,12 @@ export const getGetOrganizationMemberByUserIDResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -112,18 +103,12 @@ export const getGetOrganizationMemberResponseMock = (
     email: faker.string.alpha({ length: { min: 10, max: 20 } }),
     emailVerified: faker.datatype.boolean(),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    image: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    image: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",

@@ -23,24 +23,21 @@ export const getListApiKeysResponseMock = (
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     enabled: faker.datatype.boolean(),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     keyHash: faker.string.alpha({ length: { min: 10, max: 20 } }),
     last: faker.string.alpha({ length: { min: 10, max: 20 } }),
     lastRequestedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -49,11 +46,11 @@ export const getListApiKeysResponseMock = (
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
         faker.string.alpha({ length: { min: 10, max: 20 } }),
       ),
-      undefined,
+      null,
     ]),
     prefix: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     rateLimitEnabled: faker.datatype.boolean(),
     start: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -72,24 +69,21 @@ export const getCreateApiKeyResponseMock = (
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     enabled: faker.datatype.boolean(),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     keyHash: faker.string.alpha({ length: { min: 10, max: 20 } }),
     last: faker.string.alpha({ length: { min: 10, max: 20 } }),
     lastRequestedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -98,11 +92,11 @@ export const getCreateApiKeyResponseMock = (
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
         faker.string.alpha({ length: { min: 10, max: 20 } }),
       ),
-      undefined,
+      null,
     ]),
     prefix: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     rateLimitEnabled: faker.datatype.boolean(),
     start: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -119,24 +113,21 @@ export const getVerifyApiKeyResponseMock = (
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     enabled: faker.datatype.boolean(),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     keyHash: faker.string.alpha({ length: { min: 10, max: 20 } }),
     last: faker.string.alpha({ length: { min: 10, max: 20 } }),
     lastRequestedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -145,11 +136,11 @@ export const getVerifyApiKeyResponseMock = (
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
         faker.string.alpha({ length: { min: 10, max: 20 } }),
       ),
-      undefined,
+      null,
     ]),
     prefix: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     rateLimitEnabled: faker.datatype.boolean(),
     start: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -165,24 +156,21 @@ export const getGetApiKeyResponseMock = (
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     enabled: faker.datatype.boolean(),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     keyHash: faker.string.alpha({ length: { min: 10, max: 20 } }),
     last: faker.string.alpha({ length: { min: 10, max: 20 } }),
     lastRequestedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -191,11 +179,11 @@ export const getGetApiKeyResponseMock = (
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
         faker.string.alpha({ length: { min: 10, max: 20 } }),
       ),
-      undefined,
+      null,
     ]),
     prefix: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     rateLimitEnabled: faker.datatype.boolean(),
     start: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -218,24 +206,21 @@ export const getUpdateApiKeyResponseMock = (
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     enabled: faker.datatype.boolean(),
     expiresAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
     keyHash: faker.string.alpha({ length: { min: 10, max: 20 } }),
     last: faker.string.alpha({ length: { min: 10, max: 20 } }),
     lastRequestedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -244,11 +229,11 @@ export const getUpdateApiKeyResponseMock = (
       Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() =>
         faker.string.alpha({ length: { min: 10, max: 20 } }),
       ),
-      undefined,
+      null,
     ]),
     prefix: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     rateLimitEnabled: faker.datatype.boolean(),
     start: faker.string.alpha({ length: { min: 10, max: 20 } }),

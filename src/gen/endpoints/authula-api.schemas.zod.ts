@@ -791,6 +791,7 @@ export type ListOrganizationTeamsResponseOutput = zod.output<typeof ListOrganiza
 
 export const Organization = zod.object({
   createdAt: zod.iso.datetime({ offset: true }),
+  deletedAt: zod.iso.datetime({ offset: true }).nullish(),
   id: zod.string(),
   logo: zod.string().nullish(),
   metadata: zod.record(zod.string(), zod.unknown()).nullish(),

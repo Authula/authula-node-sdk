@@ -21,20 +21,20 @@ export const getListBannedUserStatesResponseMock = (): AdminUserState[] | null =
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -47,20 +47,20 @@ export const getBanUserResponseMock = (
   state: {
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -76,70 +76,52 @@ export const getListUserSessionsResponseMock = (): AdminUserSession[] | null =>
       expiresAt: faker.date.past().toISOString().slice(0, 19) + "Z",
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       ipAddress: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       token: faker.string.alpha({ length: { min: 10, max: 20 } }),
       updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
       userAgent: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       userId: faker.string.alpha({ length: { min: 10, max: 20 } }),
     },
     state: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        null,
-        {
-          createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-          impersonationExpiresAt: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-            undefined,
-          ]),
-          impersonationReason: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
-          ]),
-          impersonatorSessionId: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
-          ]),
-          impersonatorUserId: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
-          ]),
-          revokedAt: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-            undefined,
-          ]),
-          revokedByUserId: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
-          ]),
-          revokedReason: faker.helpers.arrayElement([
-            faker.helpers.arrayElement([
-              faker.string.alpha({ length: { min: 10, max: 20 } }),
-              null,
-            ]),
-            undefined,
-          ]),
-          sessionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
-          updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-        },
-      ]),
-      undefined,
+      null,
+      {
+        createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+        impersonationExpiresAt: faker.helpers.arrayElement([
+          faker.date.past().toISOString().slice(0, 19) + "Z",
+          null,
+        ]),
+        impersonationReason: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        impersonatorSessionId: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        impersonatorUserId: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        revokedAt: faker.helpers.arrayElement([
+          faker.date.past().toISOString().slice(0, 19) + "Z",
+          null,
+        ]),
+        revokedByUserId: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        revokedReason: faker.helpers.arrayElement([
+          faker.string.alpha({ length: { min: 10, max: 20 } }),
+          null,
+        ]),
+        sessionId: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+      },
     ]),
   }));
 
@@ -149,20 +131,20 @@ export const getGetUserStateResponseMock = (
   state: {
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -177,20 +159,20 @@ export const getCreateUserStateResponseMock = (
   state: {
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -212,20 +194,20 @@ export const getUpdateUserStateResponseMock = (
   state: {
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",
@@ -240,20 +222,20 @@ export const getUnbanUserResponseMock = (
   state: {
     banned: faker.datatype.boolean(),
     bannedAt: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     bannedByUserId: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedReason: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+      faker.string.alpha({ length: { min: 10, max: 20 } }),
+      null,
     ]),
     bannedUntil: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
-      undefined,
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
     updatedAt: faker.date.past().toISOString().slice(0, 19) + "Z",

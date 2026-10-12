@@ -18,19 +18,17 @@ export const getListOrganizationsResponseMock = (
 ): ListOrganizationsResponse => ({
   data: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
     createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
-    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    logo: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
+    deletedAt: faker.helpers.arrayElement([
+      faker.date.past().toISOString().slice(0, 19) + "Z",
+      null,
     ]),
+    id: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    logo: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -51,19 +49,14 @@ export const getCreateOrganizationResponseMock = (
   overrideResponse: Partial<Extract<Organization, object>> = {},
 ): Organization => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  deletedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  logo: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  logo: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   metadata: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([
-      {
-        [faker.string.alphanumeric(5)]: {},
-      },
-      null,
-    ]),
-    undefined,
+    {
+      [faker.string.alphanumeric(5)]: {},
+    },
+    null,
   ]),
   name: faker.string.alpha({ length: { min: 10, max: 20 } }),
   ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -76,19 +69,14 @@ export const getGetOrganizationResponseMock = (
   overrideResponse: Partial<Extract<Organization, object>> = {},
 ): Organization => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  deletedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  logo: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  logo: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   metadata: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([
-      {
-        [faker.string.alphanumeric(5)]: {},
-      },
-      null,
-    ]),
-    undefined,
+    {
+      [faker.string.alphanumeric(5)]: {},
+    },
+    null,
   ]),
   name: faker.string.alpha({ length: { min: 10, max: 20 } }),
   ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -108,19 +96,14 @@ export const getUpdateOrganizationResponseMock = (
   overrideResponse: Partial<Extract<Organization, object>> = {},
 ): Organization => ({
   createdAt: faker.date.past().toISOString().slice(0, 19) + "Z",
+  deletedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + "Z", null]),
   id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-  logo: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-    undefined,
-  ]),
+  logo: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
   metadata: faker.helpers.arrayElement([
-    faker.helpers.arrayElement([
-      {
-        [faker.string.alphanumeric(5)]: {},
-      },
-      null,
-    ]),
-    undefined,
+    {
+      [faker.string.alphanumeric(5)]: {},
+    },
+    null,
   ]),
   name: faker.string.alpha({ length: { min: 10, max: 20 } }),
   ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),

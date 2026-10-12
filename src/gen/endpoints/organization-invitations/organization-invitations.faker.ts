@@ -31,17 +31,14 @@ export const getListOrganizationInvitationsResponseMock = (
     organization: {
       id: faker.string.alpha({ length: { min: 10, max: 20 } }),
       logo: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-        undefined,
+        faker.string.alpha({ length: { min: 10, max: 20 } }),
+        null,
       ]),
       metadata: faker.helpers.arrayElement([
-        faker.helpers.arrayElement([
-          {
-            [faker.string.alphanumeric(5)]: {},
-          },
-          null,
-        ]),
-        undefined,
+        {
+          [faker.string.alphanumeric(5)]: {},
+        },
+        null,
       ]),
       name: faker.string.alpha({ length: { min: 10, max: 20 } }),
       ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
@@ -87,18 +84,12 @@ export const getGetOrganizationInvitationResponseMock = (
   },
   organization: {
     id: faker.string.alpha({ length: { min: 10, max: 20 } }),
-    logo: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
-      undefined,
-    ]),
+    logo: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), null]),
     metadata: faker.helpers.arrayElement([
-      faker.helpers.arrayElement([
-        {
-          [faker.string.alphanumeric(5)]: {},
-        },
-        null,
-      ]),
-      undefined,
+      {
+        [faker.string.alphanumeric(5)]: {},
+      },
+      null,
     ]),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ownerId: faker.string.alpha({ length: { min: 10, max: 20 } }),
