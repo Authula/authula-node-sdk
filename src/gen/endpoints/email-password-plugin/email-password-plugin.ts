@@ -5,22 +5,6 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-import { useMutation, useQuery } from "@tanstack/react-query";
-import type {
-  DataTag,
-  DefinedInitialDataOptions,
-  DefinedUseQueryResult,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey,
-  UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-
 import type {
   ChangeEmailResponse,
   ChangePasswordRequest,
@@ -35,23 +19,6 @@ import type {
 } from "../../models";
 
 import { customFetch } from "../../../mutators/custom-fetch";
-
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
-  const result = { queryKey } as T & { queryKey: K };
-  for (const key of Object.keys(query)) {
-    // The explicit queryKey always wins, matching the previous
-    // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
-    Object.defineProperty(result, key, {
-      enumerable: true,
-      configurable: true,
-      get: () => (query as Record<string, unknown>)[key],
-    });
-  }
-  return result;
-};
 
 export const getChangePasswordUrl = () => {
   return `/email-password/change-password`;
@@ -92,68 +59,6 @@ export const changePassword = async (
   });
 };
 
-export const getChangePasswordMutationKey = () => ["changePassword"] as const;
-
-export const getChangePasswordMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof changePassword>>,
-    TError,
-    ChangePasswordMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof changePassword>>,
-  TError,
-  ChangePasswordMutationVariables,
-  TContext
-> => {
-  const mutationKey = getChangePasswordMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof changePassword>>,
-    ChangePasswordMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return changePassword(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type ChangePasswordMutationResult = NonNullable<Awaited<ReturnType<typeof changePassword>>>;
-export type ChangePasswordMutationBody = ChangePasswordRequest | undefined;
-export type ChangePasswordMutationError = unknown;
-export type ChangePasswordMutationVariables = { data?: ChangePasswordRequest };
-
-/**
- * @summary Change password
- */
-export const useChangePassword = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof changePassword>>,
-      TError,
-      ChangePasswordMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof changePassword>>,
-  TError,
-  ChangePasswordMutationVariables,
-  TContext
-> => {
-  return useMutation(getChangePasswordMutationOptions(options), queryClient);
-};
 export const getRequestEmailChangeUrl = () => {
   return `/email-password/request-email-change`;
 };
@@ -193,73 +98,6 @@ export const requestEmailChange = async (
   });
 };
 
-export const getRequestEmailChangeMutationKey = () => ["requestEmailChange"] as const;
-
-export const getRequestEmailChangeMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof requestEmailChange>>,
-    TError,
-    RequestEmailChangeMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof requestEmailChange>>,
-  TError,
-  RequestEmailChangeMutationVariables,
-  TContext
-> => {
-  const mutationKey = getRequestEmailChangeMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof requestEmailChange>>,
-    RequestEmailChangeMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return requestEmailChange(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type RequestEmailChangeMutationResult = NonNullable<
-  Awaited<ReturnType<typeof requestEmailChange>>
->;
-export type RequestEmailChangeMutationBody = RequestEmailChangeRequest | undefined;
-export type RequestEmailChangeMutationError = unknown;
-export type RequestEmailChangeMutationVariables = { data?: RequestEmailChangeRequest };
-
-/**
- * @summary Request email change
- */
-export const useRequestEmailChange = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof requestEmailChange>>,
-      TError,
-      RequestEmailChangeMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof requestEmailChange>>,
-  TError,
-  RequestEmailChangeMutationVariables,
-  TContext
-> => {
-  return useMutation(getRequestEmailChangeMutationOptions(options), queryClient);
-};
 export const getRequestPasswordResetUrl = () => {
   return `/email-password/request-password-reset`;
 };
@@ -299,73 +137,6 @@ export const requestPasswordReset = async (
   });
 };
 
-export const getRequestPasswordResetMutationKey = () => ["requestPasswordReset"] as const;
-
-export const getRequestPasswordResetMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof requestPasswordReset>>,
-    TError,
-    RequestPasswordResetMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof requestPasswordReset>>,
-  TError,
-  RequestPasswordResetMutationVariables,
-  TContext
-> => {
-  const mutationKey = getRequestPasswordResetMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof requestPasswordReset>>,
-    RequestPasswordResetMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return requestPasswordReset(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type RequestPasswordResetMutationResult = NonNullable<
-  Awaited<ReturnType<typeof requestPasswordReset>>
->;
-export type RequestPasswordResetMutationBody = RequestPasswordResetRequest | undefined;
-export type RequestPasswordResetMutationError = unknown;
-export type RequestPasswordResetMutationVariables = { data?: RequestPasswordResetRequest };
-
-/**
- * @summary Request password reset
- */
-export const useRequestPasswordReset = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof requestPasswordReset>>,
-      TError,
-      RequestPasswordResetMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof requestPasswordReset>>,
-  TError,
-  RequestPasswordResetMutationVariables,
-  TContext
-> => {
-  return useMutation(getRequestPasswordResetMutationOptions(options), queryClient);
-};
 export const getSendEmailVerificationUrl = () => {
   return `/email-password/send-email-verification`;
 };
@@ -405,73 +176,6 @@ export const sendEmailVerification = async (
   });
 };
 
-export const getSendEmailVerificationMutationKey = () => ["sendEmailVerification"] as const;
-
-export const getSendEmailVerificationMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof sendEmailVerification>>,
-    TError,
-    SendEmailVerificationMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof sendEmailVerification>>,
-  TError,
-  SendEmailVerificationMutationVariables,
-  TContext
-> => {
-  const mutationKey = getSendEmailVerificationMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof sendEmailVerification>>,
-    SendEmailVerificationMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return sendEmailVerification(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type SendEmailVerificationMutationResult = NonNullable<
-  Awaited<ReturnType<typeof sendEmailVerification>>
->;
-export type SendEmailVerificationMutationBody = SendEmailVerificationRequest | undefined;
-export type SendEmailVerificationMutationError = unknown;
-export type SendEmailVerificationMutationVariables = { data?: SendEmailVerificationRequest };
-
-/**
- * @summary Send email verification
- */
-export const useSendEmailVerification = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof sendEmailVerification>>,
-      TError,
-      SendEmailVerificationMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof sendEmailVerification>>,
-  TError,
-  SendEmailVerificationMutationVariables,
-  TContext
-> => {
-  return useMutation(getSendEmailVerificationMutationOptions(options), queryClient);
-};
 export const getSignInUrl = () => {
   return `/email-password/sign-in`;
 };
@@ -511,68 +215,6 @@ export const signIn = async (
   });
 };
 
-export const getSignInMutationKey = () => ["signIn"] as const;
-
-export const getSignInMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof signIn>>,
-    TError,
-    SignInMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof signIn>>,
-  TError,
-  SignInMutationVariables,
-  TContext
-> => {
-  const mutationKey = getSignInMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof signIn>>,
-    SignInMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return signIn(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type SignInMutationResult = NonNullable<Awaited<ReturnType<typeof signIn>>>;
-export type SignInMutationBody = SignInRequest | undefined;
-export type SignInMutationError = unknown;
-export type SignInMutationVariables = { data?: SignInRequest };
-
-/**
- * @summary Sign in
- */
-export const useSignIn = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof signIn>>,
-      TError,
-      SignInMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof signIn>>,
-  TError,
-  SignInMutationVariables,
-  TContext
-> => {
-  return useMutation(getSignInMutationOptions(options), queryClient);
-};
 export const getSignUpUrl = () => {
   return `/email-password/sign-up`;
 };
@@ -612,68 +254,6 @@ export const signUp = async (
   });
 };
 
-export const getSignUpMutationKey = () => ["signUp"] as const;
-
-export const getSignUpMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof signUp>>,
-    TError,
-    SignUpMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof signUp>>,
-  TError,
-  SignUpMutationVariables,
-  TContext
-> => {
-  const mutationKey = getSignUpMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof signUp>>,
-    SignUpMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return signUp(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type SignUpMutationResult = NonNullable<Awaited<ReturnType<typeof signUp>>>;
-export type SignUpMutationBody = SignUpRequest | undefined;
-export type SignUpMutationError = unknown;
-export type SignUpMutationVariables = { data?: SignUpRequest };
-
-/**
- * @summary Register new user
- */
-export const useSignUp = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof signUp>>,
-      TError,
-      SignUpMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof signUp>>,
-  TError,
-  SignUpMutationVariables,
-  TContext
-> => {
-  return useMutation(getSignUpMutationOptions(options), queryClient);
-};
 export const getVerifyEmailUrl = () => {
   return `/email-password/verify-email`;
 };
@@ -690,88 +270,3 @@ export const verifyEmail = async (
     method: "GET",
   });
 };
-
-export const getVerifyEmailQueryKey = () => {
-  return [`/email-password/verify-email`] as const;
-};
-
-export const getVerifyEmailQueryOptions = <
-  TData = Awaited<ReturnType<typeof verifyEmail>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyEmail>>, TError, TData>>;
-  request?: SecondParameter<typeof customFetch>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getVerifyEmailQueryKey();
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof verifyEmail>>> = ({ signal }) =>
-    verifyEmail({ signal, ...requestOptions });
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof verifyEmail>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type VerifyEmailQueryResult = NonNullable<Awaited<ReturnType<typeof verifyEmail>>>;
-export type VerifyEmailQueryError = unknown;
-
-export function useVerifyEmail<TData = Awaited<ReturnType<typeof verifyEmail>>, TError = unknown>(
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyEmail>>, TError, TData>> &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof verifyEmail>>,
-          TError,
-          Awaited<ReturnType<typeof verifyEmail>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useVerifyEmail<TData = Awaited<ReturnType<typeof verifyEmail>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyEmail>>, TError, TData>> &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof verifyEmail>>,
-          TError,
-          Awaited<ReturnType<typeof verifyEmail>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useVerifyEmail<TData = Awaited<ReturnType<typeof verifyEmail>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyEmail>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-/**
- * @summary Verify email
- */
-
-export function useVerifyEmail<TData = Awaited<ReturnType<typeof verifyEmail>>, TError = unknown>(
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof verifyEmail>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getVerifyEmailQueryOptions(options);
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}

@@ -3,7 +3,7 @@ import { defineConfig } from "orval";
 import { openApiTransformer } from "./orval-utils";
 
 export default defineConfig({
-  // Tanstack Query client generation
+  // Fetch client generation
   authula: {
     input: {
       target: "./openapi.json",
@@ -16,7 +16,7 @@ export default defineConfig({
       namingConvention: "kebab-case",
       target: "./src/gen/endpoints",
       schemas: "./src/gen/models",
-      client: "react-query",
+      client: "fetch",
       clean: true,
       headers: false,
       mock: true,

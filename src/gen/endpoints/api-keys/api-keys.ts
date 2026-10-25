@@ -5,22 +5,6 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-import { useMutation, useQuery } from "@tanstack/react-query";
-import type {
-  DataTag,
-  DefinedInitialDataOptions,
-  DefinedUseQueryResult,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey,
-  UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-
 import type {
   CreateApiKeyRequest,
   CreateApiKeyResponse,
@@ -35,23 +19,6 @@ import type {
 } from "../../models";
 
 import { customFetch } from "../../../mutators/custom-fetch";
-
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
-  const result = { queryKey } as T & { queryKey: K };
-  for (const key of Object.keys(query)) {
-    // The explicit queryKey always wins, matching the previous
-    // `{ ...query, queryKey }` spread where it was set last.
-    if (key === "queryKey") continue;
-    Object.defineProperty(result, key, {
-      enumerable: true,
-      configurable: true,
-      get: () => (query as Record<string, unknown>)[key],
-    });
-  }
-  return result;
-};
 
 export const getListApiKeysUrl = (params?: ListApiKeysParams) => {
   const normalizedParams = new URLSearchParams();
@@ -80,98 +47,6 @@ export const listApiKeys = async (
     method: "GET",
   });
 };
-
-export const getListApiKeysQueryKey = (params?: ListApiKeysParams) => {
-  return [`/api-keys`, ...(params ? [params] : [])] as const;
-};
-
-export const getListApiKeysQueryOptions = <
-  TData = Awaited<ReturnType<typeof listApiKeys>>,
-  TError = unknown,
->(
-  params?: ListApiKeysParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listApiKeys>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getListApiKeysQueryKey(params);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof listApiKeys>>> = ({ signal }) =>
-    listApiKeys(params, { signal, ...requestOptions });
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof listApiKeys>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type ListApiKeysQueryResult = NonNullable<Awaited<ReturnType<typeof listApiKeys>>>;
-export type ListApiKeysQueryError = unknown;
-
-export function useListApiKeys<TData = Awaited<ReturnType<typeof listApiKeys>>, TError = unknown>(
-  params: undefined | ListApiKeysParams,
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof listApiKeys>>, TError, TData>> &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listApiKeys>>,
-          TError,
-          Awaited<ReturnType<typeof listApiKeys>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useListApiKeys<TData = Awaited<ReturnType<typeof listApiKeys>>, TError = unknown>(
-  params?: ListApiKeysParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listApiKeys>>, TError, TData>> &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listApiKeys>>,
-          TError,
-          Awaited<ReturnType<typeof listApiKeys>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useListApiKeys<TData = Awaited<ReturnType<typeof listApiKeys>>, TError = unknown>(
-  params?: ListApiKeysParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listApiKeys>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-/**
- * @summary List API keys
- */
-
-export function useListApiKeys<TData = Awaited<ReturnType<typeof listApiKeys>>, TError = unknown>(
-  params?: ListApiKeysParams,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listApiKeys>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getListApiKeysQueryOptions(params, options);
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
 
 export const getCreateApiKeyUrl = () => {
   return `/api-keys`;
@@ -212,68 +87,6 @@ export const createApiKey = async (
   });
 };
 
-export const getCreateApiKeyMutationKey = () => ["createApiKey"] as const;
-
-export const getCreateApiKeyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createApiKey>>,
-    TError,
-    CreateApiKeyMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createApiKey>>,
-  TError,
-  CreateApiKeyMutationVariables,
-  TContext
-> => {
-  const mutationKey = getCreateApiKeyMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createApiKey>>,
-    CreateApiKeyMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return createApiKey(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type CreateApiKeyMutationResult = NonNullable<Awaited<ReturnType<typeof createApiKey>>>;
-export type CreateApiKeyMutationBody = CreateApiKeyRequest | undefined;
-export type CreateApiKeyMutationError = unknown;
-export type CreateApiKeyMutationVariables = { data?: CreateApiKeyRequest };
-
-/**
- * @summary Create API key
- */
-export const useCreateApiKey = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof createApiKey>>,
-      TError,
-      CreateApiKeyMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof createApiKey>>,
-  TError,
-  CreateApiKeyMutationVariables,
-  TContext
-> => {
-  return useMutation(getCreateApiKeyMutationOptions(options), queryClient);
-};
 export const getVerifyApiKeyUrl = () => {
   return `/api-keys/verify`;
 };
@@ -313,68 +126,6 @@ export const verifyApiKey = async (
   });
 };
 
-export const getVerifyApiKeyMutationKey = () => ["verifyApiKey"] as const;
-
-export const getVerifyApiKeyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof verifyApiKey>>,
-    TError,
-    VerifyApiKeyMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof verifyApiKey>>,
-  TError,
-  VerifyApiKeyMutationVariables,
-  TContext
-> => {
-  const mutationKey = getVerifyApiKeyMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof verifyApiKey>>,
-    VerifyApiKeyMutationVariables
-  > = (props) => {
-    const { data } = props ?? {};
-
-    return verifyApiKey(data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type VerifyApiKeyMutationResult = NonNullable<Awaited<ReturnType<typeof verifyApiKey>>>;
-export type VerifyApiKeyMutationBody = VerifyApiKeyRequest | undefined;
-export type VerifyApiKeyMutationError = unknown;
-export type VerifyApiKeyMutationVariables = { data?: VerifyApiKeyRequest };
-
-/**
- * @summary Verify API key
- */
-export const useVerifyApiKey = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof verifyApiKey>>,
-      TError,
-      VerifyApiKeyMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof verifyApiKey>>,
-  TError,
-  VerifyApiKeyMutationVariables,
-  TContext
-> => {
-  return useMutation(getVerifyApiKeyMutationOptions(options), queryClient);
-};
 export const getGetApiKeyUrl = (id: string) => {
   return `/api-keys/${id}`;
 };
@@ -392,101 +143,6 @@ export const getApiKey = async (
     method: "GET",
   });
 };
-
-export const getGetApiKeyQueryKey = (id: string) => {
-  return [`/api-keys/${id}`] as const;
-};
-
-export const getGetApiKeyQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiKey>>,
-  TError = unknown,
->(
-  id: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
-
-  const queryKey = queryOptions?.queryKey ?? getGetApiKeyQueryKey(id);
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiKey>>> = ({ signal }) =>
-    getApiKey(id, { signal, ...requestOptions });
-
-  return {
-    queryKey,
-    queryFn,
-    enabled: id !== null && id !== undefined,
-    ...queryOptions,
-  } as UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-};
-
-export type GetApiKeyQueryResult = NonNullable<Awaited<ReturnType<typeof getApiKey>>>;
-export type GetApiKeyQueryError = unknown;
-
-export function useGetApiKey<TData = Awaited<ReturnType<typeof getApiKey>>, TError = unknown>(
-  id: string,
-  options: {
-    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData>> &
-      Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKey>>,
-          TError,
-          Awaited<ReturnType<typeof getApiKey>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetApiKey<TData = Awaited<ReturnType<typeof getApiKey>>, TError = unknown>(
-  id: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData>> &
-      Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKey>>,
-          TError,
-          Awaited<ReturnType<typeof getApiKey>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-export function useGetApiKey<TData = Awaited<ReturnType<typeof getApiKey>>, TError = unknown>(
-  id: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-/**
- * @summary Get API key by ID
- */
-
-export function useGetApiKey<TData = Awaited<ReturnType<typeof getApiKey>>, TError = unknown>(
-  id: string,
-  options?: {
-    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiKey>>, TError, TData>>;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-  const queryOptions = getGetApiKeyQueryOptions(id, options);
-
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-    queryKey: DataTag<QueryKey, TData, TError>;
-  };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
 
 export const getDeleteApiKeyUrl = (id: string) => {
   return `/api-keys/${id}`;
@@ -506,68 +162,6 @@ export const deleteApiKey = async (
   });
 };
 
-export const getDeleteApiKeyMutationKey = () => ["deleteApiKey"] as const;
-
-export const getDeleteApiKeyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteApiKey>>,
-    TError,
-    DeleteApiKeyMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof deleteApiKey>>,
-  TError,
-  DeleteApiKeyMutationVariables,
-  TContext
-> => {
-  const mutationKey = getDeleteApiKeyMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof deleteApiKey>>,
-    DeleteApiKeyMutationVariables
-  > = (props) => {
-    const { id } = props ?? {};
-
-    return deleteApiKey(id, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type DeleteApiKeyMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiKey>>>;
-
-export type DeleteApiKeyMutationError = unknown;
-export type DeleteApiKeyMutationVariables = { id: string };
-
-/**
- * @summary Delete API key
- */
-export const useDeleteApiKey = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof deleteApiKey>>,
-      TError,
-      DeleteApiKeyMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof deleteApiKey>>,
-  TError,
-  DeleteApiKeyMutationVariables,
-  TContext
-> => {
-  return useMutation(getDeleteApiKeyMutationOptions(options), queryClient);
-};
 export const getUpdateApiKeyUrl = (id: string) => {
   return `/api-keys/${id}`;
 };
@@ -606,67 +200,4 @@ export const updateApiKey = async (
     headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
     body: JSON.stringify(updateApiKeyRequest),
   });
-};
-
-export const getUpdateApiKeyMutationKey = () => ["updateApiKey"] as const;
-
-export const getUpdateApiKeyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateApiKey>>,
-    TError,
-    UpdateApiKeyMutationVariables,
-    TContext
-  >;
-  request?: SecondParameter<typeof customFetch>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updateApiKey>>,
-  TError,
-  UpdateApiKeyMutationVariables,
-  TContext
-> => {
-  const mutationKey = getUpdateApiKeyMutationKey();
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updateApiKey>>,
-    UpdateApiKeyMutationVariables
-  > = (props) => {
-    const { id, data } = props ?? {};
-
-    return updateApiKey(id, data, requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type UpdateApiKeyMutationResult = NonNullable<Awaited<ReturnType<typeof updateApiKey>>>;
-export type UpdateApiKeyMutationBody = UpdateApiKeyRequest | undefined;
-export type UpdateApiKeyMutationError = unknown;
-export type UpdateApiKeyMutationVariables = { id: string; data?: UpdateApiKeyRequest };
-
-/**
- * @summary Update API key
- */
-export const useUpdateApiKey = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof updateApiKey>>,
-      TError,
-      UpdateApiKeyMutationVariables,
-      TContext
-    >;
-    request?: SecondParameter<typeof customFetch>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof updateApiKey>>,
-  TError,
-  UpdateApiKeyMutationVariables,
-  TContext
-> => {
-  return useMutation(getUpdateApiKeyMutationOptions(options), queryClient);
 };
