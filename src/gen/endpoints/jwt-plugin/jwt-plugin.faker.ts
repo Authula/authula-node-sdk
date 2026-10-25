@@ -7,7 +7,7 @@
  */
 import { faker } from "@faker-js/faker";
 
-import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../models";
+import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../../models";
 
 export const getGetJWKSResponseMock = (
   overrideResponse: Partial<Extract<WellKnownJWKSResponse, object>> = {},

@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as adminAccounts from "../../gen/endpoints/admin-accounts/admin-accounts";
 import * as adminImpersonation from "../../gen/endpoints/admin-impersonation/admin-impersonation";
 import * as adminSessionState from "../../gen/endpoints/admin-session-state/admin-session-state";

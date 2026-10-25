@@ -2,62 +2,80 @@ import { defineConfig } from "orval";
 
 import { openApiTransformer } from "./orval-utils";
 
-export default defineConfig({
-  // Tanstack Query client generation
-  authula: {
-    input: {
-      target: "./openapi.json",
-      override: {
-        transformer: openApiTransformer,
-      },
+const input = {
+  target: "./openapi.json",
+  override: {
+    transformer: openApiTransformer,
+  },
+};
+
+const baseOutput = {
+  mode: "tags-split",
+  namingConvention: "kebab-case",
+  headers: false,
+  urlEncodeParameters: false,
+  formatter: "oxfmt",
+  tsconfig: "./tsconfig.json",
+  packageJson: "./package.json",
+  override: {
+    enumGenerationType: "const",
+    namingConvention: {
+      enum: "camelCase",
     },
+    useTypeOverInterfaces: true,
+    mutator: {
+      path: "./src/core/mutators/custom-fetch.ts",
+      name: "customFetch",
+    },
+  },
+} as const;
+
+type QueryClient = "react-query" | "vue-query" | "solid-query" | "svelte-query";
+
+const queryProject = (client: QueryClient, dir: string) => ({
+  input,
+  output: {
+    ...baseOutput,
+    client,
+    target: `./src/gen/${dir}`,
+    schemas: "./src/models",
+    mock: false,
+  },
+});
+
+export default defineConfig({
+  fetch: {
+    input,
     output: {
-      mode: "tags-split",
-      namingConvention: "kebab-case",
+      ...baseOutput,
+      client: "fetch",
       target: "./src/gen/endpoints",
-      schemas: "./src/gen/models",
-      client: "react-query",
-      clean: true,
-      headers: false,
+      schemas: "./src/models",
       mock: true,
-      urlEncodeParameters: false,
-      formatter: "oxfmt",
-      tsconfig: "./tsconfig.json",
       override: {
-        enumGenerationType: "const",
-        namingConvention: {
-          enum: "camelCase",
-        },
-        useTypeOverInterfaces: true,
-        mutator: {
-          path: "./src/mutators/custom-fetch.ts",
-          name: "customFetch",
-        },
+        ...baseOutput.override,
         fetch: {
           includeHttpResponseReturnType: false,
         },
       },
     },
-    hooks: {
-      afterAllFilesWrite: "pnpm run fmt",
-    },
   },
-  // Zod schema generation
-  authulaZod: {
-    input: {
-      target: "./openapi.json",
-      override: {
-        transformer: openApiTransformer,
-      },
-    },
+  react: queryProject("react-query", "react"),
+  vue: queryProject("vue-query", "vue"),
+  solid: queryProject("solid-query", "solid"),
+  svelte: queryProject("svelte-query", "svelte"),
+  zod: {
+    input,
     output: {
       mode: "tags-split",
       namingConvention: "kebab-case",
-      target: "./src/gen/endpoints",
+      target: "./src/gen/zod",
       client: "zod",
       fileExtension: ".zod.ts",
       allParamsOptional: false,
       packageJson: "./package.json",
+      formatter: "oxfmt",
+      tsconfig: "./tsconfig.json",
       override: {
         enumGenerationType: "union",
         zod: {
@@ -68,9 +86,6 @@ export default defineConfig({
         },
         useTypeOverInterfaces: true,
       },
-    },
-    hooks: {
-      afterAllFilesWrite: "pnpm run fmt",
     },
   },
 });

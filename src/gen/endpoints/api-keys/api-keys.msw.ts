@@ -15,7 +15,7 @@ import type {
   GetApiKeyResponse,
   UpdateApiKeyResponse,
   VerifyApiKeyResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getCreateApiKeyResponseMock,

@@ -13,7 +13,7 @@ import type {
   ChangePasswordResponse,
   SignInResponse,
   SignUpResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getChangePasswordResponseMock,

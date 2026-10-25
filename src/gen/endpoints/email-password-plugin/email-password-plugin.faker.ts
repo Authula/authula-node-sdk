@@ -12,7 +12,7 @@ import type {
   ChangePasswordResponse,
   SignInResponse,
   SignUpResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getChangePasswordResponseMock = (
   overrideResponse: Partial<Extract<ChangePasswordResponse, object>> = {},

@@ -8,7 +8,7 @@
 import { HttpResponse, http } from "msw";
 import type { RequestHandlerOptions } from "msw";
 
-import type { GetMeResponse, SignOutResponse } from "../../models";
+import type { GetMeResponse, SignOutResponse } from "../../../models";
 
 import { getGetMeResponseMock, getSignOutResponseMock } from "./core.faker";
 

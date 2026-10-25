@@ -11,7 +11,7 @@ import type {
   DeleteOrganizationTeamResponse,
   ListOrganizationTeamsResponse,
   OrganizationTeam,
-} from "../../models";
+} from "../../../models";
 
 export const getListOrganizationTeamsResponseMock = (
   overrideResponse: Partial<Extract<ListOrganizationTeamsResponse, object>> = {},

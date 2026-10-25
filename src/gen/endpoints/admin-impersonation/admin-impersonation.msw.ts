@@ -13,7 +13,7 @@ import type {
   Impersonation,
   StartImpersonationResponse,
   StopImpersonationResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getGetImpersonationResponseMock,

@@ -8,7 +8,7 @@
 import { HttpResponse, http } from "msw";
 import type { RequestHandlerOptions } from "msw";
 
-import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../models";
+import type { RefreshTokenResponse, WellKnownJWKSResponse } from "../../../models";
 
 import { getGetJWKSResponseMock, getRefreshTokenResponseMock } from "./jwt-plugin.faker";
 

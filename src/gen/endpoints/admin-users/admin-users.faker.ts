@@ -13,7 +13,7 @@ import type {
   GetUserByIDResponse,
   UpdateUserResponse,
   UsersPage,
-} from "../../models";
+} from "../../../models";
 
 export const getListUsersResponseMock = (
   overrideResponse: Partial<Extract<UsersPage, object>> = {},

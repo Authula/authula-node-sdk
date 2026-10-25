@@ -14,7 +14,7 @@ import type {
   GetAccountByIDResponse,
   UpdateAccountResponse,
   UserAccountsResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getCreateAccountResponseMock,

@@ -7,7 +7,7 @@
  */
 import { faker } from "@faker-js/faker";
 
-import type { AuthorizeResponse, CallbackResponse } from "../../models";
+import type { AuthorizeResponse, CallbackResponse } from "../../../models";
 
 export const getOauthAuthorizeResponseMock = (
   overrideResponse: Partial<Extract<AuthorizeResponse, object>> = {},

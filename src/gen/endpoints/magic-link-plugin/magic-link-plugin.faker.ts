@@ -11,7 +11,7 @@ import type {
   MagicLinkExchangeResponse,
   MagicLinkSignInResponse,
   MagicLinkVerifyResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getExchangeMagicLinkResponseMock = (
   overrideResponse: Partial<Extract<MagicLinkExchangeResponse, object>> = {},

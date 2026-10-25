@@ -7,7 +7,7 @@
  */
 import { faker } from "@faker-js/faker";
 
-import type { GetMeResponse, SignOutResponse } from "../../models";
+import type { GetMeResponse, SignOutResponse } from "../../../models";
 
 export const getGetMeResponseMock = (
   overrideResponse: Partial<Extract<GetMeResponse, object>> = {},

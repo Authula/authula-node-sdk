@@ -12,7 +12,7 @@ import type {
   MagicLinkExchangeResponse,
   MagicLinkSignInResponse,
   MagicLinkVerifyResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getExchangeMagicLinkResponseMock,

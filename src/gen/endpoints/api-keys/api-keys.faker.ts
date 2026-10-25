@@ -14,7 +14,7 @@ import type {
   GetApiKeyResponse,
   UpdateApiKeyResponse,
   VerifyApiKeyResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getListApiKeysResponseMock = (
   overrideResponse: Partial<Extract<GetAllApiKeysResponse, object>> = {},

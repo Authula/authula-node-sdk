@@ -8,7 +8,7 @@
 import { HttpResponse, http } from "msw";
 import type { RequestHandlerOptions } from "msw";
 
-import type { AuthorizeResponse, CallbackResponse } from "../../models";
+import type { AuthorizeResponse, CallbackResponse } from "../../../models";
 
 import { getOauthAuthorizeResponseMock, getOauthCallbackResponseMock } from "./oauth2-plugin.faker";
 

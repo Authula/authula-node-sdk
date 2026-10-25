@@ -12,7 +12,7 @@ import type {
   DeleteOrganizationResponse,
   ListOrganizationsResponse,
   Organization,
-} from "../../models";
+} from "../../../models";
 
 import {
   getCreateOrganizationResponseMock,

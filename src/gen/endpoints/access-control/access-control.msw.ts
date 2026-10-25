@@ -28,7 +28,7 @@ import type {
   UpdateRoleResponse,
   UserPermissionInfo,
   UserRoleInfo,
-} from "../../models";
+} from "../../../models";
 
 import {
   getAddRolePermissionResponseMock,

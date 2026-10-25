@@ -15,7 +15,7 @@ import type {
   GetTOTPURIResponse,
   VerifyBackupCodeResponse,
   VerifyTOTPResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getDisableTotpResponseMock,

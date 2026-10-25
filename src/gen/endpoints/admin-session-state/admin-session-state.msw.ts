@@ -14,7 +14,7 @@ import type {
   GetSessionStateResponse,
   RevokeSessionResponse,
   UpsertSessionStateResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getCreateSessionStateResponseMock,

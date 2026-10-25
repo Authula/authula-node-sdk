@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as emailPassword from "../../gen/endpoints/email-password-plugin/email-password-plugin";
 
 export class EmailPasswordPlugin implements Plugin {

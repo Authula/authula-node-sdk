@@ -13,7 +13,7 @@ import type {
   GetSessionStateResponse,
   RevokeSessionResponse,
   UpsertSessionStateResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getListRevokedSessionStatesResponseMock = (): AdminSessionState[] | null =>
   Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({

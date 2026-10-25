@@ -1,8 +1,8 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { BearerPlugin } from "./plugin";
-import type { AfterFetchHook, BeforeFetchHook, FetchContext } from "@/types";
+import type { AfterFetchHook, BeforeFetchHook, FetchContext } from "@/core/types";
 import type { JWTPlugin } from "../jwt/plugin";
-import type { ClientWithPlugins } from "@/sdk";
+import type { ClientWithPlugins } from "@/core/sdk";
 import { localStorageMock } from "@/tests/mocks/local-storage.mock";
 
 describe("Bearer Plugin", () => {
@@ -234,9 +234,7 @@ describe("Bearer Plugin", () => {
         jwt: undefined,
       };
 
-      plugin.init(
-        clientWithoutJwt as unknown as ClientWithPlugins<[JWTPlugin]>,
-      );
+      plugin.init(clientWithoutJwt as unknown as ClientWithPlugins<[JWTPlugin]>);
       const ctx: FetchContext = {
         url: "/test",
         init: { headers: {} },
@@ -246,9 +244,7 @@ describe("Bearer Plugin", () => {
 
       const result = await afterFetchHooks[0](ctx, mockResponse);
       expect(result).toBeUndefined();
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "JWT Plugin is required for Bearer token refresh.",
-      );
+      expect(consoleSpy).toHaveBeenCalledWith("JWT Plugin is required for Bearer token refresh.");
     });
 
     test("should refresh token and update localStorage on 401", async () => {
@@ -276,14 +272,8 @@ describe("Bearer Plugin", () => {
       expect(mockClient.jwt!.refreshToken).toHaveBeenCalledWith({
         refreshToken: "old-refresh-token",
       });
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        "accessToken",
-        newAccessToken,
-      );
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        "refreshToken",
-        newRefreshToken,
-      );
+      expect(localStorage.setItem).toHaveBeenCalledWith("accessToken", newAccessToken);
+      expect(localStorage.setItem).toHaveBeenCalledWith("refreshToken", newRefreshToken);
       const headers = ctx.init.headers as Headers;
       expect(headers.get("Authorization")).toBe(`Bearer ${newAccessToken}`);
     });
@@ -337,9 +327,7 @@ describe("Bearer Plugin", () => {
         if (key === "refreshToken") return "old-refresh-token";
         return null;
       });
-      vi.mocked(mockClient.jwt!.refreshToken).mockRejectedValue(
-        new Error("Network error"),
-      );
+      vi.mocked(mockClient.jwt!.refreshToken).mockRejectedValue(new Error("Network error"));
 
       plugin.init(mockClient as ClientWithPlugins<[JWTPlugin]>);
       const ctx: FetchContext = {
@@ -350,9 +338,7 @@ describe("Bearer Plugin", () => {
       const mockResponse = new Response(null, { status: 401 });
 
       // Plugin doesn't catch errors, they propagate
-      await expect(afterFetchHooks[0](ctx, mockResponse)).rejects.toThrow(
-        "Network error",
-      );
+      await expect(afterFetchHooks[0](ctx, mockResponse)).rejects.toThrow("Network error");
     });
 
     test("should implement single flight pattern for concurrent 401s", async () => {
@@ -363,10 +349,7 @@ describe("Bearer Plugin", () => {
       });
 
       // Slow refresh to test single flight
-      let resolveRefresh: (value: {
-        accessToken: string;
-        refreshToken: string;
-      }) => void;
+      let resolveRefresh: (value: { accessToken: string; refreshToken: string }) => void;
       const refreshPromise = new Promise<{
         accessToken: string;
         refreshToken: string;
@@ -452,9 +435,7 @@ describe("Bearer Plugin", () => {
         if (key === "refreshToken") return "old-refresh-token";
         return null;
       });
-      vi.mocked(mockClient.jwt!.refreshToken).mockRejectedValueOnce(
-        new Error("Refresh failed"),
-      );
+      vi.mocked(mockClient.jwt!.refreshToken).mockRejectedValueOnce(new Error("Refresh failed"));
 
       plugin.init(mockClient as ClientWithPlugins<[JWTPlugin]>);
       const ctx: FetchContext = {
@@ -465,9 +446,7 @@ describe("Bearer Plugin", () => {
       const mockResponse = new Response(null, { status: 401 });
 
       // First attempt throws
-      await expect(afterFetchHooks[0](ctx, mockResponse)).rejects.toThrow(
-        "Refresh failed",
-      );
+      await expect(afterFetchHooks[0](ctx, mockResponse)).rejects.toThrow("Refresh failed");
 
       // After failed refresh (finally clears the promise), a new 401 should attempt refresh again
       vi.mocked(mockClient.jwt!.refreshToken).mockResolvedValueOnce({

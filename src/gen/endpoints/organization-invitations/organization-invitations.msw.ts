@@ -12,7 +12,7 @@ import type {
   GetOrganizationInvitationResponse,
   ListOrganizationInvitationsResponse,
   OrganizationInvitation,
-} from "../../models";
+} from "../../../models";
 
 import {
   getAcceptOrganizationInvitationResponseMock,

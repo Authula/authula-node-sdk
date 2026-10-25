@@ -13,7 +13,7 @@ import type {
   ListOrganizationMembersResponse,
   OrganizationMember,
   OrganizationMemberResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getAddOrganizationMemberResponseMock,

@@ -1,5 +1,5 @@
-import type { FetchContext, Plugin } from "@/types";
-import type { ClientWithPlugins } from "@/sdk";
+import type { FetchContext, Plugin } from "@/core/types";
+import type { ClientWithPlugins } from "@/core/sdk";
 import type { JWTPlugin } from "../jwt/plugin";
 import type { BearerPluginOptions } from "./types";
 

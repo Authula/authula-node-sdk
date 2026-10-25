@@ -14,7 +14,7 @@ import type {
   GetUserByIDResponse,
   UpdateUserResponse,
   UsersPage,
-} from "../../models";
+} from "../../../models";
 
 import {
   getCreateUserResponseMock,

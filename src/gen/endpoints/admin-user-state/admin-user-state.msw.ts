@@ -16,7 +16,7 @@ import type {
   GetUserStateResponse,
   UnbanUserResponse,
   UpsertUserStateResponse,
-} from "../../models";
+} from "../../../models";
 
 import {
   getBanUserResponseMock,

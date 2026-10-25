@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as organizations from "../../gen/endpoints/organizations/organizations";
 import * as organizationInvitations from "../../gen/endpoints/organization-invitations/organization-invitations";
 import * as organizationMembers from "../../gen/endpoints/organization-members/organization-members";

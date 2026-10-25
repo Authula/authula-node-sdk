@@ -12,7 +12,7 @@ import type {
   ListOrganizationTeamMembersResponse,
   OrganizationTeamMember,
   OrganizationTeamMemberResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getListOrganizationTeamMembersResponseMock = (
   overrideResponse: Partial<Extract<ListOrganizationTeamMembersResponse, object>> = {},

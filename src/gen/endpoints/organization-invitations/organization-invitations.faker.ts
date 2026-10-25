@@ -7,12 +7,12 @@
  */
 import { faker } from "@faker-js/faker";
 
-import { OrganizationInvitationStatus } from "../../models";
+import { OrganizationInvitationStatus } from "../../../models";
 import type {
   GetOrganizationInvitationResponse,
   ListOrganizationInvitationsResponse,
   OrganizationInvitation,
-} from "../../models";
+} from "../../../models";
 
 export const getListOrganizationInvitationsResponseMock = (
   overrideResponse: Partial<Extract<ListOrganizationInvitationsResponse, object>> = {},

@@ -14,7 +14,7 @@ import type {
   GetTOTPURIResponse,
   VerifyBackupCodeResponse,
   VerifyTOTPResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getDisableTotpResponseMock = (
   overrideResponse: Partial<Extract<DisableResponse, object>> = {},

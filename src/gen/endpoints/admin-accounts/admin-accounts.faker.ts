@@ -13,7 +13,7 @@ import type {
   GetAccountByIDResponse,
   UpdateAccountResponse,
   UserAccountsResponse,
-} from "../../models";
+} from "../../../models";
 
 export const getGetAccountResponseMock = (
   overrideResponse: Partial<Extract<GetAccountByIDResponse, object>> = {},
