@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types/plugins";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types/plugins";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as totp from "../../gen/endpoints/totp-plugin/totp-plugin";
 
 export class TOTPPlugin implements Plugin {

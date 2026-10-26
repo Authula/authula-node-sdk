@@ -8,8 +8,7 @@ export const walkAndTransformSpec = (obj: any): any => {
   if (!obj || typeof obj !== "object") return obj;
   if (Array.isArray(obj)) return obj.map(walkAndTransformSpec);
 
-  const toCamelCase = (str: string) =>
-    str.replace(/_([a-z0-9])/g, (_, g) => g.toUpperCase());
+  const toCamelCase = (str: string) => str.replace(/_([a-z0-9])/g, (_, g) => g.toUpperCase());
 
   const newObj: any = {};
   for (const [key, value] of Object.entries(obj)) {
@@ -25,9 +24,7 @@ export const walkAndTransformSpec = (obj: any): any => {
     } else if (key === "required" && Array.isArray(value)) {
       // FIX: Map the elements inside the required array to match our camelCased properties
       newObj[key] = value.map((reqKey) =>
-        typeof reqKey === "string" && reqKey.includes("_")
-          ? toCamelCase(reqKey)
-          : reqKey,
+        typeof reqKey === "string" && reqKey.includes("_") ? toCamelCase(reqKey) : reqKey,
       );
     } else if (obj.in && obj.in !== "path" && key === "name" && typeof value === "string") {
       // Convert non-path parameter names to camelCase for TS client usage
@@ -42,10 +39,7 @@ export const walkAndTransformSpec = (obj: any): any => {
 };
 
 export const openApiTransformer = (htmlStringOrObj: any) => {
-  const spec =
-    typeof htmlStringOrObj === "string"
-      ? JSON.parse(htmlStringOrObj)
-      : htmlStringOrObj;
+  const spec = typeof htmlStringOrObj === "string" ? JSON.parse(htmlStringOrObj) : htmlStringOrObj;
 
   // 1. Process schema properties securely without modifying root object definitions
   if (spec.components && spec.components.schemas) {

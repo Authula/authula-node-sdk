@@ -1,6 +1,6 @@
-import type { FetchContext, Plugin } from "@/types";
+import type { FetchContext, Plugin } from "@/core/types";
 import type { CSRFPluginOptions } from "./types";
-import type { AuthulaClient } from "@/client";
+import type { AuthulaClient } from "@/core/client";
 
 export class CSRFPlugin implements Plugin {
   public readonly id = "csrf";
@@ -14,8 +14,7 @@ export class CSRFPlugin implements Plugin {
       }
 
       const value =
-        ctx.cookies?.[this.options.cookieName] ??
-        (await client.getCookie(this.options.cookieName));
+        ctx.cookies?.[this.options.cookieName] ?? (await client.getCookie(this.options.cookieName));
 
       if (!value) {
         return;

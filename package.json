@@ -1,6 +1,6 @@
 {
   "name": "authula",
-  "version": "0.7.16",
+  "version": "0.8.0",
   "description": "Official SDK for Authula.",
   "homepage": "https://github.com/Authula/authula-node-sdk#readme",
   "bugs": {
@@ -15,15 +15,20 @@
     "dist"
   ],
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./plugins": "./dist/plugins/index.js",
+    "./core": "./dist/core.js",
+    "./models": "./dist/models.js",
+    "./plugins": "./dist/plugins.js",
+    "./react": "./dist/react.js",
+    "./solid": "./dist/solid.js",
+    "./svelte": "./dist/svelte.js",
+    "./vue": "./dist/vue.js",
+    "./zod": "./dist/zod.js",
     "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm run orval:build && pnpm run tsdown:build",
-    "orval:build": "rm -rf ./src/gen && orval -c orval.config.ts",
+    "orval:build": "rm -rf ./src/gen ./src/models && orval -c orval.config.ts",
     "tsdown:build": "rm -rf ./dist && tsdown",
     "watch:orval": "orval",
     "watch:tsdown": "tsdown --watch",
@@ -38,24 +43,71 @@
     "update-npm-deps": "tsx ./scripts/update-npm-deps.ts"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.103.1",
     "cookie": "^2.0.1",
-    "es-toolkit": "^1.52.0",
-    "zod": "^4.6.5"
+    "es-toolkit": "^1.53.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
+    "@tanstack/react-query": "^5.104.5",
+    "@tanstack/solid-query": "^5.104.5",
+    "@tanstack/svelte-query": "^6.3.5",
+    "@tanstack/vue-query": "^5.104.5",
     "@types/node": "^26.6.5",
-    "@vitest/coverage-v8": "^5.0.3",
-    "@vitest/ui": "^5.0.3",
+    "@types/react": "^19.3.0",
+    "@types/semver": "^7.8.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "@vitest/ui": "^5.0.5",
     "bumpp": "^12.3.0",
-    "orval": "^8.41.0",
-    "oxfmt": "^0.72.0",
-    "oxlint": "^1.87.0",
-    "tsdown": "^0.23.1",
+    "msw": "^3.0.3",
+    "orval": "^8.45.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
+    "react": "^19.3.1",
+    "semver": "^7.8.5",
+    "solid-js": "^1.9.17",
+    "svelte": "^5.57.2",
+    "tsdown": "^0.23.2",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5",
+    "vue": "^3.5.44"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.74.7",
+    "@tanstack/solid-query": "^5.74.7",
+    "@tanstack/svelte-query": "^5.74.7",
+    "@tanstack/vue-query": "^5.74.7",
+    "react": "^18 || ^19",
+    "solid-js": "^1.9.6",
+    "svelte": "^5.28.3",
+    "vue": "^3.5.14"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "@tanstack/vue-query": {
+      "optional": true
+    },
+    "@tanstack/solid-query": {
+      "optional": true
+    },
+    "@tanstack/svelte-query": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@12.11.2"
 }

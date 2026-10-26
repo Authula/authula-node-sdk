@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { CSRFPlugin } from "./plugin";
-import type { BeforeFetchHook, FetchContext } from "@/types";
-import type { AuthulaClient } from "@/client";
+import type { BeforeFetchHook, FetchContext } from "@/core/types";
+import type { AuthulaClient } from "@/core/client";
 
 type MockClient = {
   registerBeforeFetch: (hook: BeforeFetchHook) => void;
@@ -59,20 +59,17 @@ describe("CSRF Plugin", () => {
   });
 
   describe("beforeFetch hook - method filtering", () => {
-    test.each(["GET", "HEAD", "OPTIONS"])(
-      "should skip %s requests",
-      async (method) => {
-        plugin.init(mockClient as unknown as AuthulaClient);
-        const ctx: FetchContext = {
-          url: "/test",
-          init: { method },
-          meta: {},
-        };
+    test.each(["GET", "HEAD", "OPTIONS"])("should skip %s requests", async (method) => {
+      plugin.init(mockClient as unknown as AuthulaClient);
+      const ctx: FetchContext = {
+        url: "/test",
+        init: { method },
+        meta: {},
+      };
 
-        await beforeFetchHooks[0](ctx);
-        expect(ctx.init.headers).toBeUndefined();
-      },
-    );
+      await beforeFetchHooks[0](ctx);
+      expect(ctx.init.headers).toBeUndefined();
+    });
 
     test("should process POST requests", async () => {
       plugin.init(mockClient as unknown as AuthulaClient);

@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types/plugins";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types/plugins";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as oauth2 from "../../gen/endpoints/oauth2-plugin/oauth2-plugin";
 
 export class OAuth2Plugin implements Plugin {

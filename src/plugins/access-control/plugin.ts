@@ -1,6 +1,6 @@
-import type { AuthulaClient } from "@/client";
-import type { Plugin } from "@/types";
-import { wrapGenerated } from "@/utils/wrap-generated";
+import type { AuthulaClient } from "@/core/client";
+import type { Plugin } from "@/core/types";
+import { wrapGenerated } from "@/core/utils/wrap-generated";
 import * as accessControl from "../../gen/endpoints/access-control/access-control";
 
 export class AccessControlPlugin implements Plugin {

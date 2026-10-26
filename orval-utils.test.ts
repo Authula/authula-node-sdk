@@ -160,9 +160,7 @@ describe("walkAndTransformSpec", () => {
     const result = walkAndTransformSpec(input);
     expect(result.required).toEqual([]);
     expect(result.properties.metadata.properties).toHaveProperty("createdBy");
-    expect(result.properties.metadata.properties).toHaveProperty(
-      "lastEditedBy",
-    );
+    expect(result.properties.metadata.properties).toHaveProperty("lastEditedBy");
     expect(result.properties.metadata.required).toBeUndefined();
   });
 
@@ -208,9 +206,7 @@ describe("walkAndTransformSpec", () => {
     };
     const result = walkAndTransformSpec(input);
     expect(result.properties.metadata.properties).toHaveProperty("createdBy");
-    expect(result.properties.metadata.properties).toHaveProperty(
-      "lastEditedBy",
-    );
+    expect(result.properties.metadata.properties).toHaveProperty("lastEditedBy");
   });
 
   it("transforms nested required arrays inside nested properties", () => {
@@ -338,9 +334,7 @@ describe("openApiTransformer", () => {
       paths: {
         "/guides": {
           get: {
-            parameters: [
-              { in: "query", name: "guide_id", schema: { type: "string" } },
-            ],
+            parameters: [{ in: "query", name: "guide_id", schema: { type: "string" } }],
           },
         },
       },
@@ -361,9 +355,7 @@ describe("openApiTransformer", () => {
       },
     });
     const result = openApiTransformer(spec);
-    expect(result.components.schemas.Item.properties).toHaveProperty(
-      "itemName",
-    );
+    expect(result.components.schemas.Item.properties).toHaveProperty("itemName");
   });
 
   it("handles spec without components", () => {
@@ -403,12 +395,8 @@ describe("openApiTransformer", () => {
       },
     };
     const result = openApiTransformer(spec);
-    expect(result.components.schemas.Guide.properties).toHaveProperty(
-      "creatorId",
-    );
-    expect(result.components.schemas.Step.properties).toHaveProperty(
-      "stepOrder",
-    );
+    expect(result.components.schemas.Guide.properties).toHaveProperty("creatorId");
+    expect(result.components.schemas.Step.properties).toHaveProperty("stepOrder");
   });
 
   it("preserves schema names (keys of components/schemas)", () => {
