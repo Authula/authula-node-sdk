@@ -199,7 +199,7 @@ const client = createClient({
 
 const me = await client.core.getMe();
 
-const user: User = me.data.user;
+const user: User = me.user;
 ```
 
 ### Zod schemas

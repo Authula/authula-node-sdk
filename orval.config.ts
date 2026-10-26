@@ -27,6 +27,9 @@ const baseOutput = {
       path: "./src/core/mutators/custom-fetch.ts",
       name: "customFetch",
     },
+    fetch: {
+      includeHttpResponseReturnType: false,
+    },
   },
 } as const;
 
@@ -52,12 +55,6 @@ export default defineConfig({
       target: "./src/gen/endpoints",
       schemas: "./src/models",
       mock: true,
-      override: {
-        ...baseOutput.override,
-        fetch: {
-          includeHttpResponseReturnType: false,
-        },
-      },
     },
   },
   react: queryProject("react-query", "react"),
