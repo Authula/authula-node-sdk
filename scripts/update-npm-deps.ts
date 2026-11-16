@@ -11,7 +11,17 @@ import * as semver from "semver";
 
 // Dependencies this script must never bump. Entries are matched against the package
 // name and may use `*` as a wildcard, e.g. "@types/*" or "eslint-plugin-*".
-const EXCLUDED_DEPENDENCIES: readonly string[] = [];
+const EXCLUDED_DEPENDENCIES: readonly string[] = [
+  "@tanstack/react-query",
+  "@tanstack/solid-query",
+  "@tanstack/svelte-query",
+  "@tanstack/vue-query",
+  "react",
+  "solid-js",
+  "svelte",
+  "typescript",
+  "vue",
+];
 
 const DEFAULT_REGISTRY = "https://registry.npmjs.org";
 const DEFAULT_MIN_HOURS = 24;

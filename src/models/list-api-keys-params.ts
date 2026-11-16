@@ -7,20 +7,12 @@
  */
 
 export type ListApiKeysParams = {
-  /**
-   * @nullable
-   */
+  /** @nullable */
   ownerType?: string | null;
-  /**
-   * @nullable
-   */
+  /** @nullable */
   ownerId?: string | null;
-  /**
-   * @nullable
-   */
+  /** @nullable */
   page?: number | null;
-  /**
-   * @nullable
-   */
+  /** @nullable */
   limit?: number | null;
 };
