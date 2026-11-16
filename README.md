@@ -291,7 +291,7 @@ authulaClient.registerAfterFetch(async (ctx, response) => {
 });
 ```
 
-## Migration from 0.7.x to 0.8.0
+## Migration to 0.8.0+
 
 | Before                                   | After                                                              |
 | ---------------------------------------- | ------------------------------------------------------------------ |

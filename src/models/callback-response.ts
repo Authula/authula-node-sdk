@@ -5,10 +5,10 @@
  * Authula API - An open-source authentication solution that scales with you.
  * OpenAPI spec version: 0.1.0
  */
-import type { Session } from "./session";
+import type { CallbackSession } from "./callback-session";
 import type { User } from "./user";
 
 export type CallbackResponse = {
-  session: Session;
+  session: CallbackSession;
   user: User;
 };

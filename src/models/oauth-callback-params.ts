@@ -7,7 +7,8 @@
  */
 
 export type OauthCallbackParams = {
-  code: string;
-  state: string;
+  code?: string;
+  state?: string;
   error?: string;
+  errorDescription?: string;
 };
